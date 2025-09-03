@@ -52,7 +52,7 @@ AngVelThresh = (
     np.pi / 2.5
 )  # the max angular velocity per frame we will accept as not an artifact
 
-OBendThresh = 3
+OBendThresh = 1
 # radians of curvature to call an O-bend
 CBendThresh = 1
 # radians of curvature to call an C-bend
