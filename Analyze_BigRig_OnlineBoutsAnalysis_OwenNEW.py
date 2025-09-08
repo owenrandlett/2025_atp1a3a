@@ -24,519 +24,754 @@ sys.path.append(os.path.realpath(current_dir + r'/ExtraFunctions/glasbey-master/
 
 from glasbey import Glasbey
 
-
 #%
 big_rig3 = True
 #%
-exp_dir = r'/media/BigBoy/MultiTracker/20250113_113921_atp1a3a_BR2_Phin'
+# exp_dir = r'/media/BigBoy/MultiTracker/20250113_113921_atp1a3a_BR2_Phin'
 # exp_dir = r'/media/BigBoy/MultiTracker/20250127_110626_atp1a3a_BR3_Phin'
 
-os.chdir(exp_dir)
+exp_dirs = [
+    r'/media/BigBoy/Common/atp1a3a_Data/BigRigData/20250113_113921_atp1a3a_BR2_Phin',
+    r'/media/BigBoy/Common/atp1a3a_Data/BigRigData/20250127_110626_atp1a3a_BR3_Phin'
+]
+def stripplot_period_full_grid(data, period_name, global_y_lims=None, use_median = True):
 
-graph_dir = os.path.join(exp_dir, 'boutsAnalysis_graphs')
+        # --- Statistics to plot ---
+    if use_median:
+        stats_to_plot = [
+            ("median_disp", "Median displacement per bout (mm)"),
+            ("median_duration", "Median bout duration (s)"),
+            ("median_peak", "Median peak bout speed (mm/s)"),
+            ("total_disp", "Total displacement (mm)"),  # total is always a sum
+            # ("n_bouts", "Number of bouts"),
+            ("bout_freq_hz", "Bout frequency (Hz)")
+        ]
+    else:
+        stats_to_plot = [
+            ("mean_disp", "Mean displacement per bout"),
+            ("mean_duration", "Mean bout duration (s)"),
+            ("mean_peak", "Mean peak speed"),
+            ("total_disp", "Total displacement"),
+            # ("n_bouts", "Number of bouts"),
+            ("bout_freq_hz", "Bout frequency (Hz)")
+        ]
+    data = data[data["period_name"] == period_name].copy()
+    
+    # --- Prepare text file for stats ---
+    safe_period_name = period_name.replace(" ", "_")
+    stats_filename = f"{graph_dir}/MovementStats_Plate{plate}_{safe_period_name}.txt"
+    stats_file = open(stats_filename, 'w')
+    stats_file.write(f"Statistical results for {period_name}, Plate {plate}\n\n")
+    
+    n_stats = len(stats_to_plot)
+    n_cols = 2
+    n_rows = 3
+    fig, axes = plt.subplots(n_rows, n_cols, figsize=(12, 18))
+    axes = axes.flatten()
+    
+    for ax, (stat, ylabel) in zip(axes, stats_to_plot):
+        # Kruskal-Wallis test
+        groups_data = [data[data["group"] == g][stat].values for g in group_order]
+        kw_stat, kw_p = kruskal(*groups_data)
+        
+            # --- Compute N per group ---
+        group_counts = data.groupby("group").size().reindex(group_order).fillna(0).astype(int)
+        group_labels_with_n = [f"{g}\n(n={group_counts[g]})" for g in group_order]
+
+        # --- Write KW result to text file ---
+        stats_file.write(f"{stat}:\n")
+        stats_file.write(f"  Kruskal-Wallis H = {kw_stat:.3f}, p = {kw_p:.4f}\n")
+        
+        # --- Write group means to text file ---
+        medians = data.groupby("group")[stat].median()
+        stats_file.write("  Group medians:\n")
+        for g in group_order:
+            stats_file.write(f"    {g}: {medians[g]:.3f}\n")
+        
+        # Stripplot
+        sns.stripplot(
+            x="group",
+            y=stat,
+            data=data,
+            order=group_order,
+            palette=group_palette,
+            jitter=0.3,
+            alpha=0.7,
+            marker="o",
+            size=8,
+            ax=ax
+        )
+        
+        # Overlay group medians
+        for i, g in enumerate(group_order):
+            y = medians[g]
+            ax.hlines(y=y, xmin=i-0.3, xmax=i+0.3, color=group_palette[g], linewidth=7)
+        
+        # Pairwise significance annotations
+        if kw_p < 0.05:
+            n_comparisons = len(group_order) * (len(group_order)-1) / 2
+            sig_annotations = []
+            for g1, g2 in itertools.combinations(group_order, 2):
+                u_stat, p_val = mannwhitneyu(
+                    data[data["group"]==g1][stat], 
+                    data[data["group"]==g2][stat],
+                    alternative='two-sided'
+                )
+                p_val_corr = min(p_val * n_comparisons, 1.0)
+                if p_val_corr < 0.05:
+                    if p_val_corr < 0.001:
+                        p_text = "p<0.001"
+                    elif p_val_corr < 0.01:
+                        p_text = "p<0.01"
+                    else:
+                        p_text = "p<0.05"
+                    sig_annotations.append((g1, g2, p_text))
+                    # Write pairwise result to text file
+                    stats_file.write("         Pairwise Mann Whitney Sig. Results: \n")
+                    stats_file.write(f"    {g1} vs {g2}: p = {p_val_corr}\n")
+            # Annotate significance on plot
+            y_max = data[stat].max()
+            y_offset = y_max * 0.1
+            for j, (g1, g2, p_text) in enumerate(sig_annotations):
+                x1 = group_order.index(g1)
+                x2 = group_order.index(g2)
+                y = y_max + y_offset * (j+1)
+                ax.plot([x1, x1, x2, x2], [y, y+y_offset/4, y+y_offset/4, y], color='black')
+                ax.text((x1+x2)/2, y+y_offset/4, p_text, ha='center', va='bottom', fontsize=10)
+        
+        # Formatting
+        if global_y_lims and stat in global_y_lims:
+            ax.set_ylim(global_y_lims[stat])
+        else:
+            ax.set_ylim(bottom=0)
+        ax.set_xticks(range(len(group_order)))
+        ax.set_xticklabels(group_labels_with_n, fontsize=14, rotation=45, ha='right')
+        ax.set_xlabel("")
+        ax.set_yticks(ax.get_yticks())
+        ax.set_yticklabels([f"{y:.2f}" for y in ax.get_yticks()], fontsize=10)
+        ax.set_ylabel(ylabel, fontsize=16)
+        # ax.set_title(stat.replace('_',' ').title(), fontsize=16)
+
+    
+    # Hide unused subplots
+    for ax in axes[n_stats:]:
+        ax.axis('off')
+    
+    fig.suptitle(f"{period_name}", fontsize=20)
+    plt.tight_layout(rect=[0, 0, 1, 0.95])
+    
+    # Save figure
+    fig_title = f"Plate{plate}_{safe_period_name}"
+    plt.savefig(f"{graph_dir}/MovementGraphs_{fig_title}.png")
+    plt.savefig(f"{graph_dir}/MovementGraphs_{fig_title}.svg")
+    plt.show()
+    
+    # Close stats file
+    stats_file.close()
+
+
+for exp_dir in exp_dirs:
+    os.chdir(exp_dir)
+    print('analzing ' + os.path.basename(exp_dir))
+
+    graph_dir = os.path.join(exp_dir, 'boutsAnalysis_graphs')
+
+    if not os.path.exists(graph_dir):
+        os.mkdir(graph_dir)
+        
+
+    camera_rez = 180/2290 # camera resolution in mm/pixel
+        
+    exp_data_file =glob.glob(exp_dir+'/exp_data.pkl')[0]
+    online_tracking_file = glob.glob(exp_dir+'/online_tracking.hdf5')[0]
+    plate_tracking_data = glob.glob(exp_dir+'/*trackdata_twoMeasures.pkl')
+    n_plates = len(plate_tracking_data)
+    #%
+    with open(exp_data_file, 'rb') as f:
+        exp_data = pickle.load(f)
+
+
+    #%
+    online_tracking = h5py.File(online_tracking_file)
+    print(list(online_tracking.keys()))
+    #%
+    # load datasets from hdf5 file
+    frames_plate = np.array(online_tracking['plate']) # 0 or 1, depending on if its tracking plate 0 or plate 1
+    t_stamps = np.array(online_tracking['time_stamp']) # clock time of the experiment
+    t_stamps_intervals = np.diff(t_stamps) # time intervals between frames
+    t_stamps_hrs = (t_stamps-t_stamps[0])/(60*60)
+    t_stamps_min = t_stamps_hrs*60
+    t_stamps_sec = t_stamps_min*60
+
+    frame_rate_tracking = 1/np.mean(np.diff(t_stamps)) # frame rate of the tracking data
+    frame_idex = np.array(online_tracking['frame_index']) # frame index of the experiment
+    camera_fps = np.mean(np.diff(frame_idex))/np.mean(np.diff(t_stamps)) # caluclating the FPS of that experiment
+
+
+
+    coords = online_tracking['tail_coords'] # tracking coordinates. 4d array: order = [timepoints, x/y, fish, tail coordinate]
+    head_coords = coords[:,:,:,0]
+    print("DATA loaded")
+
+
+
+    plates = np.arange(n_plates)
+
+    gb = Glasbey()
+
+
+    # Old pickles may reference pandas.core.indexes.numeric.Int64Index
+    numeric_mod = types.ModuleType("pandas.core.indexes.numeric")
+    numeric_mod.Int64Index = pd.Index  # alias to modern Index
+    sys.modules["pandas.core.indexes.numeric"] = numeric_mod
+
+
+    rois = []
+    names = []
+    stim_frame_inds = []
+    stim_given = []
+
+    curv_events = []
+    for plate in range(n_plates):
+        with open(plate_tracking_data[plate], 'rb') as f:
+            tracking_data = pickle.load(f)
+            names.append(tracking_data['names'])
+            rois.append(tracking_data['rois'])
+            stim_frame_inds.append(tracking_data['TiffFrameInds'])
+            stim_given.append( tracking_data['stim_given'])
+            curv_events.append(tracking_data['MaxCurvatureOBendEvents'])
+
+
+    # note that this logic assumes the standard "big rig" habituation assay protocol
+    plot_frame_interval_names = [
+        'Acclimitaization Period',
+        'Block 1',
+        'Block 2',
+        'Block 3',
+        'Block 4',
+        'Free Swimming',
+        'Taps',
+        'Motion stimulus',
+        'Block 5',
+    ] 
+
+    plot_frame_intervals = []
+    for plate in range(n_plates):
+        plot_frame_intervals.append([
+            (np.where(frames_plate == plate)[0][0], np.where(frame_idex >= stim_frame_inds[plate][0])[0][0]), # acclim
+            (np.where(frame_idex >= stim_frame_inds[plate][0]- camera_fps*60)[0][0], np.where(frame_idex >= stim_frame_inds[plate][59] +  camera_fps*60)[0][0]),
+            (np.where(frame_idex >= stim_frame_inds[plate][60] - camera_fps*60)[0][0], np.where(frame_idex >= stim_frame_inds[plate][119] +  camera_fps*60)[0][0]),
+            (np.where(frame_idex >= stim_frame_inds[plate][120] - camera_fps*60)[0][0], np.where(frame_idex >= stim_frame_inds[plate][179] +  camera_fps*60)[0][0]),
+            (np.where(frame_idex >= stim_frame_inds[plate][180] - camera_fps*60)[0][0], np.where(frame_idex >= stim_frame_inds[plate][239] +  camera_fps*60)[0][0]),
+            (np.where(frame_idex >= stim_frame_inds[plate][240] - camera_fps*60*25)[0][0], np.where(frame_idex >= stim_frame_inds[plate][240] - camera_fps)[0][0]),
+            (np.where(frame_idex >= stim_frame_inds[plate][240] - camera_fps*60)[0][0], np.where(frame_idex >= stim_frame_inds[plate][269] +  camera_fps*60)[0][0]),
+            (np.where(frame_idex >= stim_frame_inds[plate][270])[0][0], np.where(frame_idex >= stim_frame_inds[plate][270] +  camera_fps*60*59)[0][0]),
+            (np.where(frame_idex >= stim_frame_inds[plate][271] - camera_fps*60)[0][0], np.where(frame_idex >= stim_frame_inds[plate][330] +  camera_fps*1)[0][0]),
+        ])
+
+
+
+
+    plt.rcParams.update({
+        'font.size': 30,           # Increase overall font size
+        'axes.titlesize': 36,      # Title font size
+        'axes.labelsize': 32,      # Axis label font size
+        'xtick.labelsize': 28,     # X tick label font size
+        'ytick.labelsize': 28,     # Y tick label font size
+        'legend.fontsize': 28      # Legend font size
+    })
+
+    sav_sz_sec = 0.3  # sav_sz_sec is the size of the window to smooth over in seconds
+    sav_sz = np.round(frame_rate_tracking*sav_sz_sec).astype(int) 
+    speeds = FishTrack.get_speeds(head_coords, sav_sz=sav_sz, sav_ord=1, speed_thresh=4) 
+    speeds = speeds*camera_rez # convert speeds to mm/frame
+
+    speeds = speeds/t_stamps_intervals[:, None] # convert speeds to mm/s
+
+    #%
+
+    speed_thresh = 0.5
+    bouts = speeds > speed_thresh # binary array where 1 is when the fish is "in a bout". This could be used to find bouts starts and ends, for example use difference of this. 
+
+
+    bout_st_end = np.diff(bouts.astype(int), axis=0)
+    bout_starts = []
+    bout_ends = []
+
+        
+    for i in range(bouts.shape[1]):
+        bout_starts.append(np.where(bout_st_end[:, i] > 0)[0])
+        bout_ends.append(np.where(bout_st_end[:, i] < 0)[0])
+
+    #%
+    print("Speeds calculated")
+
+
+
+    speed_thresh_start = 1
+    speed_thresh_end = 0.5
+
+
+    bouts_start = speeds > speed_thresh_start
+    below_end = speeds < speed_thresh_end  # (n_frames, n_fish)
+
+    bout_st_array = np.diff(bouts_start.astype(int), axis=0)
+
+    min_gap = 2  # frames; merge bouts if next start is within this many frames of previous end
+
+    bout_starts = []
+    bout_ends = []
+
+    for i in range(speeds.shape[1]):
+        # Rising edges = bout starts
+        starts = np.where(bout_st_array[:, i] > 0)[0] + 1
+
+        # Candidate ends
+        end_candidates = np.where(below_end[:, i])[0]
+
+        # Match each start to the first end after it
+        ends_idx = np.searchsorted(end_candidates, starts)
+        valid = ends_idx < len(end_candidates)
+
+        starts = starts[valid]
+        ends   = end_candidates[ends_idx[valid]]
+
+        # --- enforce 1-to-1 sequential bouts ---
+        matched_starts = []
+        matched_ends = []
+        last_end = -1
+
+        for st, en in zip(starts, ends):
+            if st > last_end:   # only accept if bout has closed
+                matched_starts.append(st)
+                matched_ends.append(en)
+                last_end = en
+
+        # --- enforce minimum inter-bout gap (merge close bouts) ---
+        merged_starts = []
+        merged_ends = []
+        for st, en in zip(matched_starts, matched_ends):
+            if len(merged_starts) == 0:
+                merged_starts.append(st)
+                merged_ends.append(en)
+            else:
+                if st - merged_ends[-1] <= min_gap:
+                    # merge with previous bout: extend its end
+                    merged_ends[-1] = en
+                else:
+                    # start a new bout
+                    merged_starts.append(st)
+                    merged_ends.append(en)
+
+        bout_starts.append(np.array(merged_starts, dtype=int))
+        bout_ends.append(np.array(merged_ends, dtype=int))
+
+    ## plot some data with bout annotations for testing thresholds
+
+    # for fish in rois[0][0][:10]:
+
+    #     bout_min_len = 0.05 # minimum bout length in seconds
+    #     bout_min_frames = bout_min_len * frame_rate_tracking
+
+    #     if bout_ends[fish][0] < bout_starts[fish][0]:
+    #         bout_ends[fish] = bout_ends[fish][1:]
+    #     if bout_starts[fish][-1] > bout_ends[fish][-1]:
+    #         bout_starts[fish] = bout_starts[fish][:-1]
+
+    #     bout_len = bout_ends[fish] - bout_starts[fish]
+
+    #     # plt.hist(ISI, bins=100)
+    #     #%
+    #     st = 580539
+    #     end = st + 1000
+
+    #     bouts_st_fish = np.zeros(speeds[:, fish].shape)
+    #     bouts_end_fish = np.zeros(speeds[:, fish].shape)
+    #     bouts_st_fish[:] = np.nan
+    #     bouts_end_fish[:] = np.nan
+    #     bouts_st_fish[bout_starts[fish]] = 1
+    #     bouts_end_fish[bout_ends[fish]] = 1
+    #     plt.figure(figsize=(30, 10))
+    #     plt.title('Fish ' + str(fish) + '; sav_size ' + str(sav_sz_sec) + ' seconds')
+    #     plt.plot(t_stamps_sec[st:end], speeds[st:end, fish])
+    #     plt.plot(t_stamps_sec[st:end], bouts_st_fish[st:end]*speed_thresh_start, 'og', markersize=10)
+    #     plt.plot(t_stamps_sec[st:end], bouts_end_fish[st:end]*speed_thresh_end, 'or', markersize=10)
+    #     plt.ylim([0, 10])
+    #     plt.show()
+
+    #%
+
+    all_bouts = []
+
+    for fish_id in range(speeds.shape[1]):
+        starts = bout_starts[fish_id]
+        ends   = bout_ends[fish_id]
+
+        for st, en in zip(starts, ends):
+            # displacement = integral of speed * dt
+            displacement = np.sum(speeds[st:en, fish_id] * t_stamps_intervals[st:en])
+
+            # duration in seconds
+            duration = np.sum(t_stamps_intervals[st:en])
+
+            # peak speed in this bout
+            peak_speed = np.max(speeds[st:en+1, fish_id])
+
+            all_bouts.append({
+                "fish_id": fish_id,
+                "bout_start_frame": st,
+                "bout_end_frame": en,
+                "bout_start_time": t_stamps[st],
+                "bout_end_time": t_stamps[en],
+                "duration": duration,
+                "displacement": displacement,
+                "peak_speed": peak_speed,
+            })
+
+    bout_df = pd.DataFrame(all_bouts)
+
+    #%
+
+    bout_df["plate"] = bout_df["bout_start_frame"].map(lambda f: frames_plate[f])
+
+
+
+
+    cross_plate = frames_plate[bout_df["bout_start_frame"].values] != frames_plate[bout_df["bout_end_frame"].values]
+
+    if cross_plate.any():
+        print("Warning: some bouts span across plates! Dropping them.")
+        bout_df = bout_df.loc[~cross_plate].copy()
+
+
+    plate_filename = plate_tracking_data[plate]
+    if not plate_filename.find('_plate_0') == -1:
+        bout_df_plate = bout_df[bout_df["plate"] == 0].copy()
+    else:
+        bout_df_plate = bout_df[bout_df["plate"] == 1].copy()
+
+
+
+    #%
+
+    for plate in range(n_plates):
+        # --- Step 3: assign group labels ---
+        fish_to_group = {}
+        for group_name, fish_inds in zip(names[plate], rois[plate]):
+            # fish_inds could be list or array, possibly nested
+            for f in fish_inds:  
+                # f might still be an array if nested, so flatten manually
+                if isinstance(f, (list, np.ndarray)):
+                    for ff in f:
+                        fish_to_group[int(ff)] = group_name
+                else:
+                    fish_to_group[int(f)] = group_name
+
+        # Assign group names to your DataFrame
+        bout_df_plate["group"] = bout_df_plate["fish_id"].map(fish_to_group)
+        #%
+
+
+        intervals = plot_frame_intervals[plate]
+        intervals = [(int(s), int(e)) for s, e in intervals]
+
+        def assign_period(frame):
+            for pi, (start, end) in enumerate(intervals):
+                if start <= frame <= end:
+                    return pi
+            return None
+
+        bout_df_plate["period"] = bout_df_plate["bout_start_frame"].apply(assign_period)
+
+
+        #%
+        # --- Step 6: compute per-fish averages and totals per period ---
+        per_fish = (
+            bout_df_plate.groupby(["fish_id", "group", "period"])
+            .agg(
+                mean_disp=("displacement", "mean"),
+                median_disp=("displacement", "median"),
+                total_disp=("displacement", "sum"),
+                mean_duration=("duration", "mean"),
+                median_duration=("duration", "median"),
+                mean_peak=("peak_speed", "mean"),
+                median_peak=("peak_speed", "median"),
+                n_bouts=("fish_id", "count")
+            )
+            .reset_index()
+        )
+
+
+        # Map period index to name
+        period_names_map = {i: name for i, name in enumerate(plot_frame_interval_names)}
+        per_fish["period_name"] = per_fish["period"].map(period_names_map)
+
+        # --- Compute period length using t_stamps vector ---
+        period_lengths = {}
+        for i, (start, end) in enumerate(intervals):
+            t_start = t_stamps[start]
+            t_end   = t_stamps[end]
+            period_lengths[i] = t_end - t_start
+
+            
+        # Map period length to each fish
+        per_fish["period_length_s"] = per_fish["period"].map(period_lengths)
+
+        # Calculate bout frequency in Hz
+        per_fish["bout_freq_hz"] = per_fish["n_bouts"] / per_fish["period_length_s"]
+
+        # save extracted bouts data to csv files
+
+        # Add experiment metadata
+        exp_id = os.path.basename(exp_dir)
+        bout_df_plate["experiment"] = exp_id
+        per_fish["experiment"] = exp_id
+
+        bout_df_plate["plate"] = plate
+        per_fish["plate"] = plate
+
+        # Save per-plate data
+        bout_file = os.path.join(graph_dir, f"bout_df_plate{plate}.csv")
+        perfish_file = os.path.join(graph_dir, f"per_fish_plate{plate}.csv")
+
+
+        # Optionally also save CSVs
+        bout_df_plate.to_csv(bout_file, index=False)
+        per_fish.to_csv(perfish_file, index=False)
+
+
+        # --- Group order and palette ---
+        group_order = names[plate]  # list of group names for this plate
+
+        p = gb.generate_palette(size=len(names[plate])+2) 
+        col_vec = gb.convert_palette_to_rgb(p) 
+        col_vec = np.array(col_vec[1:], dtype=float)/255
+        group_palette = {g: tuple(col_vec[i]) for i, g in enumerate(group_order)}
+
+
+        # # --- Generate figures for all selected periods ---
+        for period in plot_frame_interval_names:
+            stripplot_period_full_grid(per_fish, period)
+
+
+
+        # global_y_lims = {}
+        # for stat, _ in stats_to_plot:
+        #     global_y_lims[stat] = (0, per_fish[stat].max())
+        #     print(f"{stat}: y-lim = {global_y_lims[stat]}")
+
+
+
+
+
+#%% Load datasets across multiple experiments and combine
+
+def stripplot_period_full_grid(data, period_name, global_y_lims=None, use_median = True):
+
+        # --- Statistics to plot ---
+    if use_median:
+        stats_to_plot = [
+            ("median_disp", "Median displacement per bout (mm)"),
+            ("median_duration", "Median bout duration (s)"),
+            ("median_peak", "Median peak bout speed (mm/s)"),
+            ("total_disp", "Total displacement (mm)"),  # total is always a sum
+            # ("n_bouts", "Number of bouts"),
+            ("bout_freq_hz", "Bout frequency (Hz)")
+        ]
+    else:
+        stats_to_plot = [
+            ("mean_disp", "Mean displacement per bout"),
+            ("mean_duration", "Mean bout duration (s)"),
+            ("mean_peak", "Mean peak speed"),
+            ("total_disp", "Total displacement"),
+            # ("n_bouts", "Number of bouts"),
+            ("bout_freq_hz", "Bout frequency (Hz)")
+        ]
+    data = data[data["period_name"] == period_name].copy()
+    
+    # --- Prepare text file for stats ---
+    safe_period_name = period_name.replace(" ", "_")
+    stats_filename = f"{graph_dir}/MovementStats_Plate{plate}_{safe_period_name}.txt"
+    stats_file = open(stats_filename, 'w')
+    stats_file.write(f"Statistical results for {period_name}, Plate {plate}\n\n")
+    
+    n_stats = len(stats_to_plot)
+    n_cols = 2
+    n_rows = 3
+    fig, axes = plt.subplots(n_rows, n_cols, figsize=(12, 18))
+    axes = axes.flatten()
+    
+    for ax, (stat, ylabel) in zip(axes, stats_to_plot):
+        # Kruskal-Wallis test
+        groups_data = [data[data["group"] == g][stat].values for g in group_order]
+        kw_stat, kw_p = kruskal(*groups_data)
+        
+            # --- Compute N per group ---
+        group_counts = data.groupby("group").size().reindex(group_order).fillna(0).astype(int)
+        group_labels_with_n = [f"{g}\n(n={group_counts[g]})" for g in group_order]
+
+        # --- Write KW result to text file ---
+        stats_file.write(f"{stat}:\n")
+        stats_file.write(f"  Kruskal-Wallis H = {kw_stat:.3f}, p = {kw_p:.4f}\n")
+        
+        # --- Write group means to text file ---
+        medians = data.groupby("group")[stat].median()
+        stats_file.write("  Group medians:\n")
+        for g in group_order:
+            stats_file.write(f"    {g}: {medians[g]:.3f}\n")
+        
+        # Stripplot
+        sns.stripplot(
+            x="group",
+            y=stat,
+            data=data,
+            order=group_order,
+            palette=group_palette,
+            jitter=0.2,
+            linewidth=1,  # Marker edge width
+            alpha=0.3,
+            marker="o",
+            size=8,
+            zorder = 5,
+            ax=ax
+        )
+
+        sns.violinplot(
+            x="group",
+            y=stat,
+            data=data,
+            order=group_order,
+            palette=group_palette,
+            split=False,  # Do not split the violin plot
+            inner=None,  # Remove the fill color
+            linewidth=1,  # Set the line width
+            alpha=0.5,
+            cut=0,  # Do not extend the violin plot beyond the data range
+            zorder = 3,
+            ax=ax
+        )   
+
+        sns.pointplot(
+            x="group",
+            y=stat,
+            data=data,
+            order=group_order,
+            palette=group_palette,
+            estimator=np.median,
+            color=(0.5, 0.5, 0.5),
+            markeredgewidth=1,
+            markeredgecolor="black",
+            markerfacecolor="white",
+            alpha=0.9,
+            errorbar=None,
+            markers="o",  # Marker style
+            linestyles="",  # No line connecting the points        # Scale the size of the markers
+            linewidth=1,
+            markersize=15,  # Increase the size of the markers
+            zorder=10,  # Increase zorder to make it more prominent
+            ax=ax
+        )
+
+
+        
+        # # Overlay group medians
+        # for i, g in enumerate(group_order):
+        #     y = medians[g]
+        #     ax.hlines(y=y, xmin=i-0.3, xmax=i+0.3, color=group_palette[g], linewidth=7)
+        
+        # Pairwise significance annotations
+        if kw_p < 0.05:
+            n_comparisons = len(group_order) * (len(group_order)-1) / 2
+            sig_annotations = []
+            for g1, g2 in itertools.combinations(group_order, 2):
+                u_stat, p_val = mannwhitneyu(
+                    data[data["group"]==g1][stat], 
+                    data[data["group"]==g2][stat],
+                    alternative='two-sided'
+                )
+                p_val_corr = min(p_val * n_comparisons, 1.0)
+                if p_val_corr < 0.05:
+                    if p_val_corr < 0.001:
+                        p_text = "p<0.001"
+                    elif p_val_corr < 0.01:
+                        p_text = "p<0.01"
+                    else:
+                        p_text = "p<0.05"
+                    sig_annotations.append((g1, g2, p_text))
+                    # Write pairwise result to text file
+                    stats_file.write("         Pairwise Mann Whitney Sig. Results: \n")
+                    stats_file.write(f"    {g1} vs {g2}: p = {p_val_corr}\n")
+            # Annotate significance on plot
+            y_max = data[stat].max()
+            y_offset = y_max * 0.1
+            for j, (g1, g2, p_text) in enumerate(sig_annotations):
+                x1 = group_order.index(g1)
+                x2 = group_order.index(g2)
+                y = y_max + y_offset * (j+1)
+                ax.plot([x1, x1, x2, x2], [y, y+y_offset/4, y+y_offset/4, y], color='black')
+                ax.text((x1+x2)/2, y+y_offset/4, p_text, ha='center', va='bottom', fontsize=10)
+        
+        # Formatting
+        if global_y_lims and stat in global_y_lims:
+            ax.set_ylim(global_y_lims[stat])
+        else:
+            ax.set_ylim(bottom=0)
+        ax.set_xticks(range(len(group_order)))
+        ax.set_xticklabels(group_labels_with_n, fontsize=14, rotation=45, ha='right')
+        ax.set_xlabel("")
+        ax.set_yticks(ax.get_yticks())
+        ax.set_yticklabels([f"{y:.2f}" for y in ax.get_yticks()], fontsize=10)
+        ax.set_ylabel(ylabel, fontsize=16)
+        # ax.set_title(stat.replace('_',' ').title(), fontsize=16)
+
+    
+    # Hide unused subplots
+    for ax in axes[n_stats:]:
+        ax.axis('off')
+    
+    fig.suptitle(f"{period_name}", fontsize=20)
+    plt.tight_layout(rect=[0, 0, 1, 0.95])
+    
+    # Save figure
+    fig_title = f"Plate{plate}_{safe_period_name}"
+    plt.savefig(f"{graph_dir}/MovementGraphs_{fig_title}.png")
+    plt.savefig(f"{graph_dir}/MovementGraphs_{fig_title}.svg")
+    plt.show()
+    
+    # Close stats file
+    stats_file.close()
+
+
+
+# Collect CSV files from all experiment directories
+per_fish_files = []
+bout_files = []
+
+for d in exp_dirs:
+    per_fish_files.extend(glob.glob(os.path.join(d, "**", "per_fish_plate*.csv"), recursive=True))
+    bout_files.extend(glob.glob(os.path.join(d, "**", "bout_df_plate*.csv"), recursive=True))
+
+print("Found per_fish files:", per_fish_files)
+print("Found bout files:", bout_files)
+
+# Load and concatenate (CSV instead of parquet)
+all_per_fish = pd.concat([pd.read_csv(f) for f in per_fish_files], ignore_index=True)
+all_bouts = pd.concat([pd.read_csv(f) for f in bout_files], ignore_index=True)
+
+graph_dir = os.path.join(os.path.split(d)[0], 'boutsAnalysis_combinedexperiments_graphs')
 
 if not os.path.exists(graph_dir):
     os.mkdir(graph_dir)
-    
 
-camera_rez = 180/2290 # camera resolution in mm/pixel
-    
-exp_data_file =glob.glob(exp_dir+'/exp_data.pkl')[0]
-online_tracking_file = glob.glob(exp_dir+'/online_tracking.hdf5')[0]
-plate_tracking_data = glob.glob(exp_dir+'/*trackdata_twoMeasures.pkl')
-n_plates = len(plate_tracking_data)
-#%
-with open(exp_data_file, 'rb') as f:
-    exp_data = pickle.load(f)
-
-
-#%
-online_tracking = h5py.File(online_tracking_file)
-print(list(online_tracking.keys()))
-#%
-# load datasets from hdf5 file
-frames_plate = np.array(online_tracking['plate']) # 0 or 1, depending on if its tracking plate 0 or plate 1
-t_stamps = np.array(online_tracking['time_stamp']) # clock time of the experiment
-t_stamps_intervals = np.diff(t_stamps) # time intervals between frames
-t_stamps_hrs = (t_stamps-t_stamps[0])/(60*60)
-t_stamps_min = t_stamps_hrs*60
-t_stamps_sec = t_stamps_min*60
-
-frame_rate_tracking = 1/np.mean(np.diff(t_stamps)) # frame rate of the tracking data
-frame_idex = np.array(online_tracking['frame_index']) # frame index of the experiment
-camera_fps = np.mean(np.diff(frame_idex))/np.mean(np.diff(t_stamps)) # caluclating the FPS of that experiment
+# # --- Generate figures for all selected periods ---
+for period in plot_frame_interval_names:
+    stripplot_period_full_grid(all_per_fish, period)
 
 
 
-coords = online_tracking['tail_coords'] # tracking coordinates. 4d array: order = [timepoints, x/y, fish, tail coordinate]
-head_coords = coords[:,:,:,0]
-print("DATA loaded")
-
-
-
-plates = np.arange(n_plates)
-
-gb = Glasbey()
-
-
-# Old pickles may reference pandas.core.indexes.numeric.Int64Index
-numeric_mod = types.ModuleType("pandas.core.indexes.numeric")
-numeric_mod.Int64Index = pd.Index  # alias to modern Index
-sys.modules["pandas.core.indexes.numeric"] = numeric_mod
-
-
-rois = []
-names = []
-stim_frame_inds = []
-stim_given = []
-
-curv_events = []
-for plate in range(n_plates):
-    with open(plate_tracking_data[plate], 'rb') as f:
-        tracking_data = pickle.load(f)
-        names.append(tracking_data['names'])
-        rois.append(tracking_data['rois'])
-        stim_frame_inds.append(tracking_data['TiffFrameInds'])
-        stim_given.append( tracking_data['stim_given'])
-        curv_events.append(tracking_data['MaxCurvatureOBendEvents'])
-
-
-# note that this logic assumes the standard "big rig" habituation assay protocol
-plot_frame_interval_names = [
-    'Acclimitaization Period',
-    'Block 1',
-    'Block 2',
-    'Block 3',
-    'Block 4',
-    'Free Swimming',
-    'Taps',
-    'Motion stimulus',
-    'Block 5',
-] 
-
-plot_frame_intervals = []
-for plate in range(n_plates):
-    plot_frame_intervals.append([
-        (np.where(frames_plate == plate)[0][0], np.where(frame_idex >= stim_frame_inds[plate][0])[0][0]), # acclim
-        (np.where(frame_idex >= stim_frame_inds[plate][0]- camera_fps*60)[0][0], np.where(frame_idex >= stim_frame_inds[plate][59] +  camera_fps*60)[0][0]),
-        (np.where(frame_idex >= stim_frame_inds[plate][60] - camera_fps*60)[0][0], np.where(frame_idex >= stim_frame_inds[plate][119] +  camera_fps*60)[0][0]),
-        (np.where(frame_idex >= stim_frame_inds[plate][120] - camera_fps*60)[0][0], np.where(frame_idex >= stim_frame_inds[plate][179] +  camera_fps*60)[0][0]),
-        (np.where(frame_idex >= stim_frame_inds[plate][180] - camera_fps*60)[0][0], np.where(frame_idex >= stim_frame_inds[plate][239] +  camera_fps*60)[0][0]),
-        (np.where(frame_idex >= stim_frame_inds[plate][240] - camera_fps*60*25)[0][0], np.where(frame_idex >= stim_frame_inds[plate][240] - camera_fps)[0][0]),
-        (np.where(frame_idex >= stim_frame_inds[plate][240] - camera_fps*60)[0][0], np.where(frame_idex >= stim_frame_inds[plate][269] +  camera_fps*60)[0][0]),
-        (np.where(frame_idex >= stim_frame_inds[plate][270])[0][0], np.where(frame_idex >= stim_frame_inds[plate][270] +  camera_fps*60*59)[0][0]),
-        (np.where(frame_idex >= stim_frame_inds[plate][271] - camera_fps*60)[0][0], np.where(frame_idex >= stim_frame_inds[plate][330] +  camera_fps*1)[0][0]),
-    ])
-
-
-
-
-plt.rcParams.update({
-    'font.size': 30,           # Increase overall font size
-    'axes.titlesize': 36,      # Title font size
-    'axes.labelsize': 32,      # Axis label font size
-    'xtick.labelsize': 28,     # X tick label font size
-    'ytick.labelsize': 28,     # Y tick label font size
-    'legend.fontsize': 28      # Legend font size
-})
-
-sav_sz_sec = 0.3  # sav_sz_sec is the size of the window to smooth over in seconds
-sav_sz = np.round(frame_rate_tracking*sav_sz_sec).astype(int) 
-speeds = FishTrack.get_speeds(head_coords, sav_sz=sav_sz, sav_ord=1, speed_thresh=4) 
-speeds = speeds*camera_rez # convert speeds to mm/frame
-
-speeds = speeds/t_stamps_intervals[:, None] # convert speeds to mm/s
-
-#%
-
-speed_thresh = 0.5
-bouts = speeds > speed_thresh # binary array where 1 is when the fish is "in a bout". This could be used to find bouts starts and ends, for example use difference of this. 
-
-
-bout_st_end = np.diff(bouts.astype(int), axis=0)
-bout_starts = []
-bout_ends = []
-
-    
-for i in range(bouts.shape[1]):
-    bout_starts.append(np.where(bout_st_end[:, i] > 0)[0])
-    bout_ends.append(np.where(bout_st_end[:, i] < 0)[0])
-
-#%
-print("Speeds calculated")
 #%%
 
-
-speed_thresh_start = 1
-speed_thresh_end = 0.5
-
-
-bouts_start = speeds > speed_thresh_start
-below_end = speeds < speed_thresh_end  # (n_frames, n_fish)
-
-bout_st_array = np.diff(bouts_start.astype(int), axis=0)
-
-min_gap = 2  # frames; merge bouts if next start is within this many frames of previous end
-
-bout_starts = []
-bout_ends = []
-
-for i in range(speeds.shape[1]):
-    # Rising edges = bout starts
-    starts = np.where(bout_st_array[:, i] > 0)[0] + 1
-
-    # Candidate ends
-    end_candidates = np.where(below_end[:, i])[0]
-
-    # Match each start to the first end after it
-    ends_idx = np.searchsorted(end_candidates, starts)
-    valid = ends_idx < len(end_candidates)
-
-    starts = starts[valid]
-    ends   = end_candidates[ends_idx[valid]]
-
-    # --- enforce 1-to-1 sequential bouts ---
-    matched_starts = []
-    matched_ends = []
-    last_end = -1
-
-    for st, en in zip(starts, ends):
-        if st > last_end:   # only accept if bout has closed
-            matched_starts.append(st)
-            matched_ends.append(en)
-            last_end = en
-
-    # --- enforce minimum inter-bout gap (merge close bouts) ---
-    merged_starts = []
-    merged_ends = []
-    for st, en in zip(matched_starts, matched_ends):
-        if len(merged_starts) == 0:
-            merged_starts.append(st)
-            merged_ends.append(en)
-        else:
-            if st - merged_ends[-1] <= min_gap:
-                # merge with previous bout: extend its end
-                merged_ends[-1] = en
-            else:
-                # start a new bout
-                merged_starts.append(st)
-                merged_ends.append(en)
-
-    bout_starts.append(np.array(merged_starts, dtype=int))
-    bout_ends.append(np.array(merged_ends, dtype=int))
-
-## plot some data with bout annotations for testing thresholds
-
-# for fish in rois[0][0][:10]:
-
-#     bout_min_len = 0.05 # minimum bout length in seconds
-#     bout_min_frames = bout_min_len * frame_rate_tracking
-
-#     if bout_ends[fish][0] < bout_starts[fish][0]:
-#         bout_ends[fish] = bout_ends[fish][1:]
-#     if bout_starts[fish][-1] > bout_ends[fish][-1]:
-#         bout_starts[fish] = bout_starts[fish][:-1]
-
-#     bout_len = bout_ends[fish] - bout_starts[fish]
-
-#     # plt.hist(ISI, bins=100)
-#     #%
-#     st = 580539
-#     end = st + 1000
-
-#     bouts_st_fish = np.zeros(speeds[:, fish].shape)
-#     bouts_end_fish = np.zeros(speeds[:, fish].shape)
-#     bouts_st_fish[:] = np.nan
-#     bouts_end_fish[:] = np.nan
-#     bouts_st_fish[bout_starts[fish]] = 1
-#     bouts_end_fish[bout_ends[fish]] = 1
-#     plt.figure(figsize=(30, 10))
-#     plt.title('Fish ' + str(fish) + '; sav_size ' + str(sav_sz_sec) + ' seconds')
-#     plt.plot(t_stamps_sec[st:end], speeds[st:end, fish])
-#     plt.plot(t_stamps_sec[st:end], bouts_st_fish[st:end]*speed_thresh_start, 'og', markersize=10)
-#     plt.plot(t_stamps_sec[st:end], bouts_end_fish[st:end]*speed_thresh_end, 'or', markersize=10)
-#     plt.ylim([0, 10])
-#     plt.show()
-
-#%
-
-all_bouts = []
-
-for fish_id in range(speeds.shape[1]):
-    starts = bout_starts[fish_id]
-    ends   = bout_ends[fish_id]
-
-    for st, en in zip(starts, ends):
-        # displacement = integral of speed * dt
-        displacement = np.sum(speeds[st:en, fish_id] * t_stamps_intervals[st:en])
-
-        # duration in seconds
-        duration = np.sum(t_stamps_intervals[st:en])
-
-        # peak speed in this bout
-        peak_speed = np.max(speeds[st:en+1, fish_id])
-
-        all_bouts.append({
-            "fish_id": fish_id,
-            "bout_start_frame": st,
-            "bout_end_frame": en,
-            "bout_start_time": t_stamps[st],
-            "bout_end_time": t_stamps[en],
-            "duration": duration,
-            "displacement": displacement,
-            "peak_speed": peak_speed,
-        })
-
-bout_df = pd.DataFrame(all_bouts)
-
-#%
-
-bout_df["plate"] = bout_df["bout_start_frame"].map(lambda f: frames_plate[f])
-
-
-
-
-cross_plate = frames_plate[bout_df["bout_start_frame"].values] != frames_plate[bout_df["bout_end_frame"].values]
-
-if cross_plate.any():
-    print("Warning: some bouts span across plates! Dropping them.")
-    bout_df = bout_df.loc[~cross_plate].copy()
-
-
-plate_filename = plate_tracking_data[plate]
-if not plate_filename.find('_plate_0') == -1:
-    bout_df_plate = bout_df[bout_df["plate"] == 0].copy()
-else:
-    bout_df_plate = bout_df[bout_df["plate"] == 1].copy()
-
-
-
-#%
-
-for plate in range(n_plates):
-    # --- Step 3: assign group labels ---
-    fish_to_group = {}
-    for group_name, fish_inds in zip(names[plate], rois[plate]):
-        # fish_inds could be list or array, possibly nested
-        for f in fish_inds:  
-            # f might still be an array if nested, so flatten manually
-            if isinstance(f, (list, np.ndarray)):
-                for ff in f:
-                    fish_to_group[int(ff)] = group_name
-            else:
-                fish_to_group[int(f)] = group_name
-
-    # Assign group names to your DataFrame
-    bout_df_plate["group"] = bout_df_plate["fish_id"].map(fish_to_group)
-    #%
-
-
-    intervals = plot_frame_intervals[plate]
-    intervals = [(int(s), int(e)) for s, e in intervals]
-
-    def assign_period(frame):
-        for pi, (start, end) in enumerate(intervals):
-            if start <= frame <= end:
-                return pi
-        return None
-
-    bout_df_plate["period"] = bout_df_plate["bout_start_frame"].apply(assign_period)
-
-
-    #%
-    # --- Step 6: compute per-fish averages and totals per period ---
-    per_fish = (
-        bout_df_plate.groupby(["fish_id", "group", "period"])
-        .agg(
-            mean_disp=("displacement", "mean"),
-            median_disp=("displacement", "median"),
-            total_disp=("displacement", "sum"),
-            mean_duration=("duration", "mean"),
-            median_duration=("duration", "median"),
-            mean_peak=("peak_speed", "mean"),
-            median_peak=("peak_speed", "median"),
-            n_bouts=("fish_id", "count")
-        )
-        .reset_index()
-    )
-
-
-    # Map period index to name
-    period_names_map = {i: name for i, name in enumerate(plot_frame_interval_names)}
-    per_fish["period_name"] = per_fish["period"].map(period_names_map)
-
-    # --- Compute period length using t_stamps vector ---
-    period_lengths = {}
-    for i, (start, end) in enumerate(intervals):
-        t_start = t_stamps[start]
-        t_end   = t_stamps[end]
-        period_lengths[i] = t_end - t_start
-
-        
-    # Map period length to each fish
-    per_fish["period_length_s"] = per_fish["period"].map(period_lengths)
-
-    # Calculate bout frequency in Hz
-    per_fish["bout_freq_hz"] = per_fish["n_bouts"] / per_fish["period_length_s"]
-
-    # --- Group order and palette ---
-    group_order = names[plate]  # list of group names for this plate
-
-    p = gb.generate_palette(size=len(names[plate])+2) 
-    col_vec = gb.convert_palette_to_rgb(p) 
-    col_vec = np.array(col_vec[1:], dtype=float)/255
-    group_palette = {g: tuple(col_vec[i]) for i, g in enumerate(group_order)}
-
-
-
-    def stripplot_period_full_grid(period_name, global_y_lims=None, use_median = True):
-
-            # --- Statistics to plot ---
-        if use_median:
-            stats_to_plot = [
-                ("median_disp", "Median displacement per bout (mm)"),
-                ("median_duration", "Median bout duration (s)"),
-                ("median_peak", "Median peak bout speed (mm/s)"),
-                ("total_disp", "Total displacement (mm)"),  # total is always a sum
-                # ("n_bouts", "Number of bouts"),
-                ("bout_freq_hz", "Bout frequency (Hz)")
-            ]
-        else:
-            stats_to_plot = [
-                ("mean_disp", "Mean displacement per bout"),
-                ("mean_duration", "Mean bout duration (s)"),
-                ("mean_peak", "Mean peak speed"),
-                ("total_disp", "Total displacement"),
-                # ("n_bouts", "Number of bouts"),
-                ("bout_freq_hz", "Bout frequency (Hz)")
-            ]
-        data = per_fish[per_fish["period_name"] == period_name].copy()
-        
-        # --- Prepare text file for stats ---
-        safe_period_name = period_name.replace(" ", "_")
-        stats_filename = f"{graph_dir}/MovementStats_Plate{plate}_{safe_period_name}.txt"
-        stats_file = open(stats_filename, 'w')
-        stats_file.write(f"Statistical results for {period_name}, Plate {plate}\n\n")
-        
-        n_stats = len(stats_to_plot)
-        n_cols = 2
-        n_rows = 3
-        fig, axes = plt.subplots(n_rows, n_cols, figsize=(12, 18))
-        axes = axes.flatten()
-        
-        for ax, (stat, ylabel) in zip(axes, stats_to_plot):
-            # Kruskal-Wallis test
-            groups_data = [data[data["group"] == g][stat].values for g in group_order]
-            kw_stat, kw_p = kruskal(*groups_data)
-            
-            # --- Write KW result to text file ---
-            stats_file.write(f"{stat}:\n")
-            stats_file.write(f"  Kruskal-Wallis H = {kw_stat:.3f}, p = {kw_p:.4f}\n")
-            
-            # --- Write group means to text file ---
-            medians = data.groupby("group")[stat].median()
-            stats_file.write("  Group medians:\n")
-            for g in group_order:
-                stats_file.write(f"    {g}: {medians[g]:.3f}\n")
-            
-            # Stripplot
-            sns.stripplot(
-                x="group",
-                y=stat,
-                data=data,
-                order=group_order,
-                palette=group_palette,
-                jitter=0.3,
-                alpha=0.7,
-                marker="o",
-                size=8,
-                ax=ax
-            )
-            
-            # Overlay group medians
-            for i, g in enumerate(group_order):
-                y = medians[g]
-                ax.hlines(y=y, xmin=i-0.3, xmax=i+0.3, color=group_palette[g], linewidth=7)
-            
-            # Pairwise significance annotations
-            if kw_p < 0.05:
-                n_comparisons = len(group_order) * (len(group_order)-1) / 2
-                sig_annotations = []
-                for g1, g2 in itertools.combinations(group_order, 2):
-                    u_stat, p_val = mannwhitneyu(
-                        data[data["group"]==g1][stat], 
-                        data[data["group"]==g2][stat],
-                        alternative='two-sided'
-                    )
-                    p_val_corr = min(p_val * n_comparisons, 1.0)
-                    if p_val_corr < 0.05:
-                        if p_val_corr < 0.001:
-                            p_text = "p<0.001"
-                        elif p_val_corr < 0.01:
-                            p_text = "p<0.01"
-                        else:
-                            p_text = "p<0.05"
-                        sig_annotations.append((g1, g2, p_text))
-                        # Write pairwise result to text file
-                        stats_file.write("         Pairwise Mann Whitney Sig. Results: \n")
-                        stats_file.write(f"    {g1} vs {g2}: p = {p_val_corr}\n")
-                # Annotate significance on plot
-                y_max = data[stat].max()
-                y_offset = y_max * 0.1
-                for j, (g1, g2, p_text) in enumerate(sig_annotations):
-                    x1 = group_order.index(g1)
-                    x2 = group_order.index(g2)
-                    y = y_max + y_offset * (j+1)
-                    ax.plot([x1, x1, x2, x2], [y, y+y_offset/4, y+y_offset/4, y], color='black')
-                    ax.text((x1+x2)/2, y+y_offset/4, p_text, ha='center', va='bottom', fontsize=10)
-            
-            # Formatting
-            if global_y_lims and stat in global_y_lims:
-                ax.set_ylim(global_y_lims[stat])
-            else:
-                ax.set_ylim(bottom=0)
-            ax.set_xticks(range(len(group_order)))
-            ax.set_xticklabels(group_order, fontsize=14, rotation=45, ha='right')
-            ax.set_xlabel("")
-            ax.set_yticks(ax.get_yticks())
-            ax.set_yticklabels([f"{y:.2f}" for y in ax.get_yticks()], fontsize=10)
-            ax.set_ylabel(ylabel, fontsize=16)
-            # ax.set_title(stat.replace('_',' ').title(), fontsize=16)
-
-        
-        # Hide unused subplots
-        for ax in axes[n_stats:]:
-            ax.axis('off')
-        
-        fig.suptitle(f"{period_name}", fontsize=20)
-        plt.tight_layout(rect=[0, 0, 1, 0.95])
-        
-        # Save figure
-        fig_title = f"Plate{plate}_{safe_period_name}"
-        plt.savefig(f"{graph_dir}/MovementGraphs_{fig_title}.png")
-        plt.savefig(f"{graph_dir}/MovementGraphs_{fig_title}.svg")
-        plt.show()
-        
-        # Close stats file
-        stats_file.close()
-
-
-    # # --- Generate figures for all selected periods ---
-    for period in plot_frame_interval_names:
-        stripplot_period_full_grid(period)
-
-
-
-    # global_y_lims = {}
-    # for stat, _ in stats_to_plot:
-    #     global_y_lims[stat] = (0, per_fish[stat].max())
-    #     print(f"{stat}: y-lim = {global_y_lims[stat]}")
-
-
-
-
-#%% 
-# analysis of aligned bouts
+# visual analysis of aligned bouts
 
 from scipy.ndimage import median_filter
 
@@ -636,6 +871,3 @@ plt.tight_layout()
 plt.savefig(os.path.join(graph_dir, f"aligned_bouts_plate{plate}_all_periods.png"), dpi=300)
 plt.savefig(os.path.join(graph_dir, f"aligned_bouts_plate{plate}_all_periods.svg"), dpi=300)
 plt.show()
-
-#%%
-
