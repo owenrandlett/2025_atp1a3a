@@ -2,95 +2,155 @@
 # 
 #  make sure we are running in 'imaging' and not 'suite2p' environment, or else we do not have the right skimage packages. 
 
-import h5py, os, tqdm, nrrd, subprocess, glob, napari
+
 
 import matplotlib.pyplot as plt
 import numpy as np
+
+import h5py, os, tqdm, nrrd, subprocess, glob
 
 from pathlib import Path
 from skimage.registration import phase_cross_correlation
 from natsort import natsorted
 from scipy.ndimage import zoom, shift
 import tifffile
-saveRoot = os.path.realpath(r'/mnt/md0/suite2p_output/')
+from pynwb import NWBHDF5IO
 
-ref_brain = os.path.realpath(r'/media/BigBoy/ciqle/ref_brains/HuC-H2BRFP_ZBrain.nrrd')
-images_fld = os.path.realpath(r'/mnt/md0/registration/images')
-folders = natsorted(glob.glob(saveRoot + '/*033*_*fish*'))[-1::-1]
-folders = folders+ natsorted(glob.glob(saveRoot + '/*_*fish*'))[-1::-1]
+saveRoot = os.path.realpath(r'/media/FastDrive/atp1a3a_data/')
+
+ref_brain = os.path.realpath(r'/media/BigBoy/Common/atp1a3a_Data/Ca2ImagingData/ref_brain/HuC-H2BRFP_ZBrain_CROP_Telen.nrrd')
+images_fld = os.path.realpath(r'/media/FastDrive/atp1a3a_data/registration/images')
+folders = natsorted(glob.glob(saveRoot + '/*_func-000'))
+
 print(folders)
 
 #%
-def determine_z_planes(IM_anat, f_h5, folder, zoom_factor = 0.25, n_blocks = 5):
+def determine_z_planes(IM_anat, nwb, folder, zoom_factor=0.25, n_blocks=5):
+    """
+    Determine z-plane alignment using anatomical stack and functional imaging data stored in NWB.
+    
+    Parameters
+    ----------
+    IM_anat : np.ndarray
+        3D anatomical stack (x, y, z)
+    nwb : pynwb.file.NWBFile
+        NWB object already opened
+    folder : str
+        Path where results should be saved
+    zoom_factor : float
+        Downsampling factor for registration
+    n_blocks : int
+        Number of temporal blocks to split data into
+    """
+    
+    # --- Preprocess anatomy stack ---
     n_planes_anat = IM_anat.T.shape[0]
-    pre_reg_zoom = zoom(IM_anat.T, [1, zoom_factor, zoom_factor])
-    dset = f_h5['data']
-    n_frames, n_planes, height, width = dset.shape
-    n_blocks = 5
-    window_size = np.floor(n_frames/n_blocks).astype(int)
-    skip_size = np.floor(window_size/50).astype(int)
+    pre_reg_zoom = zoom(IM_anat.T, [1, zoom_factor, zoom_factor])  # (z, y, x)
+    
+    # --- Get available acquisitions (each one is a plane) ---
+    plane_names = sorted(nwb.acquisition.keys(), key=lambda x: int(x.split()[-1]))
+    n_planes = len(plane_names)
+
+    # --- Peek at first plane to define dimensions ---
+    first_plane = nwb.acquisition[plane_names[0]]
+    n_frames, height, width = first_plane.data.shape
+    
+    window_size = int(np.floor(n_frames / n_blocks))
+    skip_size = max(1, int(np.floor(window_size / 50)))
+    
     shifts = np.zeros((n_planes, n_blocks, 3))
     
-    for plane in tqdm.trange(n_planes):
-        for block in range(n_blocks):
+    # --- Loop over planes ---
+    for p, pname in enumerate(tqdm.tqdm(plane_names, desc="Planes")):
+        series = nwb.acquisition[pname]
 
-            IM = dset[block*window_size:block*window_size+window_size:skip_size, plane, :, :]
-            IM = np.sum(IM, axis=0)
+        for block in range(n_blocks):
+            # Load a chunk of data lazily
+            IM = series.data[block*window_size : block*window_size + window_size : skip_size]
+            IM = np.sum(IM, axis=0)   # collapse over time
             IM = zoom(IM, zoom_factor)
             
             errors_blocks = np.zeros(n_planes_anat)
             shifts_blocks = np.zeros((n_planes_anat, 2))
+            
+            # Compare with all slices of anatomy
             for slice in range(n_planes_anat):
-                shifts_blocks[slice, :], errors_blocks[slice], phasediff = phase_cross_correlation(pre_reg_zoom[slice,:,:],IM, normalization=None)
+                shifts_blocks[slice, :], errors_blocks[slice], _ = phase_cross_correlation(
+                    pre_reg_zoom[slice,:,:], IM, normalization=None
+                )
+            
             best_arg = np.argmin(errors_blocks)
-            shifts[plane, block, 0] = best_arg
-            shifts[plane, block, 1:] = shifts_blocks[best_arg,:]
-    fig, ax = plt.subplots(2,1, figsize=(10,20))
-    x = window_size/2+np.arange(n_blocks)*window_size
-    ax[0].set_title(folder)
-    ax[0].plot(x, shifts[:, :,0].T)
-
-    ax[0].set_ylabel('z coordiante',fontsize=16)
-    ax[0].set_xlabel('frames',fontsize=16)
-
+            shifts[p, block, 0] = best_arg
+            shifts[p, block, 1:] = shifts_blocks[best_arg, :]
     
-    ax[1].plot(x, np.median(shifts[:,:,0]-np.median(shifts[:,0,0]), axis=0))
-    ax[1].set_ylabel('delta median \nz coordinate',fontsize=16)
-    ax[1].set_ylim(-14,14)
-    ax[1].set_xlabel('frames',fontsize=16)
-    ax[1].hlines([-3.5,0, 3.5], 0,x[-1], colors = ['r', 'k', 'r'], linestyle='dashed')
+    # --- Plot results ---
+    fig, ax = plt.subplots(2, 1, figsize=(10, 20))
+    x = window_size/2 + np.arange(n_blocks) * window_size
+    
+    ax[0].set_title(folder)
+    ax[0].plot(x, shifts[:, :, 0].T)
+    ax[0].set_ylabel('z coordinate', fontsize=16)
+    ax[0].set_xlabel('frames', fontsize=16)
+
+    ax[1].plot(x, np.median(shifts[:, :, 0] - np.median(shifts[:, 0, 0]), axis=0))
+    ax[1].set_ylabel('delta median \nz coordinate', fontsize=16)
+    ax[1].set_ylim(-14, 14)
+    ax[1].set_xlabel('frames', fontsize=16)
+    ax[1].hlines([-3.5, 0, 3.5], 0, x[-1], colors=['r', 'k', 'r'], linestyle='dashed')
+
     plt.savefig(os.path.join(folder, 'Z-position.svg'))
     plt.show()
 
+#%%
+for folder in tqdm.tqdm(folders):
+    print(os.path.split(folder)[-1])
+
+    #% analyze z shifts first for functional stack relative to anatomy stack, and output a plot of the z-plane, and prepare the anatomy stack for cmtk registration 
+
+    nwb_file = os.path.join(folder, '2p_Data_RAW.nwb')
+    anat_stack = os.path.join(folder, 'AnatStack.nrrd')
+    IM_anat, meta = nrrd.read(anat_stack)
+
+
+    try:
+        with NWBHDF5IO(nwb_file, 'r') as io:
+            nwb = io.read()
+
+            determine_z_planes(IM_anat, nwb, folder, zoom_factor=0.25, n_blocks=5)
+    except:
+        print('!!!!! nwb file missing or corrupted for ' + folder)
+
+
+
+    # Rearrange z stack to fit with z-brain dimension order for cmtk registration
+    IM_anat_rot = IM_anat + 1
+    IM_anat_rot[:,:,0:2] = 0
+    IM_anat_rot = IM_anat_rot[:,:,-1::-1]
+    IM_anat_rot = np.moveaxis(IM_anat_rot, [0,1], [1,0])
+
+    # Update metadata to match new array
+    meta_fixed = meta.copy()
+    meta_fixed['sizes'] = list(IM_anat_rot.shape)
+    if 'spacings' in meta_fixed:
+        meta_fixed['spacings'] = meta_fixed['spacings'][[1,0,2]]  # swap x,y spacing if needed
+
+    # Write out
+    anat_name = os.path.join(images_fld, os.path.split(folder)[1]+'_01.nrrd')
+    nrrd.write(anat_name, IM_anat_rot, meta_fixed)
+
+
+
+
 
 #%%
-#% analyze z shifts first for functional stack relative to anatomy stack, and output a plot of the z-plane, and prepare the anatomy stack for cmtk registration 
-for folder in folders:
-    anat_stack = os.path.join(folder, 'AnatStack.nrrd')
-    f_h5 = h5py.File(folder+r'/func_data.h5', 'r')
-    print(folder)
 
-    IM_anat, meta = nrrd.read(anat_stack)
-    determine_z_planes(IM_anat, f_h5, folder, zoom_factor = 0.5, n_blocks = 5)
-    f_h5.close()
-
-    ## rearrange the anatomy stack to fit with z-brain dimension order for cmtk registration
-
-    IM_anat_rot = IM_anat + 1 # add 1 so all imaged pixels are > 0 
-    IM_anat_rot[:,:,0:2] = 0 # remove data from first slices because of moving Z artifact
-    IM_anat_rot = IM_anat_rot[:,:,-1::-1] # reverse Z axis
-    IM_anat_rot = np.moveaxis(IM_anat_rot,[0,1], [1,0]) # flip x and y
-
-    # write nrrd of anatomy stack for CMTK registration, in correct dimension order
-    anat_name = os.path.join(images_fld, os.path.split(folder)[1]+'_01.nrrd')
-    nrrd.write(anat_name, IM_anat_rot, meta)
-
+# for folder in folders:
 
 #%% run CMTK on the images folder direcotry, registering everything to Z-brain coordinates 
 root_dir = os.path.split(images_fld)[0]
 
 
-cmd = 'cd ' + root_dir + ' && /home/lab/cmtk/build/bin/munger -v -awr 0102 -X 52 -C 8 -G 80 -R 3 -A "--accuracy 0.4" -W "--accuracy 1.6" -s '+ ref_brain + ' "images"'
+cmd = 'cd ' + root_dir + ' && /home/melis/cmtk/build/bin/munger -v -awr 0102 -X 52 -C 8 -G 80 -R 3 -A "--accuracy 0.4" -W "--accuracy 1.6" -s '+ ref_brain + ' "images"'
 print(cmd)
 
 pipe = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
@@ -98,7 +158,7 @@ text =pipe.communicate()[0]
 print(text)
 
 
-#% run streamxform on coordinates from using from suite2p planes, output 'plane_data.npy' file for each registered plane for downstream analysis 
+#%% run streamxform on coordinates from using from suite2p planes, output 'plane_data.npy' file for each registered plane for downstream analysis 
 
 # physical size of voxels
 xy_rez_mv = meta['spacings'][0]
