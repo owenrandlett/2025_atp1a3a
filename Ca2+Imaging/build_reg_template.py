@@ -1,11 +1,11 @@
 #%% use antspy envorinment on MeLiS analysis server
 
 import ants, os, glob, shutil, subprocess
-
+from natsort import natsorted
 
 images_fld = os.path.realpath(r'/media/FastDrive/atp1a3a_data/registration/images')
-images_list = glob.glob(images_fld + '/*.nrrd')
-bridge_template = r'/media/FastDrive/atp1a3a_data/telen_template_HuC-H2BGCaMP.nrrd'
+images_list = natsorted(glob.glob(images_fld + '/*.nrrd'))
+
 #%%
 template_list = []
 for image_name in images_list:
@@ -21,8 +21,8 @@ args = {
 timage = ants.build_template( image_list = template_list, kwargs = args)
 
 
-#%%
 
+bridge_template = r'/media/FastDrive/atp1a3a_data/telen_template_allfish_HuC-H2BGCaMP.nrrd'
 ants.image_write(timage, bridge_template)
 
 
