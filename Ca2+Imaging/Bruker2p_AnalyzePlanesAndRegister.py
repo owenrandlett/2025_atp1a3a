@@ -7,24 +7,42 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-import h5py, os, tqdm, nrrd, subprocess, glob
+import h5py, os, tqdm, nrrd, subprocess, glob, shlex
 
 from pathlib import Path
 from skimage.registration import phase_cross_correlation
 from natsort import natsorted
 from scipy.ndimage import zoom, shift
 import tifffile
+
 from pynwb import NWBHDF5IO
 
-saveRoot = os.path.realpath(r'/media/FastDrive/atp1a3a_data/')
+saveRoot = os.path.realpath(r'/media/FastDrive/atp1a3a_data/2ndWeek_2')
 
-ref_brain = os.path.realpath(r'/media/BigBoy/Common/atp1a3a_Data/Ca2ImagingData/ref_brain/HuC-H2BRFP_ZBrain_CROP_Telen.nrrd')
-images_fld = os.path.realpath(r'/media/FastDrive/atp1a3a_data/registration/images')
+server_paths = [
+    os.path.realpath(r'/media/BigBoy/ciqle/2p/20250902_atp1a3aExperiments_Day1'),
+    os.path.realpath(r'/media/BigBoy/ciqle/2p/20250903_atp1a3aExperiments_Day2'),
+    os.path.realpath(r'/media/BigBoy/ciqle/2p/20250904_atp1a3aExperiments_Day3'),
+    os.path.realpath(r'/media/BigBoy/ciqle/2p/20250910_atp1a3aExperiments_Day5'),
+    os.path.realpath(r'/media/BigBoy/ciqle/2p/20250911_atp1a3aExperiments_Day6'),
+    ]
+
+ref_brain = os.path.realpath(r'/media/FastDrive/atp1a3a_data/telen_template_HuC-H2BGCaMP.nrrd')
+images_fld = os.path.join(saveRoot, r'registration/images/')
+
+if not os.path.isdir(images_fld):
+    os.makedirs(images_fld)
+
 folders = natsorted(glob.glob(saveRoot + '/*_func-000'))
 
-print(folders)
+for folder in folders:
+    print(folder)
 
-#%
+from pathlib import Path
+root_dir = str(Path(images_fld).parent)
+
+
+
 def determine_z_planes(IM_anat, nwb, folder, zoom_factor=0.25, n_blocks=5):
     """
     Determine z-plane alignment using anatomical stack and functional imaging data stored in NWB.
@@ -142,12 +160,9 @@ for folder in tqdm.tqdm(folders):
 
 
 
-#%%
 
-# for folder in folders:
 
 #%% run CMTK on the images folder direcotry, registering everything to Z-brain coordinates 
-root_dir = os.path.split(images_fld)[0]
 
 
 cmd = 'cd ' + root_dir + ' && /home/melis/cmtk/build/bin/munger -v -awr 0102 -X 52 -C 8 -G 80 -R 3 -A "--accuracy 0.4" -W "--accuracy 1.6" -s '+ ref_brain + ' "images"'
@@ -161,13 +176,14 @@ print(text)
 #%% run streamxform on coordinates from using from suite2p planes, output 'plane_data.npy' file for each registered plane for downstream analysis 
 
 # physical size of voxels
-xy_rez_mv = meta['spacings'][0]
-z_rez_mv = meta['spacings'][2]
 
-xy_rez_zb = 0.798
-z_rez_zb = 2
+
+
 
 im_ref_ori, meta_ref = nrrd.read(ref_brain)
+
+xy_rez_ref = meta_ref['space directions'][0][0]
+z_rez_ref = meta_ref['space directions'][2][-1]
 #
 
 
@@ -175,6 +191,10 @@ for folder in tqdm.tqdm(folders):
     folder = os.path.realpath(folder)
     anat_name = os.path.join(images_fld, os.path.split(folder)[1] + '_01.nrrd')
     IM_anat_rot, meta = nrrd.read(anat_name)
+
+    xy_rez_mv = meta['spacings'][0]
+    z_rez_mv = meta['spacings'][2]
+
     IM_anat_rot = np.moveaxis(IM_anat_rot, [0, 1], [1, 0])
 
     im_ref = im_ref_ori.copy().T / 2
@@ -239,43 +259,49 @@ for folder in tqdm.tqdm(folders):
             # plt.show()
 
             pxMapName = os.path.join(plane, 'cents_orig.txt')
-            pxMapName_out = pxMapName.replace('cents_orig.txt', 'cents_inzbrain.txt')
+            pxMapName_out = pxMapName.replace('cents_orig.txt', 'cents_inrefbrain.txt')
             np.savetxt(pxMapName, px_before, fmt='%1.3f', delimiter=' ')
-            # %
-            streamxform = '/home/lab/cmtk/build/bin/streamxform '
-            reg_base_dir = os.path.join(os.path.split(images_fld)[0], 'Registration', 'warp')
+
+            streamxform = '/home/melis/cmtk/build/bin/streamxform'
+            reg_base_dir = os.path.join(root_dir, 'Registration', 'warp')
             reg_files = glob.glob(reg_base_dir + '/*' + os.path.split(folder)[1] + '*.list')
+
             if len(reg_files) == 0:
                 print('didnt find registered file, streamxform will fail')
             elif len(reg_files) > 1:
                 print('found more than one registration file, using first one found')
 
             reg_file = reg_files[0]
-            cmd = streamxform + ' -- --inverse ' + reg_file + ' < ' + pxMapName + ' > ' + pxMapName_out
+
+            cmd = (
+                f"{shlex.quote(streamxform)} -- --inverse {shlex.quote(reg_file)} "
+                f"< {shlex.quote(pxMapName)} > {shlex.quote(pxMapName_out)}"
+            )
 
             pipe = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
-            text =pipe.communicate()[0]
+            text = pipe.communicate()[0]
             print(text)
+
             #%
-            cents_zbrain = np.genfromtxt(pxMapName_out, comments='FAILED') # I need to re-do the registrations on a bigger template to make sure that there are not out of boudns pixels (AKA failed)
-            cents_zbrain_px = cents_zbrain/(xy_rez_zb, xy_rez_zb, z_rez_zb)
-            cents_zbrain_px = cents_zbrain_px.astype(int)
+            cents_refbrain = np.genfromtxt(pxMapName_out, comments='FAILED') # I need to re-do the registrations on a bigger template to make sure that there are not out of boudns pixels (AKA failed)
+            cents_refbrain_px = cents_refbrain/(xy_rez_ref, xy_rez_ref, z_rez_ref)
+            cents_refbrain_px = cents_refbrain_px.astype(int)
 
 
 
             #%
             for roi in range(n_rois):
-                roi_stats[roi]['centroid_zbrain'] = cents_zbrain_px[roi,:]
-                roi_stats[roi]['ypix_zbrain'] = roi_stats[roi]['ypix'] - np.mean(roi_stats[roi]['ypix']) + cents_zbrain_px[roi,1]
-                roi_stats[roi]['xpix_zbrain'] = roi_stats[roi]['xpix'] - np.mean(roi_stats[roi]['xpix']) + cents_zbrain_px[roi,0]
+                roi_stats[roi]['centroid_refbrain'] = cents_refbrain_px[roi,:]
+                roi_stats[roi]['ypix_refbrain'] = roi_stats[roi]['ypix'] - np.mean(roi_stats[roi]['ypix']) + cents_refbrain_px[roi,1]
+                roi_stats[roi]['xpix_refbrain'] = roi_stats[roi]['xpix'] - np.mean(roi_stats[roi]['xpix']) + cents_refbrain_px[roi,0]
                 
-                #im_zbrain_space[cents_zbrain_px[roi, 2],cents_zbrain_px[roi,1], cents_zbrain_px[roi, 0]] = 65535
+                #im_refbrain_space[cents_refbrain_px[roi, 2],cents_refbrain_px[roi,1], cents_refbrain_px[roi, 0]] = 65535
 
                 try:
                     im_ref[
-                        roi_stats[roi]['centroid_zbrain'][2].astype(int), 
-                        roi_stats[roi]['ypix_zbrain'].astype(int),
-                        roi_stats[roi]['xpix_zbrain'].astype(int)
+                        roi_stats[roi]['centroid_refbrain'][2].astype(int), 
+                        roi_stats[roi]['ypix_refbrain'].astype(int),
+                        roi_stats[roi]['xpix_refbrain'].astype(int)
                         ] = 65535
                 except:
                     continue
@@ -299,6 +325,10 @@ for folder in tqdm.tqdm(folders):
         plt.show()
     else:
         print('didnt find any planes for folder: ' + folder)
+
+
+#%%
+
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%
 # below are some extra analyses for looking at the data

@@ -28,8 +28,7 @@ big_rig3 = True
 # exp_dir = r'/media/BigBoy/MultiTracker/20250127_110626_atp1a3a_BR3_Phin'
 
 exp_dirs = [
-    r'/media/BigBoy/Common/atp1a3a_Data/BigRigData/20250113_113921_atp1a3a_BR2_Phin',
-    r'/media/BigBoy/Common/atp1a3a_Data/BigRigData/20250127_110626_atp1a3a_BR3_Phin'
+    r'/media/BigBoy/MultiTracker/20250424_163708_PC-ATTAC_BR3'
 ]
 def stripplot_period_full_grid(data, period_name, global_y_lims=None, use_median = True):
 
@@ -869,12 +868,14 @@ plt.savefig(os.path.join(graph_dir, f"aligned_bouts_plate{plate}_all_periods.png
 plt.savefig(os.path.join(graph_dir, f"aligned_bouts_plate{plate}_all_periods.svg"), dpi=300)
 plt.show()
 
-#%% make an image of coordiantes
+#%% make an image of coordiantes for plate 0 of BR2
 
 plt.figure(figsize=(20, 10))
 free_period = plot_frame_intervals[plate][5]
 
-col_vec = glasbey.create_palette(len(names[plate]), as_hex=False)
+col_vec = [np.array([0., 0., 0.]),
+ np.array([0.84313725, 0.        , 0.        ]),
+ np.array([0.54901961, 0.23529412, 1.        ])]
 
 for gr in range(len(names[plate])):
     print(names[plate][gr])
