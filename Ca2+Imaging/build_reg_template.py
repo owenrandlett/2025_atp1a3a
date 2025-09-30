@@ -22,7 +22,7 @@ timage = ants.build_template( image_list = template_list, kwargs = args)
 
 
 
-bridge_template = r'/media/FastDrive/atp1a3a_data/telen_template_allfish_HuC-H2BGCaMP.nrrd'
+bridge_template = r'/media/FastDrive/atp1a3a_data/registration/telen_template_allfish_HuC-H2BGCaMP.nrrd'
 ants.image_write(timage, bridge_template)
 
 
