@@ -17,7 +17,7 @@ import tifffile
 
 from pynwb import NWBHDF5IO
 
-saveRoot = os.path.realpath(r'/media/FastDrive/atp1a3a_data/2ndWeek_2')
+saveRoot = os.path.realpath(r'/media/FastDrive/atp1a3a_data')
 
 server_paths = [
     os.path.realpath(r'/media/BigBoy/ciqle/2p/20250902_atp1a3aExperiments_Day1'),
@@ -27,7 +27,7 @@ server_paths = [
     os.path.realpath(r'/media/BigBoy/ciqle/2p/20250911_atp1a3aExperiments_Day6'),
     ]
 
-ref_brain = os.path.realpath(r'/media/FastDrive/atp1a3a_data/telen_template_HuC-H2BGCaMP.nrrd')
+ref_brain = os.path.realpath(r'/media/FastDrive/atp1a3a_data/registration/telen_template_allfish_HuC-H2BGCaMP.nrrd')
 images_fld = os.path.join(saveRoot, r'registration/images/')
 
 if not os.path.isdir(images_fld):
