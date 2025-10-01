@@ -24,7 +24,7 @@ def ffill_cols(a, startfillval=0):
     return out
 
 
-re_analyze = False # set to True to re-process all data from raw
+re_analyze = True # set to True to re-process all data from raw
 raw_data_fldrs_path = r'/media/BigBoy/ciqle/2p/20250902-11_atp1a3a_experiments'
 processed_data_flds_path = r'/media/FastDrive/atp1a3a_data'
 
@@ -37,9 +37,9 @@ if re_analyze:
     fish_dict = {
         "-/-": [
             "20250902_atp1a3a_Fish4_susMut_func-000",
-            "20250903_atp1a3a_Fish01_func-000",
+            # "20250903_atp1a3a_Fish01_func-000", # z position unstable
             "20250903_atp1a3a_Fish04_func-000",
-            "20250904_atp1a3a_Fish01_func-000",
+            # "20250904_atp1a3a_Fish01_func-000", # z position unstable
             "20250904_atp1a3a_Fish08_func-000",
             "20250909_atp1a3a_Fish05_func-000",
             "20250909_atp1a3a_Fish09_func-000",
@@ -69,17 +69,17 @@ if re_analyze:
             "20250910_atp1a3a_Fish5_func-000",
             "20250910_atp1a3a_Fish8_func-000",
             "20250910_atp1a3a_Fish9_func-000",
-            "20250911_atp1a3a_Fish4_func-000",
+            # "20250911_atp1a3a_Fish4_func-000", # z position unstable
             "20250911_atp1a3a_Fish6_func-000",
             "20250911_atp1a3a_Fish8_func-000",
             "20250911_atp1a3a_Fish9_func-000",
         ],
         "+/+": [
             "20250903_atp1a3a_Fish03_func-000",
-            "20250909_atp1a3a_Fish01_func-000",
+            # "20250909_atp1a3a_Fish01_func-000", # z position unstable
             "20250909_atp1a3a_Fish04_func-000",
             "20250909_atp1a3a_Fish10_func-000",
-            "20250910_atp1a3a_Fish1_func-000",
+            # "20250910_atp1a3a_Fish1_func-000",  # z position unstable
             "20250910_atp1a3a_Fish3_func-000",
             "20250910_atp1a3a_Fish6_func-000",
             "20250911_atp1a3a_Fish3_func-000",
@@ -126,7 +126,7 @@ if re_analyze:
         print("⚠️ These matched folders are not assigned to any category in fish_dict:")
         for m in not_in_fish_dict:
             print("   ", m)
-
+#%
 
 
     def get_fish_category(fish_type):
@@ -513,7 +513,7 @@ xy_rez = ref_meta['space directions'][0][0]
 z_rez = ref_meta['space directions'][-1][-1]
 
 outline = tifffile.imread('/media/BigBoy/ciqle/ref_brains/ZBrain2_0_outline_proj.tif')
-
+#%%
 def draw_hit_volume(hits_inds, values = [1], draw_centroid=False, add_write=True, proj_mean=True, draw_outline=False, save_name = None, normalize=True):
     hits_inds_shuf = hits_inds.copy()
     np.random.shuffle(hits_inds_shuf)
@@ -522,24 +522,30 @@ def draw_hit_volume(hits_inds, values = [1], draw_centroid=False, add_write=True
         roi_coords_y = roi_stats[hits_inds[j]]['ypix_refbrain'].astype('int')
         roi_coords_x = roi_stats[hits_inds[j]]['xpix_refbrain'].astype('int')
         roi_coords_z = roi_stats[hits_inds[j]]['centroid_refbrain'][2].astype('int')
+        roi_coords_z = np.arange(roi_coords_z-2, roi_coords_z+2) # take a 5 z-planes to make it more comparable with xy size
         roi_coords_y[roi_coords_y > height-1] = height-1
         roi_coords_x[roi_coords_x > width-1] = width-1
-        if roi_coords_z > Zs-1:
-            roi_coords_z = Zs-1
+        roi_coords_z[roi_coords_z > Zs-1] = Zs-1
+        # if roi_coords_z > Zs-1:
+        #     roi_coords_z = Zs-1
         if draw_centroid:
             roi_coords_y = np.mean(roi_coords_y).astype('int')
             roi_coords_x = np.mean(roi_coords_x).astype('int')
             roi_coords_z = np.mean(roi_coords_z).astype('int')
         if add_write:
-            if len(values) == 1:  
-                IM_roi[roi_coords_z, roi_coords_y, roi_coords_x]  += values
+            if len(values) == 1:
+                for z in roi_coords_z:  
+                    IM_roi[z, roi_coords_y, roi_coords_x]  += values
             else:
-                IM_roi[roi_coords_z, roi_coords_y, roi_coords_x]  += values[j]
+                for z in roi_coords_z:  
+                    IM_roi[z, roi_coords_y, roi_coords_x]  += values[j]
         else:
             if len(values) == 1:  
-                IM_roi[roi_coords_z, roi_coords_y, roi_coords_x]  = values
+                for z in roi_coords_z:  
+                    IM_roi[z, roi_coords_y, roi_coords_x]  = values
             else:
-                IM_roi[roi_coords_z, roi_coords_y, roi_coords_x]  = values[j]
+                for z in roi_coords_z:  
+                    IM_roi[z, roi_coords_y, roi_coords_x]  = values[j]
 
 
     if proj_mean:
@@ -570,21 +576,57 @@ plt.axis('off')
 plt.show()
 
 #%%
+import matplotlib.cm as cm
+ref_proj_z = np.max(ref_brain[:,:, :], axis=0)
+ref_proj_x = zoom(np.max(ref_brain[:,:, :], axis=2).T, [1, z_rez/xy_rez])
+ref_proj = np.hstack((ref_proj_z, ref_proj_x))
+
+def to_rgb(image, cmap_name="gray", vmin=None, vmax=None):
+    """Convert scalar image to RGB using a colormap."""
+    cmap = cm.get_cmap(cmap_name)
+    normed = np.clip((image - (vmin if vmin is not None else image.min())) /
+                     ((vmax if vmax is not None else image.max()) -
+                      (vmin if vmin is not None else image.min()) + 1e-8), 0, 1)
+    return cmap(normed)[..., :3]  # drop alpha channel
+
+common_normalize = False
+norm_value = 2 # set max value for normalization across all overlays
+
+IM_rois_regrs = []
+im_rois_proj_regrs = []
 
 for regr in range(n_regressors):
-    IM_rois, im_rois_proj = draw_hit_volume(inds_hits[regr])
-    im_rois_proj = im_rois_proj[:-5:]
-    plt.figure(figsize=(20,20))
-    plt.imshow(im_rois_proj/np.max(im_rois_proj), cmap='inferno', vmin=0, vmax=0.5)
-    plt.title('Neurons tuned to ' + regressor_names[regr])
-    plt.axis('off')
+    IM_rois, im_rois_proj = draw_hit_volume(inds_hits[regr], normalize=False)
+    IM_rois_regrs.append(IM_rois)
+    im_rois_proj_regrs.append(im_rois_proj)
+
+    # im_rois_proj = im_rois_proj[:-5, :]
+
+
+    # normalize
+    ref_rgb = to_rgb(ref_proj, cmap_name="gray", vmin=0, vmax=np.percentile(ref_proj, 95))
+
+    if common_normalize:
+        rois_rgb = to_rgb(im_rois_proj, cmap_name="magma", vmin=0, vmax=norm_value)
+    else:
+        rois_rgb = to_rgb(im_rois_proj, cmap_name="magma", vmin=0, vmax=np.percentile(im_rois_proj, 95))
+
+    # weighted additive blending
+    w_ref = 0.55   # weight for anatomy
+    w_rois = 1.0  # weight for ROI overlay
+    blended = np.clip(w_ref * ref_rgb + w_rois * rois_rgb, 0, 1)
+
+    plt.figure(figsize=(20, 20))
+    plt.imshow(blended)
+    plt.title(f"Neurons tuned to {regressor_names[regr]}", fontsize=30)
+    plt.axis("off")
     plt.show()
 
+
+
 #%%
-ref_proj_z = np.mean(ref_brain[:,:, :], axis=0)
-ref_proj_x = zoom(np.mean(ref_brain[:,:, :], axis=2).T, [1, z_rez/xy_rez])
-ref_proj = np.hstack((ref_proj_z, ref_proj_x))
-plt.imshow(ref_proj, cmap='grey')
+
+
 #%%
 #% crop to imaged volume
 n_rois_min = 10
