@@ -24,9 +24,12 @@ def ffill_cols(a, startfillval=0):
     return out
 
 
-re_analyze = True # set to True to re-process all data from raw
+re_analyze = False # set to True to re-process all data from raw
 raw_data_fldrs_path = r'/media/BigBoy/ciqle/2p/20250902-11_atp1a3a_experiments'
 processed_data_flds_path = r'/media/FastDrive/atp1a3a_data'
+out_dir = os.path.join(processed_data_flds_path, 'Outputs_2pAnalysis')
+os.makedirs(out_dir, exist_ok=True)
+
 
 if re_analyze:
     raw_data_fldrs = natsorted(glob.glob(raw_data_fldrs_path + '/*/*_func-000'))
@@ -35,20 +38,19 @@ if re_analyze:
 
 
     fish_dict = {
-        "-/-": [
-            "20250902_atp1a3a_Fish4_susMut_func-000",
-            # "20250903_atp1a3a_Fish01_func-000", # z position unstable
-            "20250903_atp1a3a_Fish04_func-000",
-            # "20250904_atp1a3a_Fish01_func-000", # z position unstable
-            "20250904_atp1a3a_Fish08_func-000",
-            "20250909_atp1a3a_Fish05_func-000",
-            "20250909_atp1a3a_Fish09_func-000",
-            "20250910_atp1a3a_Fish7_func-000",
-            "20250911_atp1a3a_Fish2_func-000",
-            "20250911_atp1a3a_Fish10_func-000",
-            "20250911_atp1a3a_Fish11_func-000",
+        "+/+": [
+            "20250903_atp1a3a_Fish03_func-000",
+            # "20250909_atp1a3a_Fish01_func-000", # z position unstable
+            "20250909_atp1a3a_Fish04_func-000",
+            "20250909_atp1a3a_Fish10_func-000",
+            # "20250910_atp1a3a_Fish1_func-000",  # z position unstable
+            "20250910_atp1a3a_Fish3_func-000",
+            "20250910_atp1a3a_Fish6_func-000",
+            "20250911_atp1a3a_Fish3_func-000",
+            # "20250911_atp1a3a_Fish5_func-000", # no neural activity or behaviour, fish presumably dead
+            "20250911_atp1a3a_Fish7_func-000",
         ],
-        "+/-": [
+            "+/-": [
             "20250902_atp1a3a_Fish1_susMut_func-000",
             "20250902_atp1a3a_Fish3_susMut_func-000",
             "20250902_atp1a3a_Fish5_susMut_func-000",
@@ -74,18 +76,21 @@ if re_analyze:
             "20250911_atp1a3a_Fish8_func-000",
             "20250911_atp1a3a_Fish9_func-000",
         ],
-        "+/+": [
-            "20250903_atp1a3a_Fish03_func-000",
-            # "20250909_atp1a3a_Fish01_func-000", # z position unstable
-            "20250909_atp1a3a_Fish04_func-000",
-            "20250909_atp1a3a_Fish10_func-000",
-            # "20250910_atp1a3a_Fish1_func-000",  # z position unstable
-            "20250910_atp1a3a_Fish3_func-000",
-            "20250910_atp1a3a_Fish6_func-000",
-            "20250911_atp1a3a_Fish3_func-000",
-            "20250911_atp1a3a_Fish5_func-000",
-            "20250911_atp1a3a_Fish7_func-000",
+        "-/-": [
+            "20250902_atp1a3a_Fish4_susMut_func-000",
+            # "20250903_atp1a3a_Fish01_func-000", # z position unstable
+            "20250903_atp1a3a_Fish04_func-000",
+            # "20250904_atp1a3a_Fish01_func-000", # z position unstable
+            "20250904_atp1a3a_Fish08_func-000",
+            "20250909_atp1a3a_Fish05_func-000",
+            "20250909_atp1a3a_Fish09_func-000",
+            "20250910_atp1a3a_Fish7_func-000",
+            "20250911_atp1a3a_Fish2_func-000",
+            "20250911_atp1a3a_Fish10_func-000",
+            "20250911_atp1a3a_Fish11_func-000",
         ],
+
+
     }
 
     # --- build quick lookup: folder -> category ---
@@ -285,9 +290,30 @@ ops = all_fish_data['ops'].item()
 
 
 #%%
+from scipy.signal import medfilt
+def safe_filename(s: str, replacement: str = "_", max_length: int = 255) -> str:
+    import re
+    """
+    Make a string safe for use as a filename on most OSes.
+    - Replaces invalid characters with `replacement`
+    - Strips leading/trailing whitespace
+    - Truncates to max_length
+    """
+    # Replace invalid characters
+    s = re.sub(r'[<>:"/\\|?*]', replacement, s)
+    # Replace whitespace with underscore
+    s = re.sub(r'\s+', replacement, s)
+    # Remove leading dots (avoid hidden files / special names)
+    s = s.lstrip(".")
+    # Truncate to maximum filename length
+    return s[:max_length]
+
+out_dir_behavPlots = os.path.join(out_dir, 'BehaveTraces_Fnorm')
+os.makedirs(out_dir_behavPlots, exist_ok=True)
+
 for fish_ind in range(len(ops)):
      
-    plt.figure(figsize=(25,10))
+    plt.figure(figsize=(25,17))
 
     keys_fish = list(ops.keys())
     fish_name = keys_fish[fish_ind]
@@ -322,16 +348,25 @@ for fish_ind in range(len(ops)):
 
     max_inds_behav = min(len(bend_amps_filt), len(behav_time))
     # --- Plot ---
-    plt.plot(mic_timestamps, np.mean(F_norm[fish_data[:,0]==fish_ind, :], axis=0), label="Mean F_norm")
-    # plt.plot(behav_time[:max_inds_behav], bend_amps_filt[:max_inds_behav], label="Bend Amps")  
-    plt.plot(behav_time[:max_inds_behav], (orients_filt[:max_inds_behav] - np.mean(orients_filt))/50, label="Orientations")  
+    
+    plt.plot(behav_time[:max_inds_behav], bend_amps_filt[:max_inds_behav], label="Bend Amps")
+    lowpass_orients = medfilt(orients_filt, 1501) 
+    # plt.plot(behav_time[:max_inds_behav], (orients_filt[:max_inds_behav] - np.mean(orients_filt))/50, label="Orientations")  
+    plt.plot(behav_time[:max_inds_behav], (lowpass_orients[:max_inds_behav] - np.mean(lowpass_orients))/50, linewidth=5, label="Orientations_lowpass")
+    plt.plot(mic_timestamps, np.mean(F_norm[fish_data[:,0]==fish_ind, :], axis=0), linewidth = 2, label="Mean F_norm")
     # plt.plot(mic_timestamps, np.mean(F_norm[:, :], axis=0), label="Mean F_norm all cells")
+    ylim_max = 0.5
+    plt.plot(mic_timestamps, OMR_vec*0.1 - ylim_max, linewidth = 3, label="OMR")
+    plt.plot(mic_timestamps, DF_vec*0.15 - ylim_max, linewidth = 3, label="DF")  # offset a bit for visibility
+    plot_title = fish_name + ' : type : ' + matched_pairs[fish_ind][2]
+    plt.title(plot_title, fontsize=30)
 
-    plt.plot(mic_timestamps, OMR_vec*0.05 - 0.1, label="OMR")
-    plt.plot(mic_timestamps, DF_vec*0.1 - 0.1, label="DF")  # offset a bit for visibility
-    plt.title(fish_name + ' : type : ' + matched_pairs[fish_ind][2], fontsize=16)
+    plt.legend(fontsize=30)
 
-    plt.legend()
+    plt.ylim([-ylim_max, ylim_max])
+
+    plt.savefig(os.path.join(out_dir_behavPlots, safe_filename(plot_title + '.png')))
+    plt.savefig(os.path.join(out_dir_behavPlots, safe_filename(plot_title + '.svg')))
     plt.show()
 
 
@@ -467,16 +502,19 @@ regressor_names = [
 'Dark Flashes',
 'OMR',
 ]
-regressors = np.vstack((
-    stim_df_conv, 
-    stim_omr_conv
-    ))
 
 for fish_ind in range(len(ops)):
+
     fish_name = keys_fish[fish_ind]
     fish_IDs = np.where(fish_data[:,0] == fish_ind)[0]
     F_norm_fish = F_norm[fish_IDs, :]
     nROIs = len(fish_IDs)
+    regressors = np.vstack((
+        stim_df_conv, 
+        stim_omr_conv
+    ))
+
+
     n_regressors = regressors.shape[0]
     corrMat_temp = np.zeros([nROIs, n_regressors])
     for regr in range(n_regressors):
@@ -491,13 +529,16 @@ for fish_ind in range(len(ops)):
 
 #%%
     
-corr_thresh = 0.15
+corr_thresh = 0.1
 inds_hits = []
 for regr in range(n_regressors):
     inds_hits.append(np.where(corrMat[:,regr] >= corr_thresh)[0])
     plt.plot(np.mean(F_norm[inds_hits[regr], :], axis=0), label=regressor_names[regr])
+plt.ylabel('Mean z-scored fluorescence of ROIs with\ncorrelation > ' + str(corr_thresh))
+plt.xlabel('Frame number')
+plt.title('Mean activity of ROIs correlated with each regressor')
 
-
+plt.legend()
 #%%
 import tifffile
 from scipy.ndimage import zoom, morphology
@@ -589,8 +630,8 @@ def to_rgb(image, cmap_name="gray", vmin=None, vmax=None):
                       (vmin if vmin is not None else image.min()) + 1e-8), 0, 1)
     return cmap(normed)[..., :3]  # drop alpha channel
 
-common_normalize = False
-norm_value = 2 # set max value for normalization across all overlays
+common_normalize = True
+norm_value = 1 # set max value for normalization across all overlays
 
 IM_rois_regrs = []
 im_rois_proj_regrs = []
@@ -612,17 +653,85 @@ for regr in range(n_regressors):
         rois_rgb = to_rgb(im_rois_proj, cmap_name="magma", vmin=0, vmax=np.percentile(im_rois_proj, 95))
 
     # weighted additive blending
-    w_ref = 0.55   # weight for anatomy
+    w_ref = 0.5   # weight for anatomy
     w_rois = 1.0  # weight for ROI overlay
     blended = np.clip(w_ref * ref_rgb + w_rois * rois_rgb, 0, 1)
 
     plt.figure(figsize=(20, 20))
     plt.imshow(blended)
-    plt.title(f"Neurons tuned to {regressor_names[regr]}", fontsize=30)
+    title_str = f"Neurons tuned to {regressor_names[regr]}"
+    plt.title(title_str, fontsize=30)
+    plt.savefig(os.path.join(out_dir, safe_filename(title_str + '.png')))
     plt.axis("off")
     plt.show()
 
+    tifffile.imwrite(os.path.join(out_dir, safe_filename(title_str + 'stack.tif')), IM_rois)
 
+
+
+
+
+#%% now do per fish category
+
+corr_thresh = 0.1
+inds_hits = []
+
+n_fish_in_category = []
+
+for fish_type in list(fish_dict.keys()):
+    n_fish_in_category.append(len(fish_dict[fish_type]))
+
+
+for regr in range(n_regressors):
+    inds_hits.append([])
+    for fish_type in [0, 1, 2]: # WT, het, hom
+        hits_reg_type = np.where((corrMat[:,regr] >= corr_thresh) & (fish_data[:,1] == fish_type))[0]
+        inds_hits[regr].append(hits_reg_type)
+
+
+common_normalize = True
+norm_value = 0.0325 # set max value for normalization across all overlays
+
+IM_rois_regrs = []
+im_rois_proj_regrs = []
+
+for regr in range(n_regressors):
+    for fish_type in [0, 1, 2]: # WT, het, hom
+        if fish_type == 0:
+            fish_type_str = 'WT'
+        elif fish_type == 1:
+            fish_type_str = 'HET'
+        else:
+            fish_type_str = 'MUT' 
+
+        IM_rois, im_rois_proj = draw_hit_volume(inds_hits[regr][fish_type], normalize=False)
+        IM_rois = IM_rois / n_fish_in_category[fish_type] # normalize to number of fish in that category
+        im_rois_proj = im_rois_proj / n_fish_in_category[fish_type]
+        # im_rois_proj = im_rois_proj[:-5, :]
+
+
+        # normalize
+        ref_rgb = to_rgb(ref_proj, cmap_name="gray", vmin=0, vmax=np.percentile(ref_proj, 95))
+
+        if common_normalize:
+            rois_rgb = to_rgb(im_rois_proj, cmap_name="magma", vmin=0, vmax=norm_value)
+        else:
+            rois_rgb = to_rgb(im_rois_proj, cmap_name="magma", vmin=0, vmax=np.percentile(im_rois_proj, 95))
+
+        # weighted additive blending
+        w_ref = 0.5   # weight for anatomy
+        w_rois = 1.0  # weight for ROI overlay
+        blended = np.clip(w_ref * ref_rgb + w_rois * rois_rgb, 0, 1)
+
+        plt.figure(figsize=(20, 20))
+        plt.imshow(blended)
+        title_str = f"Neurons tuned to {regressor_names[regr]}, fish type: {fish_type_str}"
+        plt.title(title_str, fontsize=30)
+        plt.savefig(os.path.join(out_dir, safe_filename(title_str + '.png')))
+        plt.axis("off")
+        plt.show()
+
+        tifffile.imwrite(os.path.join(out_dir, safe_filename(title_str + 'stack.tif')), IM_rois)
 
 #%%
 
