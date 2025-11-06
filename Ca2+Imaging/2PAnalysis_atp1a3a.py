@@ -23,6 +23,14 @@ def ffill_cols(a, startfillval=0):
     a[0] = tmp
     return out
 
+def rolling_window(a, window):
+    pad = np.ones(len(a.shape), dtype=np.int32)
+    pad[-1] = window-1
+    pad = list(zip(pad, np.zeros(len(a.shape), dtype=np.int32)))
+    a = np.pad(a, pad,mode='reflect')
+    shape = a.shape[:-1] + (a.shape[-1] - window + 1, window)
+    strides = a.strides + (a.strides[-1],)
+    return np.lib.stride_tricks.as_strided(a, shape=shape, strides=strides)
 
 re_analyze = False # set to True to re-process all data from raw
 raw_data_fldrs_path = r'/media/BigBoy/ciqle/2p/20250902-11_atp1a3a_experiments'
@@ -31,119 +39,120 @@ out_dir = os.path.join(processed_data_flds_path, 'Outputs_2pAnalysis')
 os.makedirs(out_dir, exist_ok=True)
 
 
-if re_analyze:
-    raw_data_fldrs = natsorted(glob.glob(raw_data_fldrs_path + '/*/*_func-000'))
-    processed_data_s2pfld = natsorted(glob.glob(processed_data_flds_path + '/*/suite2p'))
-    processed_data_fldrs = [os.path.split(f)[0] for f in processed_data_s2pfld]
+
+raw_data_fldrs = natsorted(glob.glob(raw_data_fldrs_path + '/*/*_func-000'))
+processed_data_s2pfld = natsorted(glob.glob(processed_data_flds_path + '/*/suite2p'))
+processed_data_fldrs = [os.path.split(f)[0] for f in processed_data_s2pfld]
 
 
-    fish_dict = {
-        "+/+": [
-            "20250903_atp1a3a_Fish03_func-000",
-            # "20250909_atp1a3a_Fish01_func-000", # z position unstable
-            "20250909_atp1a3a_Fish04_func-000",
-            "20250909_atp1a3a_Fish10_func-000",
-            # "20250910_atp1a3a_Fish1_func-000",  # z position unstable
-            "20250910_atp1a3a_Fish3_func-000",
-            "20250910_atp1a3a_Fish6_func-000",
-            "20250911_atp1a3a_Fish3_func-000",
-            # "20250911_atp1a3a_Fish5_func-000", # no neural activity or behaviour, fish presumably dead
-            "20250911_atp1a3a_Fish7_func-000",
-        ],
-            "+/-": [
-            "20250902_atp1a3a_Fish1_susMut_func-000",
-            "20250902_atp1a3a_Fish3_susMut_func-000",
-            "20250902_atp1a3a_Fish5_susMut_func-000",
-            "20250903_atp1a3a_Fish05_func-000",
-            "20250903_atp1a3a_Fish06_func-000",
-            "20250904_atp1a3a_Fish02_func-000",
-            "20250904_atp1a3a_Fish03_func-000",
-            "20250904_atp1a3a_Fish04_func-000",
-            "20250904_atp1a3a_Fish05_func-000",
-            "20250904_atp1a3a_Fish06_func-000",
-            "20250904_atp1a3a_Fish07_func-000",
-            "20250909_atp1a3a_Fish02_func-000",
-            "20250909_atp1a3a_Fish03_func-000",
-            "20250909_atp1a3a_Fish07_func-000",
-            "20250909_atp1a3a_Fish08_func-000",
-            "20250910_atp1a3a_Fish2_func-000",
-            "20250910_atp1a3a_Fish4_func-000",
-            "20250910_atp1a3a_Fish5_func-000",
-            "20250910_atp1a3a_Fish8_func-000",
-            "20250910_atp1a3a_Fish9_func-000",
-            # "20250911_atp1a3a_Fish4_func-000", # z position unstable
-            "20250911_atp1a3a_Fish6_func-000",
-            "20250911_atp1a3a_Fish8_func-000",
-            "20250911_atp1a3a_Fish9_func-000",
-        ],
-        "-/-": [
-            "20250902_atp1a3a_Fish4_susMut_func-000",
-            # "20250903_atp1a3a_Fish01_func-000", # z position unstable
-            "20250903_atp1a3a_Fish04_func-000",
-            # "20250904_atp1a3a_Fish01_func-000", # z position unstable
-            "20250904_atp1a3a_Fish08_func-000",
-            "20250909_atp1a3a_Fish05_func-000",
-            "20250909_atp1a3a_Fish09_func-000",
-            "20250910_atp1a3a_Fish7_func-000",
-            "20250911_atp1a3a_Fish2_func-000",
-            "20250911_atp1a3a_Fish10_func-000",
-            "20250911_atp1a3a_Fish11_func-000",
-        ],
+fish_dict = {
+    "+/+": [
+        "20250903_atp1a3a_Fish03_func-000",
+        # "20250909_atp1a3a_Fish01_func-000", # z position unstable
+        "20250909_atp1a3a_Fish04_func-000",
+        "20250909_atp1a3a_Fish10_func-000",
+        # "20250910_atp1a3a_Fish1_func-000",  # z position unstable
+        "20250910_atp1a3a_Fish3_func-000",
+        "20250910_atp1a3a_Fish6_func-000",
+        "20250911_atp1a3a_Fish3_func-000",
+        # "20250911_atp1a3a_Fish5_func-000", # no neural activity or behaviour, fish presumably dead
+        "20250911_atp1a3a_Fish7_func-000",
+    ],
+        "+/-": [
+        "20250902_atp1a3a_Fish1_susMut_func-000",
+        "20250902_atp1a3a_Fish3_susMut_func-000",
+        "20250902_atp1a3a_Fish5_susMut_func-000",
+        "20250903_atp1a3a_Fish05_func-000",
+        "20250903_atp1a3a_Fish06_func-000",
+        "20250904_atp1a3a_Fish02_func-000",
+        "20250904_atp1a3a_Fish03_func-000",
+        "20250904_atp1a3a_Fish04_func-000",
+        "20250904_atp1a3a_Fish05_func-000",
+        "20250904_atp1a3a_Fish06_func-000",
+        "20250904_atp1a3a_Fish07_func-000",
+        "20250909_atp1a3a_Fish02_func-000",
+        "20250909_atp1a3a_Fish03_func-000",
+        "20250909_atp1a3a_Fish07_func-000",
+        "20250909_atp1a3a_Fish08_func-000",
+        "20250910_atp1a3a_Fish2_func-000",
+        "20250910_atp1a3a_Fish4_func-000",
+        "20250910_atp1a3a_Fish5_func-000",
+        "20250910_atp1a3a_Fish8_func-000",
+        "20250910_atp1a3a_Fish9_func-000",
+        # "20250911_atp1a3a_Fish4_func-000", # z position unstable
+        "20250911_atp1a3a_Fish6_func-000",
+        "20250911_atp1a3a_Fish8_func-000",
+        "20250911_atp1a3a_Fish9_func-000",
+    ],
+    "-/-": [
+        "20250902_atp1a3a_Fish4_susMut_func-000",
+        # "20250903_atp1a3a_Fish01_func-000", # z position unstable
+        "20250903_atp1a3a_Fish04_func-000",
+        # "20250904_atp1a3a_Fish01_func-000", # z position unstable
+        "20250904_atp1a3a_Fish08_func-000",
+        "20250909_atp1a3a_Fish05_func-000",
+        "20250909_atp1a3a_Fish09_func-000",
+        "20250910_atp1a3a_Fish7_func-000",
+        "20250911_atp1a3a_Fish2_func-000",
+        "20250911_atp1a3a_Fish10_func-000",
+        "20250911_atp1a3a_Fish11_func-000",
+    ],
 
 
-    }
+}
 
-    # --- build quick lookup: folder -> category ---
-    category_lookup = {}
-    for cat, flist in fish_dict.items():
-        for f in flist:
-            category_lookup[f] = cat
+# --- build quick lookup: folder -> category ---
+category_lookup = {}
+for cat, flist in fish_dict.items():
+    for f in flist:
+        category_lookup[f] = cat
 
-    # --- match based on final folder name ---
-    raw_map = {os.path.basename(f): f for f in raw_data_fldrs}
-    processed_map = {os.path.basename(f): f for f in processed_data_fldrs}
+# --- match based on final folder name ---
+raw_map = {os.path.basename(f): f for f in raw_data_fldrs}
+processed_map = {os.path.basename(f): f for f in processed_data_fldrs}
 
-    common_keys = sorted(set(raw_map.keys()) & set(processed_map.keys()))
+common_keys = sorted(set(raw_map.keys()) & set(processed_map.keys()))
 
-    # build matched pairs with category
-    matched_pairs = []
-    for k in common_keys:
-        cat = category_lookup.get(k, "UNKNOWN")
-        matched_pairs.append((raw_map[k], processed_map[k], cat))
+# build matched pairs with category
+matched_pairs = []
+for k in common_keys:
+    cat = category_lookup.get(k, "UNKNOWN")
+    matched_pairs.append((raw_map[k], processed_map[k], cat))
 
-    # --- check for missing matches ---
-    missing_in_processed = set(raw_map.keys()) - set(processed_map.keys())
-    missing_in_raw = set(processed_map.keys()) - set(raw_map.keys())
+# --- check for missing matches ---
+missing_in_processed = set(raw_map.keys()) - set(processed_map.keys())
+missing_in_raw = set(processed_map.keys()) - set(raw_map.keys())
 
-    if missing_in_processed:
-        print("⚠️ No processed match for these raw folders:")
-        for m in sorted(missing_in_processed):
-            print("   ", raw_map[m])
+if missing_in_processed:
+    print("⚠️ No processed match for these raw folders:")
+    for m in sorted(missing_in_processed):
+        print("   ", raw_map[m])
 
-    if missing_in_raw:
-        print("⚠️ No raw match for these processed folders:")
-        for m in sorted(missing_in_raw):
-            print("   ", processed_map[m])
+if missing_in_raw:
+    print("⚠️ No raw match for these processed folders:")
+    for m in sorted(missing_in_raw):
+        print("   ", processed_map[m])
 
-    # --- optional: check for unmatched to fish_dict ---
-    not_in_fish_dict = [k for k in common_keys if k not in category_lookup]
-    if not_in_fish_dict:
-        print("⚠️ These matched folders are not assigned to any category in fish_dict:")
-        for m in not_in_fish_dict:
-            print("   ", m)
+# --- optional: check for unmatched to fish_dict ---
+not_in_fish_dict = [k for k in common_keys if k not in category_lookup]
+if not_in_fish_dict:
+    print("⚠️ These matched folders are not assigned to any category in fish_dict:")
+    for m in not_in_fish_dict:
+        print("   ", m)
 #%
 
 
-    def get_fish_category(fish_type):
-        if fish_type == "-/-":
-            return 2
-        elif fish_type == "+/-":
-            return 1
-        elif fish_type == "+/+":
-            return 0
-        else:
-            return -1  # Unknown category
-        
+def get_fish_category(fish_type):
+    if fish_type == "-/-":
+        return 2
+    elif fish_type == "+/-":
+        return 1
+    elif fish_type == "+/+":
+        return 0
+    else:
+        return -1  # Unknown category
+    
+if re_analyze:
     cell_thresh = 0.3 # classifier probability threshold
     ops = {}
     for k in range(len(matched_pairs)):
@@ -311,6 +320,7 @@ def safe_filename(s: str, replacement: str = "_", max_length: int = 255) -> str:
 out_dir_behavPlots = os.path.join(out_dir, 'BehaveTraces_Fnorm')
 os.makedirs(out_dir_behavPlots, exist_ok=True)
 
+
 for fish_ind in range(len(ops)):
      
     plt.figure(figsize=(25,17))
@@ -346,13 +356,21 @@ for fish_ind in range(len(ops)):
     orients_filt = pi_tailtrack['orients_filt']
     behav_time = pi_tailtrack['time']
 
+    frame_rate_behav = int(1/np.median(np.diff(behav_time)))
+    tail_power = np.std(rolling_window(bend_amps_filt, frame_rate_behav), -1)
+    tail_power = tail_power - np.median(tail_power)
+
+    swim_bursting = medfilt(tail_power, frame_rate_behav*20+1)
+
     max_inds_behav = min(len(bend_amps_filt), len(behav_time))
     # --- Plot ---
     
     plt.plot(behav_time[:max_inds_behav], bend_amps_filt[:max_inds_behav], label="Bend Amps")
-    lowpass_orients = medfilt(orients_filt, 1501) 
+    lowpass_orients = medfilt(orients_filt, frame_rate_behav*13+1) 
     # plt.plot(behav_time[:max_inds_behav], (orients_filt[:max_inds_behav] - np.mean(orients_filt))/50, label="Orientations")  
     plt.plot(behav_time[:max_inds_behav], (lowpass_orients[:max_inds_behav] - np.mean(lowpass_orients))/50, linewidth=5, label="Orientations_lowpass")
+    plt.plot(behav_time[:max_inds_behav], tail_power[:max_inds_behav], linewidth=3, label="Swimming Power")
+    plt.plot(behav_time[:max_inds_behav], swim_bursting[:max_inds_behav], linewidth = 3, label="Swimg Bursting")
     plt.plot(mic_timestamps, np.mean(F_norm[fish_data[:,0]==fish_ind, :], axis=0), linewidth = 2, label="Mean F_norm")
     # plt.plot(mic_timestamps, np.mean(F_norm[:, :], axis=0), label="Mean F_norm all cells")
     ylim_max = 0.5
@@ -376,14 +394,7 @@ for fish_ind in range(len(ops)):
 import seaborn as sns
 from numba import njit, prange
 
-def rolling_window(a, window):
-    pad = np.ones(len(a.shape), dtype=np.int32)
-    pad[-1] = window-1
-    pad = list(zip(pad, np.zeros(len(a.shape), dtype=np.int32)))
-    a = np.pad(a, pad,mode='reflect')
-    shape = a.shape[:-1] + (a.shape[-1] - window + 1, window)
-    strides = a.strides + (a.strides[-1],)
-    return np.lib.stride_tricks.as_strided(a, shape=shape, strides=strides)
+
 
 def GCaMPConvolve(trace, ker):
     if np.sum(trace) == 0:
@@ -501,7 +512,39 @@ plt.show()
 regressor_names = [
 'Dark Flashes',
 'OMR',
+'Tail Power',
+'Swim Bursting',
+'Lowpass Orientation'
 ]
+
+def resample_to_reference(high_t, high_y, low_t, method="linear", fill_value="extrapolate"):
+    """
+    Resample a signal sampled at high_t to the time base of low_t.
+
+    Parameters
+    ----------
+    high_t : array-like
+        Timestamps of the high-rate signal.
+    high_y : array-like
+        Signal values at high_t (1D).
+    low_t : array-like
+        Target timestamps (usually lower rate).
+    method : str, optional
+        Interpolation method ("linear", "nearest", "cubic", etc.).
+    fill_value : str or float, optional
+        What to do outside the range of high_t.
+        Default "extrapolate", can also be a float (e.g. 0).
+
+    Returns
+    -------
+    low_y : np.ndarray
+        Resampled signal matching low_t.
+    """
+    from scipy.interpolate import interp1d
+    
+    f = interp1d(high_t, high_y, kind=method, fill_value=fill_value, bounds_error=False)
+    return f(low_t)
+
 
 for fish_ind in range(len(ops)):
 
@@ -509,9 +552,37 @@ for fish_ind in range(len(ops)):
     fish_IDs = np.where(fish_data[:,0] == fish_ind)[0]
     F_norm_fish = F_norm[fish_IDs, :]
     nROIs = len(fish_IDs)
+    pi_tailtrack = ops[fish_name]['pi_tailtrack']
+    microscope_timestamps = ops[fish_name]['timestamps']
+    bend_amps_filt = pi_tailtrack['bend_amps_filt']
+    orients_filt = pi_tailtrack['orients_filt']
+    behav_time = pi_tailtrack['time']
+
+    max_inds_behav = min(len(bend_amps_filt), len(behav_time))
+    bend_amps_filt = bend_amps_filt[:max_inds_behav]
+    orients_filt = orients_filt[:max_inds_behav]
+    behav_time = behav_time[:max_inds_behav]
+
+
+    frame_rate_behav = int(1/np.median(np.diff(behav_time)))
+    tail_power = np.std(rolling_window(bend_amps_filt, frame_rate_behav), -1)
+    tail_power = tail_power - np.median(tail_power)
+    
+
+    tail_power_conv = GCaMPConvolve(resample_to_reference(behav_time, tail_power, microscope_timestamps), KerTotal)
+    
+    swim_bursting = medfilt(tail_power, frame_rate_behav*20+1)
+    swim_bursting_conv = GCaMPConvolve(resample_to_reference(behav_time, swim_bursting, microscope_timestamps), KerTotal)
+    
+    lowpass_orients = medfilt(orients_filt, frame_rate_behav*13+1)
+    lowpass_orients_conv = GCaMPConvolve(resample_to_reference(behav_time, lowpass_orients, microscope_timestamps), KerTotal)
+
     regressors = np.vstack((
         stim_df_conv, 
-        stim_omr_conv
+        stim_omr_conv,
+        tail_power_conv,
+        swim_bursting_conv,
+        lowpass_orients_conv
     ))
 
 
@@ -733,7 +804,50 @@ for regr in range(n_regressors):
 
         tifffile.imwrite(os.path.join(out_dir, safe_filename(title_str + 'stack.tif')), IM_rois)
 
-#%%
+
+#%% Plot per fish category: std and mean fluorescence
+
+common_normalize = True
+
+n_fish_in_category = [len(fish_dict[ft]) for ft in fish_dict.keys()]
+fish_type_labels = ['WT', 'HET', 'MUT']
+
+for measure, measure_name, cmap, norm_value in [
+    (np.std(F, axis=1), "STD", "viridis", None),      # std of raw fluorescence
+    (np.mean(F, axis=1), "Mean", "plasma", None)      # mean of raw fluorescence
+]:
+    for fish_type in [0, 1, 2]:  # WT, het, hom
+        fish_type_str = fish_type_labels[fish_type]
+        # Get indices for this fish type
+        inds_type = np.where(fish_data[:,1] == fish_type)[0]
+        # Get measure values for these neurons
+        values = measure[inds_type]
+        # Draw hit volume weighted by measure
+        IM_rois, im_rois_proj = draw_hit_volume(inds_type, values=values, normalize=False)
+        IM_rois = IM_rois / n_fish_in_category[fish_type]
+        im_rois_proj = im_rois_proj / n_fish_in_category[fish_type]
+
+        # Normalize overlay
+        ref_rgb = to_rgb(ref_proj, cmap_name="gray", vmin=0, vmax=np.percentile(ref_proj, 95))
+        if common_normalize:
+            rois_rgb = to_rgb(im_rois_proj, cmap_name=cmap, vmin=0, vmax=np.percentile(im_rois_proj, 99))
+        else:
+            rois_rgb = to_rgb(im_rois_proj, cmap_name=cmap, vmin=0, vmax=np.percentile(im_rois_proj, 95))
+
+        # Weighted additive blending
+        w_ref = 0.5
+        w_rois = 1.0
+        blended = np.clip(w_ref * ref_rgb + w_rois * rois_rgb, 0, 1)
+
+        plt.figure(figsize=(20, 20))
+        plt.imshow(blended)
+        title_str = f"Neuron {measure_name} fluorescence, fish type: {fish_type_str}"
+        plt.title(title_str, fontsize=30)
+        plt.savefig(os.path.join(out_dir, safe_filename(title_str + '.png')))
+        plt.axis("off")
+        plt.show()
+
+        tifffile.imwrite(os.path.join(out_dir, safe_filename(title_str + 'stack.tif')), IM_rois)
 
 
 #%%
