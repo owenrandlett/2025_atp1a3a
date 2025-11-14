@@ -297,8 +297,14 @@ F_norm = all_fish_data['F_norm']
 fish_data = all_fish_data['fish_data']
 ops = all_fish_data['ops'].item()
 
+#% calculate dF/F for each neuron
+Fo = np.nanmedian(F, axis=1, keepdims=True)
+F_dff = (F - Fo) / Fo
+# Remove NaNs from F_dff (set them to zero)
+F_dff[~np.isfinite(F_dff)] = 0
 
-#%%
+
+#%% analze behaviour + imaging traces
 from scipy.signal import medfilt
 def safe_filename(s: str, replacement: str = "_", max_length: int = 255) -> str:
     import re
@@ -320,72 +326,95 @@ def safe_filename(s: str, replacement: str = "_", max_length: int = 255) -> str:
 out_dir_behavPlots = os.path.join(out_dir, 'BehaveTraces_Fnorm')
 os.makedirs(out_dir_behavPlots, exist_ok=True)
 
+if re_analyze:
+    for fish_ind in range(len(ops)):
+        
+        plt.figure(figsize=(25,17))
 
-for fish_ind in range(len(ops)):
-     
-    plt.figure(figsize=(25,17))
+        keys_fish = list(ops.keys())
+        fish_name = keys_fish[fish_ind]
+        pi_tailtrack = ops[fish_name]['pi_tailtrack']
+        mic_timestamps = ops[fish_name]['timestamps']
 
-    keys_fish = list(ops.keys())
-    fish_name = keys_fish[fish_ind]
-    pi_tailtrack = ops[fish_name]['pi_tailtrack']
-    mic_timestamps = ops[fish_name]['timestamps']
+        stim_data = pi_tailtrack['stim_data']
 
-    stim_data = pi_tailtrack['stim_data']
+        # --- OMR ---
+        mask = stim_data["omr_cycle_rate"] == 0.6
+        OMR_start_sec = stim_data.loc[mask, "time (sec)"].values
+        OMR_end_sec   = stim_data.loc[mask.shift(fill_value=False), "time (sec)"].values
 
-    # --- OMR ---
-    mask = stim_data["omr_cycle_rate"] == 0.6
-    OMR_start_sec = stim_data.loc[mask, "time (sec)"].values
-    OMR_end_sec   = stim_data.loc[mask.shift(fill_value=False), "time (sec)"].values
+        OMR_vec = np.zeros_like(mic_timestamps, dtype=int)
+        for start, end in zip(OMR_start_sec, OMR_end_sec):
+            mask = (mic_timestamps >= start) & (mic_timestamps <= end)
+            OMR_vec[mask] = 1
 
-    OMR_vec = np.zeros_like(mic_timestamps, dtype=int)
-    for start, end in zip(OMR_start_sec, OMR_end_sec):
-        mask = (mic_timestamps >= start) & (mic_timestamps <= end)
-        OMR_vec[mask] = 1
+        # --- DF ---
+        mask = stim_data["stim_brighness"] == 0
+        DF_start_sec = stim_data.loc[mask, "time (sec)"].values
+        DF_end_sec   = stim_data.loc[mask.shift(fill_value=False), "time (sec)"].values
 
-    # --- DF ---
-    mask = stim_data["stim_brighness"] == 0
-    DF_start_sec = stim_data.loc[mask, "time (sec)"].values
-    DF_end_sec   = stim_data.loc[mask.shift(fill_value=False), "time (sec)"].values
+        DF_vec = np.zeros_like(mic_timestamps, dtype=int)
+        for start, end in zip(DF_start_sec, DF_end_sec):
+            mask = (mic_timestamps >= start) & (mic_timestamps <= end)
+            DF_vec[mask] = 1
 
-    DF_vec = np.zeros_like(mic_timestamps, dtype=int)
-    for start, end in zip(DF_start_sec, DF_end_sec):
-        mask = (mic_timestamps >= start) & (mic_timestamps <= end)
-        DF_vec[mask] = 1
+        bend_amps_filt = pi_tailtrack['bend_amps_filt']
+        orients_filt = pi_tailtrack['orients_filt']
+        behav_time = pi_tailtrack['time']
 
-    bend_amps_filt = pi_tailtrack['bend_amps_filt']
-    orients_filt = pi_tailtrack['orients_filt']
-    behav_time = pi_tailtrack['time']
+        frame_rate_behav = int(1/np.median(np.diff(behav_time)))
+        tail_power = np.std(rolling_window(bend_amps_filt, frame_rate_behav), -1)
+        tail_power = tail_power - np.median(tail_power)
 
-    frame_rate_behav = int(1/np.median(np.diff(behav_time)))
-    tail_power = np.std(rolling_window(bend_amps_filt, frame_rate_behav), -1)
-    tail_power = tail_power - np.median(tail_power)
+        swim_bursting = medfilt(tail_power, frame_rate_behav*20+1)
 
-    swim_bursting = medfilt(tail_power, frame_rate_behav*20+1)
+        max_inds_behav = min(len(bend_amps_filt), len(behav_time))
+        # --- Plot ---
+        
+        plt.plot(behav_time[:max_inds_behav], bend_amps_filt[:max_inds_behav], label="Bend Amps")
+        lowpass_orients = medfilt(orients_filt, frame_rate_behav*13+1) 
+        # plt.plot(behav_time[:max_inds_behav], (orients_filt[:max_inds_behav] - np.mean(orients_filt))/50, label="Orientations")  
+        plt.plot(behav_time[:max_inds_behav], (lowpass_orients[:max_inds_behav] - np.mean(lowpass_orients))/50, linewidth=5, label="Orientations_lowpass")
+        plt.plot(behav_time[:max_inds_behav], tail_power[:max_inds_behav], linewidth=3, label="Swimming Power")
+        plt.plot(behav_time[:max_inds_behav], swim_bursting[:max_inds_behav], linewidth = 3, label="Swimg Bursting")
+        plt.plot(mic_timestamps, np.mean(F_norm[fish_data[:,0]==fish_ind, :], axis=0), linewidth = 2, label="Mean F_norm")
+        # plt.plot(mic_timestamps, np.mean(F_norm[:, :], axis=0), label="Mean F_norm all cells")
+        ylim_max = 0.5
+        plt.plot(mic_timestamps, OMR_vec*0.1 - ylim_max, linewidth = 3, label="OMR")
+        plt.plot(mic_timestamps, DF_vec*0.15 - ylim_max, linewidth = 3, label="DF")  # offset a bit for visibility
+        plot_title = fish_name + ' : type : ' + matched_pairs[fish_ind][2]
+        plt.title(plot_title, fontsize=30)
 
-    max_inds_behav = min(len(bend_amps_filt), len(behav_time))
-    # --- Plot ---
-    
-    plt.plot(behav_time[:max_inds_behav], bend_amps_filt[:max_inds_behav], label="Bend Amps")
-    lowpass_orients = medfilt(orients_filt, frame_rate_behav*13+1) 
-    # plt.plot(behav_time[:max_inds_behav], (orients_filt[:max_inds_behav] - np.mean(orients_filt))/50, label="Orientations")  
-    plt.plot(behav_time[:max_inds_behav], (lowpass_orients[:max_inds_behav] - np.mean(lowpass_orients))/50, linewidth=5, label="Orientations_lowpass")
-    plt.plot(behav_time[:max_inds_behav], tail_power[:max_inds_behav], linewidth=3, label="Swimming Power")
-    plt.plot(behav_time[:max_inds_behav], swim_bursting[:max_inds_behav], linewidth = 3, label="Swimg Bursting")
-    plt.plot(mic_timestamps, np.mean(F_norm[fish_data[:,0]==fish_ind, :], axis=0), linewidth = 2, label="Mean F_norm")
-    # plt.plot(mic_timestamps, np.mean(F_norm[:, :], axis=0), label="Mean F_norm all cells")
-    ylim_max = 0.5
-    plt.plot(mic_timestamps, OMR_vec*0.1 - ylim_max, linewidth = 3, label="OMR")
-    plt.plot(mic_timestamps, DF_vec*0.15 - ylim_max, linewidth = 3, label="DF")  # offset a bit for visibility
-    plot_title = fish_name + ' : type : ' + matched_pairs[fish_ind][2]
-    plt.title(plot_title, fontsize=30)
+        plt.legend(fontsize=30)
 
-    plt.legend(fontsize=30)
+        plt.ylim([-ylim_max, ylim_max])
 
-    plt.ylim([-ylim_max, ylim_max])
+        plt.savefig(os.path.join(out_dir_behavPlots, safe_filename(plot_title + '.png')))
+        plt.savefig(os.path.join(out_dir_behavPlots, safe_filename(plot_title + '.svg')))
+        plt.show()
 
-    plt.savefig(os.path.join(out_dir_behavPlots, safe_filename(plot_title + '.png')))
-    plt.savefig(os.path.join(out_dir_behavPlots, safe_filename(plot_title + '.svg')))
-    plt.show()
+        # Save relevant behavioral traces in ops[fish_name]
+        ops[fish_name]['behav_traces'] = {
+            'bend_amps_filt': bend_amps_filt,
+            'orients_filt': orients_filt,
+            'tail_power': tail_power,
+            'swim_bursting': swim_bursting,
+            'lowpass_orients': lowpass_orients,
+            'OMR_vec': OMR_vec,
+            'DF_vec': DF_vec,
+            'mic_timestamps': mic_timestamps,
+            'behav_time': behav_time,
+            'stim_data': stim_data
+        }
+
+    ops_save_path = os.path.join(processed_data_flds_path, 'ops_updated_wBehav.npy')
+    np.save(ops_save_path, ops)
+    print(f"Updated ops file saved to: {ops_save_path}")
+
+# Reload the updated ops file for further analysis
+ops_reload_path = os.path.join(processed_data_flds_path, 'ops_updated_wBehav.npy')
+ops = np.load(ops_reload_path, allow_pickle=True).item()
+print(f"Reloaded updated ops file from: {ops_reload_path}")
 
 
 
@@ -545,60 +574,92 @@ def resample_to_reference(high_t, high_y, low_t, method="linear", fill_value="ex
     f = interp1d(high_t, high_y, kind=method, fill_value=fill_value, bounds_error=False)
     return f(low_t)
 
+if re_analyze:
+    for fish_ind in range(len(ops)):
 
-for fish_ind in range(len(ops)):
+        fish_name = keys_fish[fish_ind]
+        fish_IDs = np.where(fish_data[:,0] == fish_ind)[0]
+        F_norm_fish = F_norm[fish_IDs, :]
+        nROIs = len(fish_IDs)
+        pi_tailtrack = ops[fish_name]['pi_tailtrack']
+        microscope_timestamps = ops[fish_name]['timestamps']
+        bend_amps_filt = pi_tailtrack['bend_amps_filt']
+        orients_filt = pi_tailtrack['orients_filt']
+        behav_time = pi_tailtrack['time']
 
-    fish_name = keys_fish[fish_ind]
-    fish_IDs = np.where(fish_data[:,0] == fish_ind)[0]
-    F_norm_fish = F_norm[fish_IDs, :]
-    nROIs = len(fish_IDs)
-    pi_tailtrack = ops[fish_name]['pi_tailtrack']
-    microscope_timestamps = ops[fish_name]['timestamps']
-    bend_amps_filt = pi_tailtrack['bend_amps_filt']
-    orients_filt = pi_tailtrack['orients_filt']
-    behav_time = pi_tailtrack['time']
-
-    max_inds_behav = min(len(bend_amps_filt), len(behav_time))
-    bend_amps_filt = bend_amps_filt[:max_inds_behav]
-    orients_filt = orients_filt[:max_inds_behav]
-    behav_time = behav_time[:max_inds_behav]
-
-
-    frame_rate_behav = int(1/np.median(np.diff(behav_time)))
-    tail_power = np.std(rolling_window(bend_amps_filt, frame_rate_behav), -1)
-    tail_power = tail_power - np.median(tail_power)
-    
-
-    tail_power_conv = GCaMPConvolve(resample_to_reference(behav_time, tail_power, microscope_timestamps), KerTotal)
-    
-    swim_bursting = medfilt(tail_power, frame_rate_behav*20+1)
-    swim_bursting_conv = GCaMPConvolve(resample_to_reference(behav_time, swim_bursting, microscope_timestamps), KerTotal)
-    
-    lowpass_orients = medfilt(orients_filt, frame_rate_behav*13+1)
-    lowpass_orients_conv = GCaMPConvolve(resample_to_reference(behav_time, lowpass_orients, microscope_timestamps), KerTotal)
-
-    regressors = np.vstack((
-        stim_df_conv, 
-        stim_omr_conv,
-        tail_power_conv,
-        swim_bursting_conv,
-        lowpass_orients_conv
-    ))
+        max_inds_behav = min(len(bend_amps_filt), len(behav_time))
+        bend_amps_filt = bend_amps_filt[:max_inds_behav]
+        orients_filt = orients_filt[:max_inds_behav]
+        behav_time = behav_time[:max_inds_behav]
 
 
-    n_regressors = regressors.shape[0]
-    corrMat_temp = np.zeros([nROIs, n_regressors])
-    for regr in range(n_regressors):
-        corrMat_temp[:, regr] = pearsonr_vec_2Dnumb(regressors[regr, start_analyze_frame:], F_norm_fish[:, start_analyze_frame:])
+        frame_rate_behav = int(1/np.median(np.diff(behav_time)))
+        tail_power = np.std(rolling_window(bend_amps_filt, frame_rate_behav), -1)
+        tail_power = tail_power - np.median(tail_power)
+        
 
-    corrMat_temp[np.isnan(corrMat_temp)] = 0 # set invalid correlations to 0
+        tail_power_conv = GCaMPConvolve(resample_to_reference(behav_time, tail_power, microscope_timestamps), KerTotal)
+        
+        swim_bursting = medfilt(tail_power, frame_rate_behav*20+1)
+        swim_bursting_conv = GCaMPConvolve(resample_to_reference(behav_time, swim_bursting, microscope_timestamps), KerTotal)
+        
+        lowpass_orients = medfilt(orients_filt, frame_rate_behav*13+1)
+        lowpass_orients_conv = GCaMPConvolve(resample_to_reference(behav_time, lowpass_orients, microscope_timestamps), KerTotal)
 
-    if fish_ind == 0:
-        corrMat = np.copy(corrMat_temp)
-    else:
-        corrMat = np.vstack((corrMat, corrMat_temp))
+        regressors = np.vstack((
+            stim_df_conv, 
+            stim_omr_conv,
+            tail_power_conv,
+            swim_bursting_conv,
+            lowpass_orients_conv
+        ))
 
-#%%
+
+        n_regressors = regressors.shape[0]
+        corrMat_temp = np.zeros([nROIs, n_regressors])
+        for regr in range(n_regressors):
+            corrMat_temp[:, regr] = pearsonr_vec_2Dnumb(regressors[regr, start_analyze_frame:], F_norm_fish[:, start_analyze_frame:])
+
+        corrMat_temp[np.isnan(corrMat_temp)] = 0 # set invalid correlations to 0
+
+        if fish_ind == 0:
+            corrMat = np.copy(corrMat_temp)
+        else:
+            corrMat = np.vstack((corrMat, corrMat_temp))
+
+    # Compile relevant correlation analysis results into a dict
+    correlation_results = {
+        "fish_names": list(ops.keys()),
+        "fish_data": fish_data,                # (N_cells, 2) [fish_ind, fish_type]
+        "regressor_names": regressor_names,    # list of regressor labels
+        "corrMat": corrMat,                    # (N_cells, N_regressors) correlation matrix
+        "F_norm": F_norm,                      # normalized fluorescence traces
+        "F_dff": F_dff,                      # dF/F fluorescence traces
+        "roi_stats": roi_stats,                # ROI metadata
+    }
+
+    # Save to disk in the same folder as other outputs
+    corr_save_path = os.path.join(out_dir, "correlation_results.npz")
+    np.savez(corr_save_path, **correlation_results)
+    print(f"Saved correlation results to: {corr_save_path}")
+
+
+# Reload correlation results for subsequent analyses
+corr_load_path = os.path.join(out_dir, "correlation_results.npz")
+corr_data = np.load(corr_load_path, allow_pickle=True)
+
+fish_names = corr_data["fish_names"]
+fish_data = corr_data["fish_data"]
+regressor_names = corr_data["regressor_names"]
+corrMat = corr_data["corrMat"]
+F_norm = corr_data["F_norm"]
+F_dff = corr_data["F_dff"]
+roi_stats = corr_data["roi_stats"]
+
+print(f"Reloaded correlation results from: {corr_load_path}")
+
+
+
     
 corr_thresh = 0.1
 inds_hits = []
@@ -610,6 +671,22 @@ plt.xlabel('Frame number')
 plt.title('Mean activity of ROIs correlated with each regressor')
 
 plt.legend()
+
+#%%
+std_thresh = 0.7
+F_dff_std = np.nanstd(F_dff, axis=1)
+plt.hist(F_dff_std, bins=np.arange(0, 2, 0.01))
+plt.vlines(std_thresh, 0, 5000, colors='r', linestyles='dashed')
+
+valid_types = [0, 1, 2]
+valid_fish_inds = np.where(np.isin(fish_data[:, 1], valid_types))[0]
+active_neurons = np.intersect1d(valid_fish_inds, np.where(F_dff_std >= std_thresh)[0])
+
+
+fish_data_active = fish_data[active_neurons, :]
+
+
+
 #%%
 import tifffile
 from scipy.ndimage import zoom, morphology
@@ -812,30 +889,73 @@ common_normalize = True
 n_fish_in_category = [len(fish_dict[ft]) for ft in fish_dict.keys()]
 fish_type_labels = ['WT', 'HET', 'MUT']
 
-for measure, measure_name, cmap, norm_value in [
-    (np.std(F, axis=1), "STD", "viridis", None),      # std of raw fluorescence
-    (np.mean(F, axis=1), "Mean", "plasma", None)      # mean of raw fluorescence
-]:
+
+
+# Define all metrics to plot
+metrics = [
+    (np.nansum(abs(F_norm), axis=1), "Sum z_score", "viridis"),
+    (np.nanmean(F, axis=1), "Mean_F", "viridis"),
+    (np.nanstd(F_dff, axis=1), "Std_dF/F", "viridis"),
+]
+
+# --- Find global maximum for each metric ---
+global_max_per_metric = []
+for measure, _, _ in metrics:
+    # For each metric, draw hit volume for all neurons and get max value in projection
+    IM_rois, im_rois_proj = draw_hit_volume(np.arange(len(measure)), values=measure, normalize=False)
+    # Normalize by total number of fish for fair comparison
+    im_rois_proj = im_rois_proj / sum(n_fish_in_category)
+    global_max_per_metric.append(np.nanmax(im_rois_proj))
+
+# --- Plot per fish category, normalized to global max ---
+stacks_by_measure = {}   # dict -> { measure_name: { 'WT': {'stack': IM_rois, 'proj': im_rois_proj, 'stack_norm': ..., 'proj_norm': ...}, ... } }
+
+for (measure, measure_name, cmap), norm_value in zip(metrics, global_max_per_metric):
+    # prepare container for this metric
+    stacks_by_measure[measure_name] = {}
+    metric_dir = os.path.join(out_dir, 'stacks_by_measure', safe_filename(measure_name))
+    os.makedirs(metric_dir, exist_ok=True)
+
     for fish_type in [0, 1, 2]:  # WT, het, hom
         fish_type_str = fish_type_labels[fish_type]
-        # Get indices for this fish type
         inds_type = np.where(fish_data[:,1] == fish_type)[0]
-        # Get measure values for these neurons
         values = measure[inds_type]
-        # Draw hit volume weighted by measure
-        IM_rois, im_rois_proj = draw_hit_volume(inds_type, values=values, normalize=False)
-        IM_rois = IM_rois / n_fish_in_category[fish_type]
-        im_rois_proj = im_rois_proj / n_fish_in_category[fish_type]
 
-        # Normalize overlay
+        # produce stacks
+        IM_rois, im_rois_proj = draw_hit_volume(inds_type, values=values, normalize=False)
+
+        # normalize by number of fish in category for fair comparison
+        IM_rois_norm = IM_rois / n_fish_in_category[fish_type]
+        im_rois_proj_norm = im_rois_proj / n_fish_in_category[fish_type]
+
+        # store in dict
+        stacks_by_measure[measure_name][fish_type_str] = {
+            'stack_raw': IM_rois.astype(np.float32),
+            'proj_raw': im_rois_proj.astype(np.float32),
+            'stack_norm': IM_rois_norm.astype(np.float32),
+            'proj_norm': im_rois_proj_norm.astype(np.float32),
+            'values_inds': inds_type,   # ROI indices used
+            'values_vec': values.astype(np.float32)  # per-ROI measure values
+        }
+
+        # save to disk for downstream analyses
+        fname_base = safe_filename(f"{measure_name}_{fish_type_str}")
+        np.save(os.path.join(metric_dir, f"{fname_base}_stack_raw.npy"), IM_rois.astype(np.float32))
+        np.save(os.path.join(metric_dir, f"{fname_base}_proj_raw.npy"), im_rois_proj.astype(np.float32))
+        np.save(os.path.join(metric_dir, f"{fname_base}_stack_norm.npy"), IM_rois_norm.astype(np.float32))
+        np.save(os.path.join(metric_dir, f"{fname_base}_proj_norm.npy"), im_rois_proj_norm.astype(np.float32))
+        try:
+            tifffile.imwrite(os.path.join(metric_dir, f"{fname_base}_stack_norm.tif"), IM_rois_norm.astype(np.float32))
+        except Exception:
+            pass
+
+        # Normalize overlay for visualization (use metric global norm if available)
         ref_rgb = to_rgb(ref_proj, cmap_name="gray", vmin=0, vmax=np.percentile(ref_proj, 95))
-        if common_normalize:
-            rois_rgb = to_rgb(im_rois_proj, cmap_name=cmap, vmin=0, vmax=np.percentile(im_rois_proj, 99))
-        else:
-            rois_rgb = to_rgb(im_rois_proj, cmap_name=cmap, vmin=0, vmax=np.percentile(im_rois_proj, 95))
+        v_max = norm_value if (norm_value is not None and not np.isnan(norm_value)) else np.nanmax(im_rois_proj_norm)
+        rois_rgb = to_rgb(im_rois_proj_norm, cmap_name=cmap, vmin=0, vmax=v_max * 0.3)
 
         # Weighted additive blending
-        w_ref = 0.5
+        w_ref = 0.4
         w_rois = 1.0
         blended = np.clip(w_ref * ref_rgb + w_rois * rois_rgb, 0, 1)
 
@@ -847,82 +967,83 @@ for measure, measure_name, cmap, norm_value in [
         plt.axis("off")
         plt.show()
 
-        tifffile.imwrite(os.path.join(out_dir, safe_filename(title_str + 'stack.tif')), IM_rois)
-
-
+        # write normalized stack for quick inspection (also keep original on disk above)
+        tifffile.imwrite(os.path.join(metric_dir, f"{fname_base}_stack_norm_inspect.tif"), IM_rois_norm.astype(np.float32))
 #%%
-#% crop to imaged volume
-n_rois_min = 10
-x_trace = np.max(np.max(IM_rois, axis=0) , axis=0)>n_rois_min
-y_trace = np.max(np.max(IM_rois, axis=0) , axis=1)>n_rois_min
-z_trace =  np.max(np.max(IM_rois, axis=1) , axis=1)>n_rois_min
-#plt.plot(z_trace)
 
-xlims = np.where(x_trace)[0][0], np.where(x_trace)[0][-1]
-print(xlims)
+from scipy.ndimage import gaussian_filter, zoom as ndi_zoom
 
-ylims = np.where(y_trace)[0][0], np.where(y_trace)[0][-1]
-print(ylims)
+# 3D gaussian blur params (radii in pixels)
+blurr_size = 30 # in microns
+blur_radius = (blurr_size/z_rez, blurr_size/xy_rez, blurr_size/xy_rez)   # (Z, Y, X) as you requested ~20x20x10 px (Z first)
+truncate = 4.0
+sigma = tuple(r / truncate for r in blur_radius)
 
-zlims = np.where(z_trace)[0][0], np.where(z_trace)[0][-1]
-print(zlims)
+comparisons_dir = os.path.join(out_dir, "group_comparisons")
+os.makedirs(comparisons_dir, exist_ok=True)
 
-zbrain_crop = zbrain[zlims[0]:zlims[1], ylims[0]:ylims[1], xlims[0]:xlims[1]]
-Zs_crop, height_crop, width_crop = zbrain_crop.shape
+def project_stack(stack, proj_mean=True):
+    # stack: (Z, H, W) -> produce same 2D projection used elsewhere (axial + sagittal hstack)
+    if proj_mean:
+        im_proj_z = np.mean(stack, axis=0)
+        im_proj_x = ndi_zoom(np.mean(stack, axis=2).T, [1, z_rez/xy_rez])
+    else:
+        im_proj_z = np.max(stack, axis=0)
+        im_proj_x = ndi_zoom(np.max(stack, axis=2).T, [1, z_rez/xy_rez])
+    # avoid division by zero
+    zmax = np.nanmax(im_proj_z) if np.nanmax(im_proj_z) != 0 else 1.0
+    xmax = np.nanmax(im_proj_x) if np.nanmax(im_proj_x) != 0 else 1.0
+    return np.hstack((im_proj_z / zmax, im_proj_x / xmax))
 
+# compute blurred stacks and pairwise diffs; plot subplots:
+pairs = [("HET", "WT"), ("MUT", "WT"), ("MUT", "HET")]
+groups_order = ("WT","HET","MUT")
 
-zbrain_outline_z = np.zeros((height_crop, width_crop))
-zbrain_outline_x = zoom(np.zeros((Zs_crop, height_crop)).T, [1, 2/0.798])
-mask_3d = np.zeros(zbrain_crop.shape)
-mask_3d[:] = 0
+# create magenta -> black -> green diverging colormap for diffs
+from matplotlib.colors import LinearSegmentedColormap
 
+cmap_mag_black_green = LinearSegmentedColormap.from_list(
+    "mag_black_green", ["magenta", "black", "green"], N=256
+)
+cmap_mag_black_green.set_bad("black")
 
-IDs = [
-    #np.where((zbrain_crop >=27) & (zbrain_crop <= 28)), # thalamus
-    np.where((zbrain_crop >=29) & (zbrain_crop <= 31)), # telencephalon
-    np.where((zbrain_crop >=48) & (zbrain_crop <= 110) | (zbrain_crop == 119)), # hindbrain
-    np.where((zbrain_crop >=111) & (zbrain_crop <= 112)), # tectum
-    np.where((zbrain_crop == 50) ), # inferior olive
-    np.where((zbrain_crop == 23) ), # pretectum  
-    #np.where((zbrain_crop == 114) ), # nucMLF
-    #np.where((zbrain_crop == 70) |  (zbrain_crop == 71) | (zbrain_crop == 72)| (zbrain_crop == 77) | (zbrain_crop == 78)| (zbrain_crop == 79) | (zbrain_crop == 91)| (zbrain_crop == 94)| (zbrain_crop == 95)| (zbrain_crop == 101)| (zbrain_crop == 102) | (zbrain_crop == 107)| (zbrain_crop == 108)), # reticulospinal 
-    #np.where((zbrain_crop >=84) & (zbrain_crop <= 89)), # more RS
-    #np.where((zbrain_crop == 79) | (zbrain_crop == 89) | (zbrain_crop == 95) ), # v cells
+for measure_name, groups in stacks_by_measure.items():
+    # ensure storage containers
+    groups.setdefault("blurred", {})
+    groups.setdefault("diffs", {})
 
-]
+    # compute blurred + normalized stacks per group
+    proj_dict = {}
+    for g in groups_order:
+        if g not in groups:
+            continue
+        stack_in = groups[g].get("stack_norm", groups[g]["stack_raw"]).astype(np.float32)
+        # apply gaussian blur
+        blurred = gaussian_filter(stack_in, sigma=sigma, truncate=truncate)
 
-for ids in IDs:
-    mask_3d = np.zeros(zbrain_crop.shape)
-    mask_3d[ids] = 1
-    mask = np.max(mask_3d, axis=0)
-    outline = morphology.distance_transform_edt(1-mask) == 1
-    #outline = morphology.binary_dilation(outline, iterations=1)
-    zbrain_outline_z[outline==1] =1
+        groups["blurred"][g] = blurred
+        # compute 2D projection for plotting
+        proj_dict[g] = project_stack(blurred, proj_mean=True)
+        # save blurred stacks
+        np.save(os.path.join(comparisons_dir, f"{safe_filename(measure_name)}_{g}_blurred.npy"), blurred.astype(np.float32))
+        try:
+            tifffile.imwrite(os.path.join(comparisons_dir, f"{safe_filename(measure_name)}_{g}_blurred.tif"), blurred.astype(np.float32))
+        except Exception:
+            pass
 
-    mask = zoom(np.max(mask_3d, axis=2).T, [1, 2/0.798], order=0)
-    outline = morphology.distance_transform_edt(1-mask) == 1
-    #outline = morphology.binary_dilation(outline, iterations=1)
-    zbrain_outline_x[outline==1] =1
+    # compute pairwise diffs (blurred a - blurred b) and projections
+    diff_projs = {}
+    for a,b in pairs:
+        if a not in groups["blurred"] or b not in groups["blurred"]:
+            continue
+        diff = (groups["blurred"][a] - groups["blurred"][b]).astype(np.float32)
+        key = f"{a}_minus_{b}"
+        groups["diffs"][key] = diff
+        diff_projs[key] = project_stack(diff, proj_mean=True)
+        # save diffs
+        np.save(os.path.join(comparisons_dir, f"{safe_filename(measure_name)}_{key}.npy"), diff)
+        try:
+            tifffile.imwrite(os.path.join(comparisons_dir, f"{safe_filename(measure_name)}_{key}.tif"), diff)
+        except Exception:
+            pass
 
-
-
-
-proj = np.hstack((zbrain_outline_z, zbrain_outline_x))
-proj = proj * 2
-proj = proj.astype(np.uint8)
-proj[proj>0] = 255
-proj[proj < 255] = 0
-
-# tifffile.imsave('/media/BigBoy/ciqle/ref_brains/ZBrain2_0_outline_proj_areas_crop.tif', data=proj)
-outline = proj
-IM_rois, im_rois_proj = draw_hit_volume(np.arange(len(roi_stats)), draw_outline=True, save_name = 'roi_density_cropped')
-plt.figure(figsize=(20,20))
-plt.imshow(im_rois_proj, cmap='inferno')
-plt.title('Density of ROIs detected')
-plt.axis('off')
-IM_rois=None
-
-
-fish_names = []
-for fish_name in ops.keys():
-    fish_names.append(fish_name)

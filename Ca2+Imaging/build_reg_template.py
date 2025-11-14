@@ -38,13 +38,13 @@ reg = ants.registration(
     aff_iterations=(2100, 1200, 1200, 10),
     aff_shrink_factors=(8,4,2,1),
     aff_smoothing_sigmas=(3,2,1,0),
-    aff_metric='mattes',       # affine metric; ok for inter-sample intensity differences
+    aff_metric='CC',       # affine metric; ok for inter-sample intensity differences
     # SyN parameters
     reg_iterations=(200,100,50,20),   # nonlinear iterations (coarse->fine)
     syn_metric='CC',                  # cross-correlation (same-modality confocal)
     syn_sampling=2,                   # metric sampling
     grad_step=0.1,                    # integration step
-    flow_sigma=3, total_sigma=0,      # smoothing parameters for updates
+    flow_sigma=6, total_sigma=1,      # smoothing parameters for updates
     outprefix=out_dir,
     verbose=True
 )
@@ -61,7 +61,7 @@ ants.plot(IM_zbrain_ref, overlay=reg['warpedmovout'], overlay_alpha=0.7, title='
 os.makedirs(out_dir, exist_ok=True)
 
 # --- Define output paths ---
-aligned_path = os.path.join(out_dir, "bridge_template_registered_wParams_CC.nii.gz")
+aligned_path = os.path.join(out_dir, "bridge_template_registered_wParams_CC_CC.nii.gz")
 
 # --- Save registered image ---
 ants.image_write(reg['warpedmovout'], aligned_path)
