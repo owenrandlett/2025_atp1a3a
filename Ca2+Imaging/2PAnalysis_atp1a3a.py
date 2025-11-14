@@ -10,9 +10,13 @@ import pandas as pd
 from scipy.signal import savgol_filter
 import pynwb
 from pynwb import NWBHDF5IO
+import tifffile
+from scipy.ndimage import zoom, morphology
+import nrrd
 
 
 def ffill_cols(a, startfillval=0):
+    
     ### fill NaN values with previous value
     mask = np.isnan(a)
     tmp = a[0].copy()
@@ -31,6 +35,60 @@ def rolling_window(a, window):
     shape = a.shape[:-1] + (a.shape[-1] - window + 1, window)
     strides = a.strides + (a.strides[-1],)
     return np.lib.stride_tricks.as_strided(a, shape=shape, strides=strides)
+
+def draw_hit_volume(hits_inds, values = [1], draw_centroid=False, add_write=True, proj_mean=True, draw_outline=False, save_name = None, normalize=True):
+    hits_inds_shuf = hits_inds.copy()
+    np.random.shuffle(hits_inds_shuf)
+    IM_roi = np.zeros((Zs, height, width))
+    for j in range(len(hits_inds)):
+        roi_coords_y = roi_stats[hits_inds[j]]['ypix_refbrain'].astype('int')
+        roi_coords_x = roi_stats[hits_inds[j]]['xpix_refbrain'].astype('int')
+        roi_coords_z = roi_stats[hits_inds[j]]['centroid_refbrain'][2].astype('int')
+        roi_coords_z = np.arange(roi_coords_z-2, roi_coords_z+2) # take a 5 z-planes to make it more comparable with xy size
+        roi_coords_y[roi_coords_y > height-1] = height-1
+        roi_coords_x[roi_coords_x > width-1] = width-1
+        roi_coords_z[roi_coords_z > Zs-1] = Zs-1
+        # if roi_coords_z > Zs-1:
+        #     roi_coords_z = Zs-1
+        if draw_centroid:
+            roi_coords_y = np.mean(roi_coords_y).astype('int')
+            roi_coords_x = np.mean(roi_coords_x).astype('int')
+            roi_coords_z = np.mean(roi_coords_z).astype('int')
+        if add_write:
+            if len(values) == 1:
+                for z in roi_coords_z:  
+                    IM_roi[z, roi_coords_y, roi_coords_x]  += values
+            else:
+                for z in roi_coords_z:  
+                    IM_roi[z, roi_coords_y, roi_coords_x]  += values[j]
+        else:
+            if len(values) == 1:  
+                for z in roi_coords_z:  
+                    IM_roi[z, roi_coords_y, roi_coords_x]  = values
+            else:
+                for z in roi_coords_z:  
+                    IM_roi[z, roi_coords_y, roi_coords_x]  = values[j]
+
+
+    if proj_mean:
+        im_proj_z = np.mean(IM_roi[:,:, :], axis=0)
+        im_proj_x = zoom(np.mean(IM_roi[:,:, :], axis=2).T, [1, z_rez/xy_rez])
+    else:
+        im_proj_z = np.max(IM_roi[:,:, :], axis=0)
+        im_proj_x = zoom(np.max(IM_roi[:,:, :], axis=2).T, [1, z_rez/xy_rez])
+    
+    if normalize:
+        im_proj = np.hstack((im_proj_z/np.max(im_proj_z), im_proj_x/np.max(im_proj_x)))
+    else:
+        im_proj = np.hstack((im_proj_z, im_proj_x))
+
+    if draw_outline:
+        im_proj[outline > 0.01] = np.max(im_proj)
+
+    # if not save_name==None:
+    #     imsave(os.path.join(analysis_out, save_name+'_proj_image.tif'), im_proj)
+    return IM_roi, im_proj
+
 
 re_analyze = False # set to True to re-process all data from raw
 raw_data_fldrs_path = r'/media/BigBoy/ciqle/2p/20250902-11_atp1a3a_experiments'
@@ -303,6 +361,14 @@ F_dff = (F - Fo) / Fo
 # Remove NaNs from F_dff (set them to zero)
 F_dff[~np.isfinite(F_dff)] = 0
 
+ref_brain_path = r'/media/FastDrive/atp1a3a_data/registration/telen_template_allfish_HuC-H2BGCaMP.nrrd' 
+ref_brain, ref_meta = nrrd.read(ref_brain_path)
+width, height, Zs = ref_brain.shape
+ref_brain = np.moveaxis(ref_brain, [0,1,2], [2,1,0])
+
+
+xy_rez = ref_meta['space directions'][0][0]
+z_rez = ref_meta['space directions'][-1][-1]
 
 #%% analze behaviour + imaging traces
 from scipy.signal import medfilt
@@ -531,6 +597,10 @@ Zs = 138
 
 color_fish = ['#2258e0', '#22e061', '#e02222']
 
+DF_vec = ops[list(ops.keys())[0]]['behav_traces']['DF_vec']
+OMR_vec = ops[list(ops.keys())[0]]['behav_traces']['OMR_vec']
+
+
 stim_df_conv = GCaMPConvolve(DF_vec, KerTotal)
 stim_omr_conv = GCaMPConvolve(OMR_vec, KerTotal)
 
@@ -660,10 +730,10 @@ print(f"Reloaded correlation results from: {corr_load_path}")
 
 
 
-    
+#%%
 corr_thresh = 0.1
 inds_hits = []
-for regr in range(n_regressors):
+for regr in range(corrMat.shape[1]):
     inds_hits.append(np.where(corrMat[:,regr] >= corr_thresh)[0])
     plt.plot(np.mean(F_norm[inds_hits[regr], :], axis=0), label=regressor_names[regr])
 plt.ylabel('Mean z-scored fluorescence of ROIs with\ncorrelation > ' + str(corr_thresh))
@@ -672,9 +742,13 @@ plt.title('Mean activity of ROIs correlated with each regressor')
 
 plt.legend()
 
-#%%
-std_thresh = 0.7
+#%% clustering of functional responses
+from sklearn.cluster import AffinityPropagation, KMeans, SpectralClustering, AgglomerativeClustering
+
+
 F_dff_std = np.nanstd(F_dff, axis=1)
+#%
+std_thresh = 0.6
 plt.hist(F_dff_std, bins=np.arange(0, 2, 0.01))
 plt.vlines(std_thresh, 0, 5000, colors='r', linestyles='dashed')
 
@@ -682,79 +756,90 @@ valid_types = [0, 1, 2]
 valid_fish_inds = np.where(np.isin(fish_data[:, 1], valid_types))[0]
 active_neurons = np.intersect1d(valid_fish_inds, np.where(F_dff_std >= std_thresh)[0])
 
-
 fish_data_active = fish_data[active_neurons, :]
 
-
+print('Number of active neurons selected for clustering: ' + str(len(active_neurons)))
 
 #%%
-import tifffile
-from scipy.ndimage import zoom, morphology
-import nrrd
-
-ref_brain_path = r'/media/FastDrive/atp1a3a_data/registration/telen_template_allfish_HuC-H2BGCaMP.nrrd' 
-ref_brain, ref_meta = nrrd.read(ref_brain_path)
-width, height, Zs = ref_brain.shape
-ref_brain = np.moveaxis(ref_brain, [0,1,2], [2,1,0])
+IM_roi, im_show = draw_hit_volume(active_neurons, draw_outline=False)
+plt.figure(figsize=(10,20))
+plt.imshow(im_show, vmin = 0, vmax=0.7, cmap='inferno')
+plt.axis('off')
+plt.title('units selected for clustering')
+plt.show()
 
 
-xy_rez = ref_meta['space directions'][0][0]
-z_rez = ref_meta['space directions'][-1][-1]
+
+#%% 
+
+
+from matplotlib.colors import LinearSegmentedColormap
+# Select first fish
+for fish_ind in range(len(fish_names)):
+    fish_IDs = np.where(fish_data[:,0] == fish_ind)[0]
+    active_neurons = np.intersect1d(fish_IDs, np.where(F_dff_std >= std_thresh)[0])
+    F_norm_fish = F_norm[active_neurons, start_analyze_frame:]
+
+    # Compute correlation matrix (z-scored data)
+    corr_m_fish = np.dot(F_norm_fish, F_norm_fish.T) / F_norm_fish.shape[1]
+
+    # Run affinity propagation clustering
+    af = AffinityPropagation(preference=-9, damping=0.9, max_iter=500, random_state=1, affinity='precomputed', verbose=True).fit(corr_m_fish)
+    labels = af.labels_
+
+
+    # Sort neurons by cluster label
+    sort_inds = np.argsort(labels)
+    F_norm_fish_sorted = F_norm_fish[sort_inds, :]
+
+    #%
+
+
+    # Get cluster boundaries for marking
+    unique_labels, label_starts = np.unique(labels[sort_inds], return_index=True)
+    label_ends = np.append(label_starts[1:], F_norm_fish_sorted.shape[0])
+
+    heatmap_cmap = LinearSegmentedColormap.from_list(
+        "black_green",
+        ["white", "black"],
+        N=256,
+    )
+    heatmap_vmin, heatmap_vmax = 0, 1
+
+    plt.figure(figsize=(14, 8))
+    sns.heatmap(
+        F_norm_fish_sorted,
+        cmap=heatmap_cmap,
+        # center=0,
+        vmin=heatmap_vmin,
+        vmax=heatmap_vmax,
+        cbar_kws={"label": "z-score"},
+    )
+    #%
+    # Mark cluster boundaries with horizontal bars
+    for start, end in zip(label_starts, label_ends):
+        plt.hlines(start, xmin=0, xmax=F_norm_fish_sorted.shape[1], colors='black', linewidth=1)
+
+    plt.title('fish ' + fish_names[fish_ind] + 'fish type = ' + str(get_fish_category(ops[fish_names[fish_ind]]['fish_ind'])))
+    plt.xlabel('Time (frame)')
+    plt.ylabel('Neuron (sorted by cluster)')
+    plt.show()
+
+#%%
+# run affinity propagation
+af = AffinityPropagation(preference=-9, damping=0.9, max_iter=500, random_state=1, affinity='precomputed', verbose=True).fit(corr_m)
+
+#%%
+
+cluster_centers_indices = af.cluster_centers_indices_
+labels = af.labels_
+n_clusters = len(cluster_centers_indices)
+print(n_clusters)
+
+
 
 outline = tifffile.imread('/media/BigBoy/ciqle/ref_brains/ZBrain2_0_outline_proj.tif')
 #%%
-def draw_hit_volume(hits_inds, values = [1], draw_centroid=False, add_write=True, proj_mean=True, draw_outline=False, save_name = None, normalize=True):
-    hits_inds_shuf = hits_inds.copy()
-    np.random.shuffle(hits_inds_shuf)
-    IM_roi = np.zeros((Zs, height, width))
-    for j in range(len(hits_inds)):
-        roi_coords_y = roi_stats[hits_inds[j]]['ypix_refbrain'].astype('int')
-        roi_coords_x = roi_stats[hits_inds[j]]['xpix_refbrain'].astype('int')
-        roi_coords_z = roi_stats[hits_inds[j]]['centroid_refbrain'][2].astype('int')
-        roi_coords_z = np.arange(roi_coords_z-2, roi_coords_z+2) # take a 5 z-planes to make it more comparable with xy size
-        roi_coords_y[roi_coords_y > height-1] = height-1
-        roi_coords_x[roi_coords_x > width-1] = width-1
-        roi_coords_z[roi_coords_z > Zs-1] = Zs-1
-        # if roi_coords_z > Zs-1:
-        #     roi_coords_z = Zs-1
-        if draw_centroid:
-            roi_coords_y = np.mean(roi_coords_y).astype('int')
-            roi_coords_x = np.mean(roi_coords_x).astype('int')
-            roi_coords_z = np.mean(roi_coords_z).astype('int')
-        if add_write:
-            if len(values) == 1:
-                for z in roi_coords_z:  
-                    IM_roi[z, roi_coords_y, roi_coords_x]  += values
-            else:
-                for z in roi_coords_z:  
-                    IM_roi[z, roi_coords_y, roi_coords_x]  += values[j]
-        else:
-            if len(values) == 1:  
-                for z in roi_coords_z:  
-                    IM_roi[z, roi_coords_y, roi_coords_x]  = values
-            else:
-                for z in roi_coords_z:  
-                    IM_roi[z, roi_coords_y, roi_coords_x]  = values[j]
-
-
-    if proj_mean:
-        im_proj_z = np.mean(IM_roi[:,:, :], axis=0)
-        im_proj_x = zoom(np.mean(IM_roi[:,:, :], axis=2).T, [1, z_rez/xy_rez])
-    else:
-        im_proj_z = np.max(IM_roi[:,:, :], axis=0)
-        im_proj_x = zoom(np.max(IM_roi[:,:, :], axis=2).T, [1, z_rez/xy_rez])
-    
-    if normalize:
-        im_proj = np.hstack((im_proj_z/np.max(im_proj_z), im_proj_x/np.max(im_proj_x)))
-    else:
-        im_proj = np.hstack((im_proj_z, im_proj_x))
-
-    if draw_outline:
-        im_proj[outline > 0.01] = np.max(im_proj)
-
-    # if not save_name==None:
-    #     imsave(os.path.join(analysis_out, save_name+'_proj_image.tif'), im_proj)
-    return IM_roi, im_proj
 
 
 IM_rois, im_rois_proj = draw_hit_volume(np.arange(len(roi_stats)))
