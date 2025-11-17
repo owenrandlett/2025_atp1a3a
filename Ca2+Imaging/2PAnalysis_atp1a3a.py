@@ -749,18 +749,21 @@ from sklearn.cluster import AffinityPropagation, KMeans, SpectralClustering, Agg
 F_dff_std = np.nanstd(F_dff, axis=1)
 #%
 std_thresh = 0.6
+std_above_thresh = F_dff_std >= std_thresh
+
+corr_thresh = 0.1
+corr_above_thresh = np.max(abs(corrMat), axis=1) >= corr_thresh
+
+active_neurons = np.where(np.logical_or(std_above_thresh, corr_above_thresh))[0]
+
 plt.hist(F_dff_std, bins=np.arange(0, 2, 0.01))
 plt.vlines(std_thresh, 0, 5000, colors='r', linestyles='dashed')
 
-valid_types = [0, 1, 2]
-valid_fish_inds = np.where(np.isin(fish_data[:, 1], valid_types))[0]
-active_neurons = np.intersect1d(valid_fish_inds, np.where(F_dff_std >= std_thresh)[0])
+print(f'Number of neurons above std threshold: {np.sum(std_above_thresh)}')
+print(f'Number of neurons above corr threshold: {np.sum(corr_above_thresh)}')
+print(f'Number of active neurons selected for clustering: {len(active_neurons)}')
 
-fish_data_active = fish_data[active_neurons, :]
-
-print('Number of active neurons selected for clustering: ' + str(len(active_neurons)))
-
-#%%
+#%
 IM_roi, im_show = draw_hit_volume(active_neurons, draw_outline=False)
 plt.figure(figsize=(10,20))
 plt.imshow(im_show, vmin = 0, vmax=0.7, cmap='inferno')
@@ -777,11 +780,13 @@ from matplotlib.colors import LinearSegmentedColormap
 # Select first fish
 for fish_ind in range(len(fish_names)):
     fish_IDs = np.where(fish_data[:,0] == fish_ind)[0]
-    active_neurons = np.intersect1d(fish_IDs, np.where(F_dff_std >= std_thresh)[0])
-    F_norm_fish = F_norm[active_neurons, start_analyze_frame:]
+
+    active_neurons_in_fish = np.intersect1d(fish_IDs, active_neurons)
+    
+    traces_to_cluster = F_norm[active_neurons_in_fish, start_analyze_frame:]
 
     # Compute correlation matrix (z-scored data)
-    corr_m_fish = np.dot(F_norm_fish, F_norm_fish.T) / F_norm_fish.shape[1]
+    corr_m_fish = np.dot(traces_to_cluster, traces_to_cluster.T) / traces_to_cluster.shape[1]
 
     # Run affinity propagation clustering
     af = AffinityPropagation(preference=-9, damping=0.9, max_iter=500, random_state=1, affinity='precomputed', verbose=True).fit(corr_m_fish)
@@ -790,14 +795,14 @@ for fish_ind in range(len(fish_names)):
 
     # Sort neurons by cluster label
     sort_inds = np.argsort(labels)
-    F_norm_fish_sorted = F_norm_fish[sort_inds, :]
+    traces_to_cluster_sorted = traces_to_cluster[sort_inds, :]
 
     #%
 
 
     # Get cluster boundaries for marking
     unique_labels, label_starts = np.unique(labels[sort_inds], return_index=True)
-    label_ends = np.append(label_starts[1:], F_norm_fish_sorted.shape[0])
+    label_ends = np.append(label_starts[1:], traces_to_cluster_sorted.shape[0])
 
     heatmap_cmap = LinearSegmentedColormap.from_list(
         "black_green",
@@ -808,7 +813,7 @@ for fish_ind in range(len(fish_names)):
 
     plt.figure(figsize=(14, 8))
     sns.heatmap(
-        F_norm_fish_sorted,
+        traces_to_cluster_sorted,
         cmap=heatmap_cmap,
         # center=0,
         vmin=heatmap_vmin,
@@ -818,9 +823,9 @@ for fish_ind in range(len(fish_names)):
     #%
     # Mark cluster boundaries with horizontal bars
     for start, end in zip(label_starts, label_ends):
-        plt.hlines(start, xmin=0, xmax=F_norm_fish_sorted.shape[1], colors='black', linewidth=1)
+        plt.hlines(start, xmin=0, xmax=traces_to_cluster_sorted.shape[1], colors='black', linewidth=1)
 
-    plt.title('fish ' + fish_names[fish_ind] + 'fish type = ' + str(get_fish_category(ops[fish_names[fish_ind]]['fish_ind'])))
+    plt.title(fish_names[fish_ind] + '\nFish Type = ' + matched_pairs[fish_ind][-1])
     plt.xlabel('Time (frame)')
     plt.ylabel('Neuron (sorted by cluster)')
     plt.show()
