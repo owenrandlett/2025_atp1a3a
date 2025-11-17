@@ -800,167 +800,381 @@ from matplotlib.colors import LinearSegmentedColormap
 from scipy.cluster.hierarchy import linkage, leaves_list
 from scipy.spatial.distance import squareform
 # Select first fish
+if re_analyze:
+    cluster_results = []
+    for fish_ind in range(len(fish_names)):
+        # locate all ROIs belonging to this fish
+        fish_IDs = np.where(fish_data[:, 0] == fish_ind)[0]
+        # keep only ROIs that passed global activity filters
+        active_neurons_in_fish = np.intersect1d(fish_IDs, active_neurons)
 
-cluster_results = []
-for fish_ind in range(len(fish_names)):
-    # locate all ROIs belonging to this fish
-    fish_IDs = np.where(fish_data[:, 0] == fish_ind)[0]
-    # keep only ROIs that passed global activity filters
-    active_neurons_in_fish = np.intersect1d(fish_IDs, active_neurons)
+        # pull normalized traces (drop initial frames to avoid artefacts)
+        traces_to_cluster = F_norm[active_neurons_in_fish, start_analyze_frame:]
+        # build similarity matrix (cosine/correlation via dot product)
+        corr_m_fish = np.dot(traces_to_cluster, traces_to_cluster.T) / traces_to_cluster.shape[1]
 
-    # pull normalized traces (drop initial frames to avoid artefacts)
-    traces_to_cluster = F_norm[active_neurons_in_fish, start_analyze_frame:]
-    # build similarity matrix (cosine/correlation via dot product)
-    corr_m_fish = np.dot(traces_to_cluster, traces_to_cluster.T) / traces_to_cluster.shape[1]
+        # run affinity propagation on the similarity matrix
+        af = AffinityPropagation(
+            preference=-9,
+            damping=0.9,
+            max_iter=500,
+            random_state=1,
+            affinity="precomputed",
+            verbose=True,
+        ).fit(corr_m_fish)
+        labels = af.labels_
 
-    # run affinity propagation on the similarity matrix
-    af = AffinityPropagation(
-        preference=-9,
-        damping=0.9,
-        max_iter=500,
-        random_state=1,
-        affinity="precomputed",
-        verbose=True,
-    ).fit(corr_m_fish)
-    labels = af.labels_
+        # compute mean trace (centroid) for each cluster
+        unique_labels = np.unique(labels)
+        centroids = np.vstack([traces_to_cluster[labels == lbl].mean(axis=0) for lbl in unique_labels])
 
-    # compute mean trace (centroid) for each cluster
-    unique_labels = np.unique(labels)
-    centroids = np.vstack([traces_to_cluster[labels == lbl].mean(axis=0) for lbl in unique_labels])
+        # order clusters so that similar centroids appear next to each other
+        if centroids.shape[0] > 1:
+            centroid_order = leaves_list(linkage(centroids, method="single"))
+            ordered_labels = unique_labels[centroid_order]
+        else:
+            ordered_labels = unique_labels
 
-    # order clusters so that similar centroids appear next to each other
-    if centroids.shape[0] > 1:
-        centroid_order = leaves_list(linkage(centroids, method="single"))
-        ordered_labels = unique_labels[centroid_order]
-    else:
-        ordered_labels = unique_labels
+        ordered_members = []
+        for lbl in ordered_labels:
+            # collect neuron indices for the current cluster
+            cluster_members = np.where(labels == lbl)[0]
+            if cluster_members.size > 1:
+                # compute within-cluster correlation matrix
+                cluster_traces = traces_to_cluster[cluster_members, :]
+                cluster_corr = np.corrcoef(cluster_traces)
+                cluster_corr[~np.isfinite(cluster_corr)] = 0
+                cluster_corr = np.clip(cluster_corr, -1, 1)
+                # convert to condensed distance form for hierarchical ordering
+                condensed = squareform(np.clip(1 - cluster_corr, 0, None), checks=False)
+                if np.any(condensed > 0):
+                    # order neurons along the dendrogram leaves for smooth transitions
+                    member_order = leaves_list(linkage(condensed, method="single"))
+                    cluster_members = cluster_members[member_order]
+                else:
+                    # fallback: keep original index order
+                    cluster_members = cluster_members[np.argsort(cluster_members)]
+            ordered_members.append(cluster_members)
 
-    ordered_members = []
-    for lbl in ordered_labels:
-        # collect neuron indices for the current cluster
-        cluster_members = np.where(labels == lbl)[0]
-        if cluster_members.size > 1:
-            # compute within-cluster correlation matrix
-            cluster_traces = traces_to_cluster[cluster_members, :]
-            cluster_corr = np.corrcoef(cluster_traces)
-            cluster_corr[~np.isfinite(cluster_corr)] = 0
-            cluster_corr = np.clip(cluster_corr, -1, 1)
-            # convert to condensed distance form for hierarchical ordering
-            condensed = squareform(np.clip(1 - cluster_corr, 0, None), checks=False)
-            if np.any(condensed > 0):
-                # order neurons along the dendrogram leaves for smooth transitions
-                member_order = leaves_list(linkage(condensed, method="single"))
-                cluster_members = cluster_members[member_order]
-            else:
-                # fallback: keep original index order
-                cluster_members = cluster_members[np.argsort(cluster_members)]
-        ordered_members.append(cluster_members)
+        # flatten per-cluster order into a single index array
+        final_inds = np.concatenate(ordered_members)
+        traces_to_cluster_sorted = traces_to_cluster[final_inds, :]
+        labels_sorted = labels[final_inds]
 
-    # flatten per-cluster order into a single index array
-    final_inds = np.concatenate(ordered_members)
-    traces_to_cluster_sorted = traces_to_cluster[final_inds, :]
-    labels_sorted = labels[final_inds]
+        # identify start/end rows for each cluster (for plotting dividers)
+        unique_labels_sorted, label_starts = np.unique(labels_sorted, return_index=True)
+        label_ends = np.append(label_starts[1:], traces_to_cluster_sorted.shape[0])
+        # fetch regressors for this fish (already convolved & resampled)
+        reg_signals = regressors_per_fish[fish_ind]
+        if isinstance(reg_signals, np.ndarray) and reg_signals.dtype == object:
+            reg_signals = np.stack(reg_signals)
+        else:
+            reg_signals = np.asarray(reg_signals)
 
-    # identify start/end rows for each cluster (for plotting dividers)
-    unique_labels_sorted, label_starts = np.unique(labels_sorted, return_index=True)
-    label_ends = np.append(label_starts[1:], traces_to_cluster_sorted.shape[0])
-    # fetch regressors for this fish (already convolved & resampled)
-    reg_signals = regressors_per_fish[fish_ind]
-    if isinstance(reg_signals, np.ndarray) and reg_signals.dtype == object:
-        reg_signals = np.stack(reg_signals)
-    else:
-        reg_signals = np.asarray(reg_signals)
-
-    heatmap_cmap = LinearSegmentedColormap.from_list(
-        "black_green",
-        ["white", "black"],
-        N=256,
-    )
-    heatmap_vmin, heatmap_vmax = 0, 1
-
-
-    with plt.rc_context({"font.size": 28}):
-        fig, axes = plt.subplots(
-            2,
-            1,
-            sharex=True,
-            figsize=(30, 20),
-            gridspec_kw={"height_ratios": [4, 1]},
+        heatmap_cmap = LinearSegmentedColormap.from_list(
+            "black_green",
+            ["white", "black"],
+            N=256,
         )
-        ax_heatmap = axes[0]
+        heatmap_vmin, heatmap_vmax = 0, 1
 
-        sns.heatmap(
-            traces_to_cluster_sorted,
-            cmap=heatmap_cmap,
-            vmin=heatmap_vmin,
-            vmax=heatmap_vmax,
-            # cbar_kws={"label": "z-score"},
-            cbar = False,
-            ax=ax_heatmap,
-        )
 
-        ax_heatmap.set_title(f"{fish_names[fish_ind]}\nFish Type = {matched_pairs[fish_ind][-1]}")
-        for start, end in zip(label_starts, label_ends):
-            ax_heatmap.hlines(start, xmin=0, xmax=traces_to_cluster_sorted.shape[1], colors="black", linestyles="--", linewidth=2.5)
+        with plt.rc_context({"font.size": 28}):
+            fig, axes = plt.subplots(
+                2,
+                1,
+                sharex=True,
+                figsize=(30, 20),
+                gridspec_kw={"height_ratios": [4, 1]},
+            )
+            ax_heatmap = axes[0]
 
-        title_str = fish_names[fish_ind] + "\nFish Type = " + matched_pairs[fish_ind][-1]
-        ax_heatmap.set_title(title_str)
-        ax_heatmap.set_ylabel("Neuron (continuum-ordered clusters)")
-        ax_heatmap.collections[0].set_rasterized(True)
+            sns.heatmap(
+                traces_to_cluster_sorted,
+                cmap=heatmap_cmap,
+                vmin=heatmap_vmin,
+                vmax=heatmap_vmax,
+                # cbar_kws={"label": "z-score"},
+                cbar = False,
+                ax=ax_heatmap,
+            )
 
-        frame_idx = np.arange(traces_to_cluster_sorted.shape[1])
-        x_coords = frame_idx + 0.5
+            # ax_heatmap.set_aspect(traces_to_cluster_sorted.shape[1] / traces_to_cluster_sorted.shape[0])
+            ax_heatmap.set_title(f"{fish_names[fish_ind]}\nFish Type = {matched_pairs[fish_ind][-1]}")
+            for start, end in zip(label_starts, label_ends):
+                ax_heatmap.hlines(start, xmin=0, xmax=traces_to_cluster_sorted.shape[1], colors="black", linestyles="--", linewidth=2.5)
 
-        ax = axes[1]
+            tick_step = 1000
+            y_tick_positions = np.arange(0, traces_to_cluster_sorted.shape[0], tick_step)-1
+            ax_heatmap.set_yticks(y_tick_positions + 0.5)
+            ax_heatmap.set_yticklabels((y_tick_positions + 1).astype(int))
+            fish_type = matched_pairs[fish_ind][-1]
+            title_str = fish_names[fish_ind] + "\nFish Type = " + fish_type
+            ax_heatmap.set_title(title_str)
+            ax_heatmap.set_ylabel("Neuron (continuum-ordered clusters)")
+            ax_heatmap.collections[0].set_rasterized(True)
+
+            frame_idx = np.arange(traces_to_cluster_sorted.shape[1])
+            x_coords = frame_idx + 0.5
+
+            ax = axes[1]
+            
+            behav_data = behav_data_per_fish[fish_ind].copy()
+            behav_data[0,:] = behav_data[0,:] * 0.15  # scale dark flash for visibility
+            behav_data[1,:] = behav_data[1,:] * 0.1   # scale OMR for visibility
+            behav_data[4,:] = behav_data[4,:] / 50  # scale lowpass orientation
+
+            for i in range(len(behav_data)):
+                ax.plot(x_coords, behav_data[i, start_analyze_frame : start_analyze_frame + len(frame_idx)], linewidth=2.5, label=regressor_names[i])
+            ax.spines["top"].set_visible(False)
+            ax.spines["right"].set_visible(False)
+
+            tick_positions = np.linspace(0, frame_idx[-1], 5, dtype=int)
+            tick_positions_shifted = tick_positions + 0.5
+            axes[-1].set_xlabel("Frame Number")
+            axes[-1].set_ylabel("Regressor Signal")
+            axes[-1].set_xticks(tick_positions_shifted)
+            axes[-1].set_xticklabels((tick_positions + start_analyze_frame).astype(int))
+            axes[-1].legend(fontsize=14)
+
+
+            plt.tight_layout()
+            plt.savefig(os.path.join(out_dir_heatmaps, safe_filename(title_str) + '.png'), dpi=300)
+            plt.savefig(
+                os.path.join(out_dir_heatmaps, safe_filename(title_str) + ".svg"),
+                dpi=300,
+                bbox_inches="tight",
+            )
+            plt.show()
         
-        behav_data = behav_data_per_fish[fish_ind].copy()
-        behav_data[0,:] = behav_data[0,:] * 0.15  # scale dark flash for visibility
-        behav_data[1,:] = behav_data[1,:] * 0.1   # scale OMR for visibility
-        behav_data[4,:] = behav_data[4,:] / 50  # scale lowpass orientation
-        
-        for i in range(len(behav_data)):
-            ax.plot(x_coords, behav_data[i, start_analyze_frame : start_analyze_frame + len(frame_idx)], linewidth=2.5, label=regressor_names[i])
-        ax.spines["top"].set_visible(False)
-        ax.spines["right"].set_visible(False)
-
-        tick_positions = np.linspace(0, frame_idx[-1], 5, dtype=int)
-        tick_positions_shifted = tick_positions + 0.5
-        axes[-1].set_xlabel("Frame Number")
-        axes[-1].set_ylabel("Regressor Signal")
-        axes[-1].set_xticks(tick_positions_shifted)
-        axes[-1].set_xticklabels((tick_positions + start_analyze_frame).astype(int))
-        axes[-1].legend(fontsize=14)
-
-
-        plt.tight_layout()
-        plt.savefig(os.path.join(out_dir_heatmaps, safe_filename(title_str) + '.png'), dpi=300)
-        plt.savefig(
-            os.path.join(out_dir_heatmaps, safe_filename(title_str) + ".svg"),
-            dpi=300,
-            bbox_inches="tight",
+        cluster_results.append(
+            {
+                "fish_index": fish_ind,
+                "fish_name": fish_names[fish_ind],
+                "fish_type": fish_type,
+                "active_neuron_ids": active_neurons_in_fish.copy(),
+                "cluster_labels": labels_sorted.copy(),
+                "cluster_order": ordered_labels.copy(),
+                "label_starts": label_starts.copy(),
+                "label_ends": label_ends.copy(),
+                "final_roi_indices": final_inds.copy(),
+                "cluster_centroids": centroids.copy(),
+                "traces_sorted": traces_to_cluster_sorted.copy(),
+                "regressors_window": reg_signals[:, start_analyze_frame : start_analyze_frame + len(frame_idx)].copy(),
+            }
         )
-        plt.show()
-    
-    cluster_results.append(
-        {
-            "fish_index": fish_ind,
-            "fish_name": fish_names[fish_ind],
-            "active_neuron_ids": active_neurons_in_fish.copy(),
-            "cluster_labels": labels_sorted.copy(),
-            "cluster_order": ordered_labels.copy(),
-            "label_starts": label_starts.copy(),
-            "label_ends": label_ends.copy(),
-            "final_roi_indices": final_inds.copy(),
-            "cluster_centroids": centroids.copy(),
-            "traces_sorted": traces_to_cluster_sorted.copy(),
-            "regressors_window": reg_signals[:, start_analyze_frame : start_analyze_frame + len(frame_idx)].copy(),
-        }
+
+    np.save(
+        os.path.join(out_dir, "cluster_results.npy"),
+        np.array(cluster_results, dtype=object),
     )
 
-np.save(
-    os.path.join(out_dir, "cluster_results.npy"),
-    np.array(cluster_results, dtype=object),
+
+cluster_results = np.load(os.path.join(out_dir, "cluster_results.npy"),allow_pickle=True)
+#%%
+fish_ind = 0
+fish_name = cluster_results[fish_ind]['fish_name']
+print(fish_name)
+active_neurons_in_fish = cluster_results[fish_ind]['active_neuron_ids']
+traces_sorted = cluster_results[fish_ind]['traces_sorted']
+labels_sorted = cluster_results[fish_ind]['cluster_labels'] 
+label_starts = cluster_results[fish_ind]['label_starts']
+label_ends = cluster_results[fish_ind]['label_ends']
+final_roi_indices = cluster_results[fish_ind]['final_roi_indices']
+centroids = cluster_results[fish_ind]['cluster_centroids']
+fish_type = matched_pairs[fish_ind][-1]
+print(fish_type)
+
+
+corr_threshold = 0.35  # adjust as needed
+
+reg_signals = np.asarray(cluster_results[fish_ind]["regressors_window"])
+traces_sorted = cluster_results[fish_ind]["traces_sorted"]
+labels_sorted = cluster_results[fish_ind]["cluster_labels"]
+ordered_labels = cluster_results[fish_ind]["cluster_order"]
+cluster_centroids = cluster_results[fish_ind]["cluster_centroids"]
+
+label_indices = {
+    lbl: np.where(labels_sorted == lbl)[0]
+    for lbl in ordered_labels
+    if np.any(labels_sorted == lbl)
+}
+
+cluster_labels_unique = np.unique(cluster_results[fish_ind]["cluster_labels"])
+centroid_lookup = {
+    lbl: cluster_centroids[idx] for idx, lbl in enumerate(cluster_labels_unique)
+}
+ordered_centroids = np.vstack([centroid_lookup[lbl] for lbl in ordered_labels])
+
+n_clusters = len(ordered_labels)
+n_reg = len(regressor_names)
+
+corrs_matrix = np.zeros((n_reg, n_clusters))
+for r_idx, r_name in enumerate(regressor_names):
+    regr = reg_signals[r_idx]
+    corrs_matrix[r_idx] = np.array(
+        [np.corrcoef(regr, centroid)[0, 1] for centroid in ordered_centroids]
+    )
+
+best_reg_idx = np.argmax(np.abs(corrs_matrix), axis=0)
+best_corrs = corrs_matrix[best_reg_idx, np.arange(n_clusters)]
+
+cluster_hits = {
+    r_name: {"labels": [], "corrs": [], "cluster_traces": []}
+    for r_name in regressor_names
+}
+unassigned_clusters = []
+
+for cluster_pos, lbl in enumerate(ordered_labels):
+    best_idx = int(best_reg_idx[cluster_pos])
+    best_corr = best_corrs[cluster_pos]
+    if np.abs(best_corr) >= corr_threshold and lbl in label_indices:
+        traces_block = traces_sorted[label_indices[lbl], :]
+        cluster_hits[regressor_names[best_idx]]["labels"].append(lbl)
+        cluster_hits[regressor_names[best_idx]]["corrs"].append(best_corr)
+        cluster_hits[regressor_names[best_idx]]["cluster_traces"].append(traces_block)
+    elif lbl in label_indices:
+        unassigned_clusters.append((lbl, best_corr, traces_sorted[label_indices[lbl], :]))
+
+behav_data_plot = behav_data_per_fish[fish_ind].copy()
+behav_data_plot[0, :] *= 0.15  # Dark flashes
+behav_data_plot[1, :] *= 0.1   # OMR
+behav_data_plot[4, :] /= 50    # Lowpass orientation
+
+behav_colors = {
+    "Dark Flashes": "#8c564b",
+    "OMR": "#1f77b4",
+    "Tail Power": "#2ca02c",
+    "Swim Bursting": "#d62728",
+    "Lowpass Orientation": "#9467bd",
+}
+
+fig, axes = plt.subplots(n_reg + 1, 1, figsize=(18, 3.6 * (n_reg + 1)), sharex=True)
+axes = np.atleast_1d(axes)
+
+global_vmin = 0
+global_vmax = 1
+heatmap_cmap = LinearSegmentedColormap.from_list("cluster_heatmap", ["white", "black"], N=256)
+
+x_coords = np.arange(traces_sorted.shape[1]) + 0.5
+behav_xlim = (x_coords[0], x_coords[-1])
+
+for ax, r_name in zip(axes[:-1], regressor_names):
+    data = cluster_hits[r_name]
+    ax.set_title(f"{r_name} (max |r| ≥ {corr_threshold})")
+    if not data["cluster_traces"]:
+        ax.text(0.5, 0.5, "No clusters assigned", transform=ax.transAxes, ha="center", va="center")
+        ax.axis("off")
+        continue
+
+    stacked_traces = np.vstack(data["cluster_traces"])
+    sns.heatmap(
+        stacked_traces,
+        cmap=heatmap_cmap,
+        vmin=global_vmin,
+        vmax=global_vmax,
+        cbar=False,
+        ax=ax,
+    )
+
+    cluster_sizes = [block.shape[0] for block in data["cluster_traces"]]
+    boundaries = np.cumsum(cluster_sizes)[:-1]
+    for line in boundaries:
+        ax.hlines(line, xmin=0, xmax=stacked_traces.shape[1], colors="white", linestyles="--", linewidth=1.2)
+
+    y_centers = np.cumsum(cluster_sizes) - np.array(cluster_sizes) / 2.0
+    y_labels = [
+        f"Cluster {lbl} (n={size}, r={corr:.2f})"
+        for lbl, size, corr in zip(data["labels"], cluster_sizes, data["corrs"])
+    ]
+    ax.set_yticks(y_centers)
+    ax.set_yticklabels(y_labels, rotation=0)
+    ax.tick_params(axis="x", labelbottom=False)
+
+    behav_idx = regressor_idx_map[r_name]
+    behav_trace = behav_data_plot[behav_idx, start_analyze_frame : start_analyze_frame + stacked_traces.shape[1]]
+    behav_ax = ax.inset_axes([0, -0.18, 1, 0.12], sharex=ax)
+    behav_ax.plot(x_coords, behav_trace, color=behav_colors.get(r_name, "black"), linewidth=2)
+    behav_ax.set_xlim(behav_xlim)
+    behav_ax.set_ylim(np.min(behav_trace) * 1.1, np.max(behav_trace) * 1.1 if np.max(behav_trace) != 0 else 1)
+    behav_ax.set_yticks([])
+    behav_ax.spines["top"].set_visible(False)
+    behav_ax.spines["right"].set_visible(False)
+    behav_ax.spines["left"].set_visible(False)
+    behav_ax.set_xlabel("")
+    behav_ax.set_title("")
+    behav_ax.set_facecolor("none")
+
+remaining_ax = axes[-1]
+remaining_ax.set_title("Remaining clusters")
+if not unassigned_clusters:
+    remaining_ax.text(0.5, 0.5, "All clusters assigned", transform=remaining_ax.transAxes, ha="center", va="center")
+    remaining_ax.axis("off")
+else:
+    remaining_traces = [block for (_, _, block) in unassigned_clusters]
+    stacked_remaining = np.vstack(remaining_traces)
+    sns.heatmap(
+        stacked_remaining,
+        cmap=heatmap_cmap,
+        vmin=global_vmin,
+        vmax=global_vmax,
+        cbar=False,
+        ax=remaining_ax,
+    )
+
+    remaining_sizes = [block.shape[0] for block in remaining_traces]
+    remaining_boundaries = np.cumsum(remaining_sizes)[:-1]
+    for line in remaining_boundaries:
+        remaining_ax.hlines(line, xmin=0, xmax=stacked_remaining.shape[1], colors="white", linestyles="--", linewidth=1.2)
+
+    remaining_centers = np.cumsum(remaining_sizes) - np.array(remaining_sizes) / 2.0
+    remaining_labels = [lbl for (lbl, _, _) in unassigned_clusters]
+    remaining_corrs = [corr for (_, corr, _) in unassigned_clusters]
+    remaining_ax.set_yticks(remaining_centers)
+    remaining_ax.set_yticklabels(
+        [f"Cluster {lbl} (n={size}, max|r|={abs(corr):.2f})" for lbl, size, corr in zip(remaining_labels, remaining_sizes, remaining_corrs)],
+        rotation=0,
+    )
+
+    behav_ax_rem = remaining_ax.inset_axes([0, -0.18, 1, 0.12], sharex=remaining_ax)
+    for idx, color in behav_colors.items():
+        behav_trace = behav_data_plot[regressor_idx_map[idx], start_analyze_frame : start_analyze_frame + stacked_remaining.shape[1]]
+        behav_ax_rem.plot(x_coords, behav_trace, color=color, linewidth=1.5, alpha=0.8, label=idx)
+    behav_ax_rem.set_xlim(behav_xlim)
+    behav_ax_rem.set_yticks([])
+    behav_ax_rem.spines["top"].set_visible(False)
+    behav_ax_rem.spines["right"].set_visible(False)
+    behav_ax_rem.spines["left"].set_visible(False)
+    behav_ax_rem.set_facecolor("none")
+    behav_ax_rem.legend(loc="upper right", fontsize=8, ncol=2, frameon=False)
+
+tick_positions = np.linspace(0, traces_sorted.shape[1] - 1, 5, dtype=int)
+axes[-1].set_xticks(tick_positions + 0.5)
+axes[-1].set_xticklabels((tick_positions + start_analyze_frame).astype(int))
+axes[-1].set_xlabel("Frame")
+
+plt.subplots_adjust(hspace=0.6)
+plt.show()
+
+#%%
+fish_ind = -1
+print(cluster_results[fish_ind]['fish_name'])
+active_neurons_in_fish = cluster_results[fish_ind]['active_neuron_ids']
+traces_sorted = cluster_results[fish_ind]['traces_sorted']
+labels_sorted = cluster_results[fish_ind]['cluster_labels']
+
+plt.figure()
+# plt.imshow(traces_sorted, aspect='auto', cmap='gray', vmin=0, vmax=1)
+
+sns.heatmap(
+    traces_sorted,
+    cmap=heatmap_cmap,
+    vmin=0,
+    vmax=1,
+    # cbar_kws={"label": "z-score"},
+    cbar = False,
 )
+plt.show()
 #%%
 # run affinity propagation
 af = AffinityPropagation(preference=-9, damping=0.9, max_iter=500, random_state=1, affinity='precomputed', verbose=True).fit(corr_m)
