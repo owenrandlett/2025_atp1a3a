@@ -136,12 +136,12 @@ fish_dict = {
         "20250910_atp1a3a_Fish2_func-000",
         "20250910_atp1a3a_Fish4_func-000",
         "20250910_atp1a3a_Fish5_func-000",
-        "20250910_atp1a3a_Fish8_func-000",
+        # "20250910_atp1a3a_Fish8_func-000", # data corrupted in cluster plot... not sure what is wrong but need to ignore
         "20250910_atp1a3a_Fish9_func-000",
         # "20250911_atp1a3a_Fish4_func-000", # z position unstable
         "20250911_atp1a3a_Fish6_func-000",
         "20250911_atp1a3a_Fish8_func-000",
-        "20250911_atp1a3a_Fish9_func-000",
+        # "20250911_atp1a3a_Fish9_func-000", # data corrupted in cluster plot... not sure what is wrong but need to ignore
     ],
     "-/-": [
         "20250902_atp1a3a_Fish4_susMut_func-000",
@@ -976,6 +976,9 @@ cluster_results = np.load(os.path.join(out_dir, "cluster_results.npy"),allow_pic
 out_dir_orderedheatmaps = os.path.join(out_dir, 'clustered_ordered_heatmaps')
 os.makedirs(out_dir_orderedheatmaps, exist_ok=True)
 
+selected_regressor_indices = [0, 1, 2]
+selected_regressor_names = [regressor_names[i] for i in selected_regressor_indices]
+
 enriched_results = []
 for fish_ind in tqdm.tqdm(range(len(cluster_results))):
     fish_name = cluster_results[fish_ind]['fish_name']
@@ -992,10 +995,8 @@ for fish_ind in tqdm.tqdm(range(len(cluster_results))):
 
     corr_threshold = 0.35  # adjust as needed
 
-    reg_signals = np.asarray(cluster_results[fish_ind]["regressors_window"])
-    regressor_idx_map = {name: idx for idx, name in enumerate(regressor_names)}
-    traces_sorted = cluster_results[fish_ind]["traces_sorted"]
-    labels_sorted = cluster_results[fish_ind]["cluster_labels"]
+    reg_signals = np.asarray(cluster_results[fish_ind]["regressors_window"])[selected_regressor_indices, :]
+    regressor_idx_map = {name: idx for idx, name in enumerate(selected_regressor_names)}
     ordered_labels = cluster_results[fish_ind]["cluster_order"]
     cluster_centroids = cluster_results[fish_ind]["cluster_centroids"]
 
@@ -1005,22 +1006,22 @@ for fish_ind in tqdm.tqdm(range(len(cluster_results))):
         if np.any(labels_sorted == lbl)
     }
 
-    cluster_labels_unique = np.unique(cluster_results[fish_ind]["cluster_labels"])
+    cluster_labels_unique = np.unique(labels_sorted)
     centroid_lookup = {lbl: cluster_centroids[idx] for idx, lbl in enumerate(cluster_labels_unique)}
     ordered_centroids = np.vstack([centroid_lookup[lbl] for lbl in ordered_labels])
 
     n_clusters = len(ordered_labels)
-    n_reg = len(regressor_names)
+    n_reg = len(selected_regressor_names)
 
     corrs_matrix = np.zeros((n_reg, n_clusters))
-    for r_idx, r_name in enumerate(regressor_names):
+    for r_idx, r_name in enumerate(selected_regressor_names):
         regr = reg_signals[r_idx]
         corrs_matrix[r_idx] = np.array([np.corrcoef(regr, centroid)[0, 1] for centroid in ordered_centroids])
 
     best_reg_idx = np.argmax(np.abs(corrs_matrix), axis=0)
     best_corrs = corrs_matrix[best_reg_idx, np.arange(n_clusters)]
 
-    cluster_hits = {r_name: {"labels": [], "corrs": [], "cluster_traces": []} for r_name in regressor_names}
+    cluster_hits = {r_name: {"labels": [], "corrs": [], "cluster_traces": []} for r_name in selected_regressor_names}
     unassigned_clusters = []
 
     for cluster_pos, lbl in enumerate(ordered_labels):
@@ -1028,16 +1029,16 @@ for fish_ind in tqdm.tqdm(range(len(cluster_results))):
         best_corr = best_corrs[cluster_pos]
         if np.abs(best_corr) >= corr_threshold and lbl in label_indices:
             traces_block = traces_sorted[label_indices[lbl], :]
-            cluster_hits[regressor_names[best_idx]]["labels"].append(lbl)
-            cluster_hits[regressor_names[best_idx]]["corrs"].append(best_corr)
-            cluster_hits[regressor_names[best_idx]]["cluster_traces"].append(traces_block)
+            cluster_hits[selected_regressor_names[best_idx]]["labels"].append(lbl)
+            cluster_hits[selected_regressor_names[best_idx]]["corrs"].append(best_corr)
+            cluster_hits[selected_regressor_names[best_idx]]["cluster_traces"].append(traces_block)
         elif lbl in label_indices:
             unassigned_clusters.append((lbl, best_corr, traces_sorted[label_indices[lbl], :]))
 
     behavior_panel_units = 60
     panel_height_units = []
     heat_panel_labels = []
-    for r_name in regressor_names:
+    for r_name in selected_regressor_names:
         blocks = cluster_hits[r_name]["cluster_traces"]
         heat_units = sum(block.shape[0] for block in blocks) if blocks else 1
         panel_height_units.extend([heat_units, behavior_panel_units])
@@ -1051,18 +1052,19 @@ for fish_ind in tqdm.tqdm(range(len(cluster_results))):
     total_units = sum(panel_height_units)
     fig_height = np.clip(0.02 * total_units, 8, 40)
 
-    behav_data_plot = behav_data_per_fish[fish_ind].copy()
+    behav_data_plot = behav_data_per_fish[fish_ind][selected_regressor_indices, :].copy()
     behav_data_plot[0, :] *= 0.15
     behav_data_plot[1, :] *= 0.1
-    behav_data_plot[4, :] /= 50
+    behav_data_plot[2, :] -= np.median(behav_data_plot[2, :])
 
-    behav_colors = {
+    behav_colors_full = {
         "Dark Flashes": "#8c564b",
         "OMR": "#1f77b4",
         "Tail Power": "#2ca02c",
         "Swim Bursting": "#d62728",
         "Lowpass Orientation": "#9467bd",
     }
+    behav_colors = {name: behav_colors_full[name] for name in selected_regressor_names}
 
     heatmap_cmap = LinearSegmentedColormap.from_list("cluster_heatmap", ["white", "black"], N=256)
     global_vmin = 0
@@ -1073,15 +1075,12 @@ for fish_ind in tqdm.tqdm(range(len(cluster_results))):
 
     axes = []
     for idx in range(len(panel_height_units)):
-        if idx == 0:
-            axes.append(fig.add_subplot(gs[idx]))
-        else:
-            axes.append(fig.add_subplot(gs[idx], sharex=axes[0]))
+        axes.append(fig.add_subplot(gs[idx], sharex=axes[0] if idx > 0 else None))
 
     axis_iter = iter(axes)
     heat_axes = {}
     behav_axes = {}
-    for r_name in regressor_names:
+    for r_name in selected_regressor_names:
         heat_axes[r_name] = next(axis_iter)
         behav_axes[r_name] = next(axis_iter)
     remaining_heat_ax = next(axis_iter)
@@ -1098,7 +1097,7 @@ for fish_ind in tqdm.tqdm(range(len(cluster_results))):
     tick_positions = minute_frames[valid]
     xticklabels_min = target_minutes[valid]
 
-    for r_name in regressor_names:
+    for r_name in selected_regressor_names:
         ax_heat = heat_axes[r_name]
         data = cluster_hits[r_name]
         ax_heat.set_title(f"{r_name} (max |r| ≥ {corr_threshold})")
@@ -1248,6 +1247,599 @@ cluster_results_enriched_path = os.path.join(out_dir, "cluster_results_enriched.
 np.save(cluster_results_enriched_path, np.array(enriched_results, dtype=object))
 
 print(f"Saved enriched clustering metadata to: {cluster_results_enriched_path}")
+
+
+#%%
+"""
+Quantify per-fish cluster-category compositions and assess genotype biases.
+
+This script:
+1. Loads `cluster_results_enriched.npy`, generated by the clustering pipeline.
+2. Tallies ROI counts per functional category (DF, OMR, Swimming; remainder → Rest).
+3. Filters out fish with missing/unknown genotype annotations.
+4. Exports per-fish fractions, genotype summaries, and Kruskal–Wallis stats.
+5. Visualizes category fractions across genotypes via box + strip plot overlays.
+"""
+
+import os
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+from scipy import stats
+
+# ---------------------------------------------------------------------------
+# Configuration / constants
+# ---------------------------------------------------------------------------
+
+PROCESSED_ROOT = "/media/FastDrive/atp1a3a_data"
+CLUSTER_RESULTS_PATH = os.path.join(PROCESSED_ROOT, "Outputs_2pAnalysis", "cluster_results_enriched.npy")
+
+# Map raw regressor names -> high-level behavioral categories of interest
+CATEGORY_MAP = {
+    "Dark Flashes": "DF",        # stimulus-triggered responses
+    "OMR": "OMR",                # optomotor-driven responses
+    "Tail Power": "Swimming",    # voluntary swim-related responses
+}
+
+# Translate stored genotype strings into harmonized labels
+GENOTYPE_MAP = {"+/+": "WT", "+/-": "HET", "-/-": "MUT"}
+
+# Desired plotting order for categorical axes
+CATEGORY_ORDER = ["DF", "OMR", "Swimming", "Rest"]
+GENOTYPE_ORDER = ["WT", "HET", "MUT"]
+
+# ---------------------------------------------------------------------------
+# Data aggregation utilities
+# ---------------------------------------------------------------------------
+
+def summarize_per_fish(path: str = CLUSTER_RESULTS_PATH) -> pd.DataFrame:
+    """
+    Load enriched cluster results and compute, for each fish, the counts and fractions
+    of ROIs assigned to each functional category (plus residual "Rest").
+
+    Returns
+    -------
+    DataFrame with columns: fish, genotype, category, count, fraction
+    """
+    enriched = np.load(path, allow_pickle=True)
+    records = []
+
+    for entry in enriched:
+        raw_type = entry.get("fish_type", "UNKNOWN")
+        if raw_type not in GENOTYPE_MAP:
+            # Skip fish lacking genotype info (removes “UNKNOWN” automatically)
+            continue
+
+        fish_name = entry["fish_name"]
+        genotype = GENOTYPE_MAP[raw_type]
+        total_cells = len(entry["active_neuron_ids"])
+        if total_cells == 0:
+            # Guard against division by zero for rare empty-capture cases
+            continue
+
+        # Track how many cells we assign to functional categories
+        assigned_cells = 0
+        for regressor_name, category in CATEGORY_MAP.items():
+            sizes = entry["cluster_categories"].get(regressor_name, {}).get("cluster_sizes", [])
+            count = int(np.sum(sizes))
+            assigned_cells += count
+            records.append(
+                {
+                    "fish": fish_name,
+                    "genotype": genotype,
+                    "category": category,
+                    "count": count,
+                    "fraction": count / total_cells,
+                }
+            )
+
+        # Any remaining ROIs (not strongly matched to tracked regressors) → "Rest"
+        rest_count = max(total_cells - assigned_cells, 0)
+        records.append(
+            {
+                "fish": fish_name,
+                "genotype": genotype,
+                "category": "Rest",
+                "count": rest_count,
+                "fraction": rest_count / total_cells,
+            }
+        )
+
+    return pd.DataFrame(records)
+
+
+def kruskal_by_category(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Apply Kruskal–Wallis tests per category across genotypes.
+
+    Parameters
+    ----------
+    df : DataFrame
+        Output of `summarize_per_fish`.
+
+    Returns
+    -------
+    DataFrame with columns: category, H, p_value
+    """
+    results = []
+    grouped = df.groupby("category")
+
+    for category, sub in grouped:
+        # Collect per-genotype fraction distributions
+        distributions = []
+        for genotype, gdf in sub.groupby("genotype"):
+            values = gdf["fraction"].dropna().values
+            if len(values) == 0:
+                continue
+            distributions.append(values)
+
+        # Require ≥2 non-empty genotype groups to run test
+        if len(distributions) < 2:
+            continue
+
+        H, p_value = stats.kruskal(*distributions, nan_policy="omit")
+        results.append({"category": category, "H": H, "p_value": p_value})
+
+    return pd.DataFrame(results)
+
+
+# ---------------------------------------------------------------------------
+# Main analysis pipeline
+# ---------------------------------------------------------------------------
+
+def main():
+    # -----------------------------------------------------------------------
+    # 1) Aggregate per-fish ROI fractions by category
+    # -----------------------------------------------------------------------
+    per_fish = summarize_per_fish()
+    per_fish.to_csv("per_fish_cluster_fractions.csv", index=False)
+
+    # -----------------------------------------------------------------------
+    # 2) Summaries per genotype/category (mean ± std, sample size)
+    # -----------------------------------------------------------------------
+    summary = (
+        per_fish.groupby(["genotype", "category"])["fraction"]
+        .agg(["mean", "std", "count"])
+        .reset_index()
+    )
+    summary.to_csv("genotype_cluster_fraction_summary.csv", index=False)
+
+    # -----------------------------------------------------------------------
+    # 3) Non-parametric comparisons across genotypes for each category
+    # -----------------------------------------------------------------------
+    kw = kruskal_by_category(per_fish)
+    kw.to_csv("genotype_cluster_fraction_kw.csv", index=False)
+
+    print("Category means ± std per genotype:")
+    print(summary)
+    print("\nKruskal–Wallis tests by category:")
+    print(kw)
+
+    # -----------------------------------------------------------------------
+    # 4) Visualization: box + strip plot overlay of fractions by genotype
+    # -----------------------------------------------------------------------
+    plot_df = (
+        per_fish.dropna(subset=["fraction"])
+        .query("category in @CATEGORY_ORDER and genotype in @GENOTYPE_ORDER")
+        .copy()
+    )
+
+    sns.set_theme(style="whitegrid")
+    plt.figure(figsize=(10, 6))
+
+    # Box plot encodes group distribution; strip plot shows individual fish
+    ax = sns.barplot(
+        data=plot_df,
+        x="category",
+        y="fraction",
+        order=CATEGORY_ORDER,
+        hue="genotype",
+        hue_order=GENOTYPE_ORDER,
+        palette="Set2",
+        estimator=np.nanmedian,
+        errorbar="se",
+        alpha=0.7,
+    )
+    
+    sns.stripplot(
+        data=plot_df,
+        x="category",
+        y="fraction",
+        order=CATEGORY_ORDER,
+        hue="genotype",
+        hue_order=GENOTYPE_ORDER,
+        dodge=True,
+        jitter=True,
+        size=4,
+        alpha=1,
+        palette="Set2",
+        ax=ax,
+    )
+
+    ax.set_ylabel("Fraction of ROIs")
+    ax.set_xlabel("Functional category")
+    ax.set_title("Per-fish ROI fractions by genotype")
+
+    # Strip plot duplicates legend entries; keep one set only
+    handles, labels = ax.get_legend_handles_labels()
+    ax.legend(
+        handles[: len(GENOTYPE_ORDER)],
+        labels[: len(GENOTYPE_ORDER)],
+        title="Genotype",
+        ncol=len(GENOTYPE_ORDER),
+        loc="upper center",
+    )
+
+    plt.tight_layout()
+    plt.savefig("cluster_fraction_boxplot.png", dpi=300, bbox_inches="tight")
+    plt.show()
+
+
+if __name__ == "__main__":
+    main()
+
+
+#%%
+from matplotlib.colors import hsv_to_rgb  # HSV → RGB conversion for cluster coloring
+
+def cluster_hsv_palette(n_clusters, hue_start=0.07, hue_end=1.0, saturation=1.0):
+    """
+    Return a stable list of RGB colors for cluster-level plotting.
+
+    The hue channel is swept uniformly across the specified hue range so the
+    first cluster always starts at `hue_start` and subsequent clusters march
+    forward around the HSV wheel.  Saturation is kept high (default 1.0) so
+    colors pop against grayscale baselines; value (brightness) will later be
+    modulated by the normalized activity traces.
+
+    Parameters
+    ----------
+    n_clusters : int
+        Number of distinct colors required (e.g., number of clusters).
+    hue_start, hue_end : float
+        Hue range (0–1).  By default we avoid the red notch at 0 to keep colors
+        more distinct from the black/white background.
+    saturation : float
+        Constant saturation level per cluster.
+
+    Returns
+    -------
+    palette_rgb : np.ndarray, shape (n_clusters, 3)
+        RGB triplets (float32, 0–1) ordered by cluster index.
+    """
+    if n_clusters <= 0:
+        return np.zeros((0, 3), dtype=np.float32)
+
+    hues = np.linspace(hue_start, hue_end, n_clusters, endpoint=False, dtype=np.float32)
+    hsv = np.stack(
+        [
+            hues,                      # varying hue per cluster
+            np.full_like(hues, saturation),  # fixed saturation
+            np.ones_like(hues),        # full value (brightness) before modulation
+        ],
+        axis=1,
+    )
+    return hsv_to_rgb(hsv).astype(np.float32)
+
+
+def build_hsv_heatmap(cluster_blocks, vmin=0.0, vmax=1.0, hue_start=0.07, hue_end=1.0):
+    """
+    Render clustered traces as an RGB heatmap using a consistent HSV palette.
+
+    Each cluster receives a unique hue (via `cluster_hsv_palette`) while the
+    normalized calcium activity sets the HSV value channel, preserving the
+    underlying temporal dynamics.  The same palette is returned so downstream
+    plots (scatter maps, legends, etc.) can reuse the exact colors.
+
+    Parameters
+    ----------
+    cluster_blocks : list[np.ndarray]
+        Each block is (n_cells_in_cluster, n_timepoints) for one cluster.
+    vmin, vmax : float
+        Min/max bounds for normalizing traces before mapping into HSV value.
+    hue_start, hue_end : float
+        Hue sweep passed through to `cluster_hsv_palette`.
+
+    Returns
+    -------
+    rgb_img : np.ndarray
+        Colored heatmap (rows = stacked cells, columns = time).
+    cluster_sizes : list[int]
+        Number of ROIs per cluster (used for annotations/dividers).
+    cluster_colors : np.ndarray, shape (n_clusters, 3)
+        RGB palette aligned with `cluster_blocks` order for reuse elsewhere.
+    """
+    if not cluster_blocks:
+        return None, [], np.zeros((0, 3), dtype=np.float32)
+
+    # Stack all cluster traces vertically and normalize to 0–1
+    stacked = np.vstack(cluster_blocks)
+    norm = np.clip((stacked - vmin) / (vmax - vmin + 1e-9), 0.0, 1.0)
+
+    cluster_sizes = [block.shape[0] for block in cluster_blocks]
+    cluster_colors = cluster_hsv_palette(len(cluster_sizes), hue_start=hue_start, hue_end=hue_end)
+
+    # Allocate HSV cube: H=indexed color, S=1, V=normalized activity
+    hsv_img = np.ones((norm.shape[0], norm.shape[1], 3), dtype=np.float32)
+    start = 0
+    for color_rgb, size in zip(cluster_colors, cluster_sizes):
+        end = start + size
+        hue = color_rgb_to_hue(color_rgb)
+        hsv_img[start:end, :, 0] = hue           # fixed hue per cluster
+        hsv_img[start:end, :, 1] = 1.0           # full saturation
+        hsv_img[start:end, :, 2] = norm[start:end, :]  # value encodes activity
+        start = end
+
+    rgb_img = hsv_to_rgb(hsv_img)
+    return rgb_img, cluster_sizes, cluster_colors
+
+
+def color_rgb_to_hue(rgb_triplet):
+    """
+    Convert an RGB triplet (array-like, 0–1) to its hue value (0–1).
+
+    Implemented via numpy to avoid importing colorsys repeatedly; the palette
+    generator already gives exact RGB values so conversion is straightforward.
+    """
+    # colorsys works on scalar floats, so we import lazily to keep top scope tidy
+    import colorsys
+    r, g, b = float(rgb_triplet[0]), float(rgb_triplet[1]), float(rgb_triplet[2])
+    hue, _, _ = colorsys.rgb_to_hsv(r, g, b)
+    return hue
+
+def build_hsv_cluster_stacks(cluster_infos, cluster_colors, normalize=False):
+    """
+    Generate HSV-tinted stacks and projections for each cluster.
+
+    Parameters
+    ----------
+    cluster_infos : Sequence[Mapping]
+        One entry per cluster with at least a 'roi_indices' iterable.
+    cluster_colors : np.ndarray
+        RGB palette (n_clusters, 3) aligned with cluster_infos.
+    normalize : bool, default False
+        If True, normalize stack/projection to [0, 1] before tinting.
+
+    Returns
+    -------
+    stack_rgb_list : list[np.ndarray | None]
+        (Z, Y, X, 3) tinted volumes per cluster (None if empty).
+    proj_rgb_list : list[np.ndarray | None]
+        (H, W, 3) tinted projections per cluster (None if empty).
+    composite_stack_rgb : np.ndarray | None
+        Sum of tinted stacks clipped to [0, 1], or None if no data.
+    composite_proj_rgb : np.ndarray | None
+        Sum of tinted projections clipped to [0, 1], or None if no data.
+    """
+    stack_rgb_list = []
+    proj_rgb_list = []
+    composite_stack_rgb = None
+    composite_proj_rgb = None
+
+    for info, color_rgb in zip(cluster_infos, cluster_colors):
+        roi_indices = np.asarray(info.get("roi_indices", []), dtype=int)
+        if roi_indices.size == 0:
+            stack_rgb_list.append(None)
+            proj_rgb_list.append(None)
+            continue
+
+        stack_vol, stack_proj = draw_hit_volume(roi_indices, normalize=False)
+
+        stack_vol = stack_vol.astype(np.float32, copy=False)
+        stack_proj = stack_proj.astype(np.float32, copy=False)
+
+        if normalize:
+            stack_norm = stack_vol / (stack_vol.max() + 1e-6)
+            proj_norm = stack_proj / (stack_proj.max() + 1e-6)
+        else:
+            stack_norm = stack_vol
+            proj_norm = stack_proj
+
+        stack_rgb = stack_norm[..., None] * color_rgb
+        proj_rgb = proj_norm[..., None] * color_rgb
+
+        stack_rgb_list.append(stack_rgb)
+        proj_rgb_list.append(proj_rgb)
+
+        if composite_stack_rgb is None:
+            composite_stack_rgb = stack_rgb.copy()
+            composite_proj_rgb = proj_rgb.copy()
+        else:
+            composite_stack_rgb += stack_rgb
+            composite_proj_rgb += proj_rgb
+
+    if composite_stack_rgb is not None:
+        composite_stack_rgb = np.clip(composite_stack_rgb, 0.0, 1.0)
+        composite_proj_rgb = np.clip(composite_proj_rgb, 0.0, 1.0)
+
+    return stack_rgb_list, proj_rgb_list, composite_stack_rgb, composite_proj_rgb
+
+mutant_inds = []
+cluster_results_enriched_path = os.path.join(out_dir, "cluster_results_enriched.npy")
+enriched = np.load(cluster_results_enriched_path, allow_pickle=True)
+
+rest_clusters_by_mutant = []
+rest_fig_dir = os.path.join(r'/media/TempStorage/', "rest_cluster_hsv_heatmaps")
+os.makedirs(rest_fig_dir, exist_ok=True)
+
+k = 0 
+for entry in enriched:
+    if entry.get("fish_type") != "-/-":
+        continue  # only analyze homozygous mutants
+    mutant_inds.append(k)
+    k += 1
+    rest_order = entry.get("remaining_cluster_order", [])
+    if not rest_order:
+        continue  # nothing fell into the "Rest" category for this fish
+
+    labels_sorted = entry["cluster_labels"]
+    final_order = entry["final_roi_indices"]
+    active_ids = entry["active_neuron_ids"]
+    traces_sorted = entry["traces_sorted"]
+    rest_manifest = entry.get("remaining_clusters", [])
+
+    rest_blocks = []
+    rest_info = []
+    for lbl in rest_order:  # already stored in plotting order
+        row_idx = np.where(labels_sorted == lbl)[0]
+        if row_idx.size == 0:
+            continue
+        roi_sorted = final_order[row_idx]
+        roi_original = active_ids[roi_sorted]
+        rest_blocks.append(traces_sorted[row_idx, :])
+        rest_info.append(
+            {
+                "cluster_label": int(lbl),
+                "roi_indices": roi_original.tolist(),
+            }
+        )
+
+    if not rest_blocks:
+        continue
+
+    rgb_img, cluster_sizes, cluster_colors = build_hsv_heatmap(rest_blocks, vmin=0.0, vmax=1.0)
+    if rgb_img is None:
+        continue
+
+    # keep per-cluster colors so we can match overlays/legends later
+    for info, color in zip(rest_info, cluster_colors):
+        info["color_rgb"] = color.tolist()
+
+    # Downsample with scipy.ndimage.zoom for faster rendering on large matrices
+    fy = min(1.0, 800 / max(rgb_img.shape[0], 1))
+    fx = min(1.0, 400 / max(rgb_img.shape[1], 1))
+    display_img = zoom(rgb_img, (fy, fx, 1), order=1, prefilter=False)
+
+    fig, ax = plt.subplots(figsize=(10, max(4, 0.02 * rgb_img.shape[0])))
+    ax.imshow(
+        display_img,
+        origin="upper",
+        interpolation="nearest",
+        extent=[0, rgb_img.shape[1], 0, rgb_img.shape[0]],
+    )
+    ax.set_title(f"{entry['fish_name']} (Rest category clusters)", fontsize=14)
+    ax.set_xlabel("Time (frames)")
+    ax.set_ylabel("ROI index (cluster order)")
+    ax.set_xticks([])
+
+    boundaries = np.cumsum(cluster_sizes)
+    centers = boundaries - np.array(cluster_sizes) / 2.0
+    labels = [f"Cluster {info['cluster_label']} (n={size})" for info, size in zip(rest_info, cluster_sizes)]
+    ax.set_yticks(centers)
+    ax.set_yticklabels(labels, fontsize=9)
+
+    plt.tight_layout()
+    plt.savefig(os.path.join(rest_fig_dir, safe_filename(f"{entry['fish_name']} (Rest category clusters).png")), dpi=300)
+    plt.show()
+
+
+    fish_payload = {"fish_name": entry["fish_name"], "rest_clusters": rest_info}
+    rest_clusters_by_mutant.append(fish_payload)
+
+    stack_rgb_list, proj_rgb_list, composite_stack_rgb, composite_proj_rgb = build_hsv_cluster_stacks(
+        rest_info,
+        cluster_colors,
+        normalize=True,
+    )
+
+    plt.imshow(composite_proj_rgb)
+    plt.show()
+
+#     rest_stack_dir = os.path.join(
+#         rest_fig_dir,
+#         "rest_cluster_roi_maps",
+#         safe_filename(entry["fish_name"])
+#     )
+#     os.makedirs(rest_stack_dir, exist_ok=True)
+
+#     composite_proj_rgb = None       # running sum of colorized 2D projections
+#     composite_stack_rgb = None      # running sum of colorized 3D stacks (optional inspection)
+
+#     for info, color_rgb in zip(rest_info, cluster_colors):
+#         cluster_label = info["cluster_label"]
+#         roi_indices = np.asarray(info["roi_indices"], dtype=int)
+
+#         if roi_indices.size == 0:
+#             continue  # guard against empty clusters
+
+#         # Draw the ROI stack in reference-brain space using the existing helper
+#         stack_vol, stack_proj = draw_hit_volume(roi_indices, normalize=False)
+
+#         # Save the raw (grayscale) stack and 2D projection for reproducibility
+#         base_name = safe_filename(f"{entry['fish_name']}_rest_cluster_{cluster_label:03d}")
+#         # np.save(os.path.join(rest_stack_dir, base_name + "_stack.npy"), stack_vol.astype(np.float32), allow_pickle=False)
+#         # tifffile.imwrite(os.path.join(rest_stack_dir, base_name + "_stack.tif"), stack_vol.astype(np.float32))
+#         # np.save(os.path.join(rest_stack_dir, base_name + "_projection.npy"), stack_proj.astype(np.float32), allow_pickle=False)
+#         # tifffile.imwrite(os.path.join(rest_stack_dir, base_name + "_projection.tif"), stack_proj.astype(np.float32))
+
+#         # Normalize projection to [0, 1] and tint with the cluster’s HSV-derived color
+#         proj_norm = np.clip(stack_proj / (stack_proj.max() + 1e-6), 0, 1)
+#         proj_rgb = proj_norm[..., None] * color_rgb  # shape → (H, W, 3)
+
+#         # np.save(os.path.join(rest_stack_dir, base_name + "_projection_rgb.npy"), proj_rgb.astype(np.float32), allow_pickle=False)
+#         tifffile.imwrite(
+#             os.path.join(rest_stack_dir, base_name + "_projection_rgb.tif"),
+#             (proj_rgb * 65535).astype(np.uint16),
+#             photometric="rgb",
+#         )
+#         plt.imshow(proj_rgb)
+#         plt.show()
+#         # Accumulate colorized stacks/projections for a single composite visualization
+#         if composite_proj_rgb is None:
+#             composite_proj_rgb = proj_rgb
+#         else:
+#             composite_proj_rgb += proj_rgb
+
+#         stack_norm = stack_vol / (stack_vol.max() + 1e-6)
+#         stack_rgb = stack_norm[..., None] * color_rgb  # (Z, Y, X, 3)
+#         if composite_stack_rgb is None:
+#             composite_stack_rgb = stack_rgb
+#         else:
+#             composite_stack_rgb += stack_rgb
+
+#     if composite_proj_rgb is None:
+#         continue  # no valid clusters mapped for this fish
+
+#     # Clip composites to valid display range
+#     composite_proj_rgb = np.clip(composite_proj_rgb, 0, 1)
+#     composite_stack_rgb = np.clip(composite_stack_rgb, 0, 1)
+
+#     # Blend the composite projection with the anatomical reference for context
+#     ref_rgb = to_rgb(ref_proj, cmap_name="gray", vmin=0, vmax=np.percentile(ref_proj, 95))
+#     blended = np.clip(0.45 * ref_rgb + composite_proj_rgb, 0, 1)
+
+#     composite_base = safe_filename(f"{entry['fish_name']}_rest_clusters_composite")
+#     np.save(os.path.join(rest_stack_dir, composite_base + "_projection_rgb.npy"), composite_proj_rgb.astype(np.float32), allow_pickle=False)
+#     tifffile.imwrite(
+#         os.path.join(rest_stack_dir, composite_base + "_projection_rgb.tif"),
+#         (composite_proj_rgb * 65535).astype(np.uint16),
+#         photometric="rgb",
+#     )
+#     np.save(os.path.join(rest_stack_dir, composite_base + "_stack_rgb.npy"), composite_stack_rgb.astype(np.float32), allow_pickle=False)
+#     tifffile.imwrite(
+#         os.path.join(rest_stack_dir, composite_base + "_stack_rgb.tif"),
+#         (composite_stack_rgb * 65535).astype(np.uint16),
+#         photometric="rgb",
+#     )
+
+#     plt.figure(figsize=(12, 8))
+#     plt.imshow(blended)
+#     plt.axis("off")
+#     plt.title(f"{entry['fish_name']} – Rest clusters (HSV composite)", fontsize=16)
+#     plt.savefig(
+#         os.path.join(rest_stack_dir, composite_base + "_projection_blended.png"),
+#         dpi=300,
+#         bbox_inches="tight",
+#     )
+#     plt.show()
+
+# for fish in rest_clusters_by_mutant:
+#     print(fish["fish_name"])
+#     for cl in fish["rest_clusters"]:
+#         print(f'  Cluster {cl["cluster_label"]}: {len(cl["roi_indices"])} ROIs -> {cl["roi_indices"]}')
+#%%
+
 
 #%%
 fish_ind = -1
