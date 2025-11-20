@@ -1,5 +1,6 @@
 from numba import njit, prange
 import numpy as np
+from matplotlib.colors import hsv_to_rgb  # HSV → RGB conversion for cluster coloring
 
 
 def safe_filename(s: str, replacement: str = "_", max_length: int = 255) -> str:
@@ -79,4 +80,44 @@ def pearsonr_2Dnumb(x,y, print_progress = False):
             print('done correlations on row ' + str(row_x) + ' in x, out of ' + str(n_rows_x))
 
     return corr
+
+
+def cluster_hsv_palette(n_clusters, hue_start=0.07, hue_end=1.0, saturation=1.0):
+    """
+    Return a stable list of RGB colors for cluster-level plotting.
+
+    The hue channel is swept uniformly across the specified hue range so the
+    first cluster always starts at `hue_start` and subsequent clusters march
+    forward around the HSV wheel.  Saturation is kept high (default 1.0) so
+    colors pop against grayscale baselines; value (brightness) will later be
+    modulated by the normalized activity traces.
+
+    Parameters
+    ----------
+    n_clusters : int
+        Number of distinct colors required (e.g., number of clusters).
+    hue_start, hue_end : float
+        Hue range (0–1).  By default we avoid the red notch at 0 to keep colors
+        more distinct from the black/white background.
+    saturation : float
+        Constant saturation level per cluster.
+
+    Returns
+    -------
+    palette_rgb : np.ndarray, shape (n_clusters, 3)
+        RGB triplets (float32, 0–1) ordered by cluster index.
+    """
+    if n_clusters <= 0:
+        return np.zeros((0, 3), dtype=np.float32)
+
+    hues = np.linspace(hue_start, hue_end, n_clusters, endpoint=False, dtype=np.float32)
+    hsv = np.stack(
+        [
+            hues,                      # varying hue per cluster
+            np.full_like(hues, saturation),  # fixed saturation
+            np.ones_like(hues),        # full value (brightness) before modulation
+        ],
+        axis=1,
+    )
+    return hsv_to_rgb(hsv).astype(np.float32)
 

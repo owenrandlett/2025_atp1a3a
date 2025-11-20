@@ -970,7 +970,9 @@ if re_analyze:
         np.array(cluster_results, dtype=object),
     )
 
+#%%
 
+import numpy as np
 cluster_results = np.load(os.path.join(out_dir, "cluster_results.npy"),allow_pickle=True)
 #%%
 out_dir_orderedheatmaps = os.path.join(out_dir, 'clustered_ordered_heatmaps')
@@ -1889,7 +1891,7 @@ import matplotlib.cm as cm
 ref_proj_z = np.max(ref_brain[:,:, :], axis=0)
 ref_proj_x = zoom(np.max(ref_brain[:,:, :], axis=2).T, [1, z_rez/xy_rez])
 ref_proj = np.hstack((ref_proj_z, ref_proj_x))
-
+n_regressors = len(regressor_names)
 def to_rgb(image, cmap_name="gray", vmin=None, vmax=None):
     """Convert scalar image to RGB using a colormap."""
     cmap = cm.get_cmap(cmap_name)
