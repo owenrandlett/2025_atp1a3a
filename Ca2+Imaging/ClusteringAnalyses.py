@@ -263,6 +263,7 @@ for fish_ind in tqdm.tqdm(range(len(cluster_results))):
                 dpi=300
             )
             plt.show()
+    print('counts per category:', counts_per_category)
 
     regressor_associated_signals.append(
         {
@@ -282,24 +283,155 @@ regressor_associated_signals = np.load(
     os.path.join(out_dir, 'regressor_associated_signals.npy'),
     allow_pickle=True
 )
-
-
+#%%
+import seaborn as sns
+import pandas as pd
 for fish_ind in range(len(regressor_associated_signals)):
-    n_in_categories = np.zeros(len(all_categories))
-    fish_name = regressor_associated_signals[fish_ind]['fish_name']
+    counts_per_category = regressor_associated_signals[fish_ind]['counts_per_category']
     fish_type = regressor_associated_signals[fish_ind]['fish_type']
-    signal_associations = regressor_associated_signals[fish_ind]['signal_associations']
-    for signals in signal_associations:
-        if signals['associated_regressor'] == all_categories[0]:
-            n_in_categories[0] += signals['associated_neurons'].size
-        elif signals['associated_regressor'] == all_categories[1]:
-            n_in_categories[1] += signals['associated_neurons'].size
-        elif signals['associated_regressor'] == all_categories[2]:
-            n_in_categories[2] += signals['associated_neurons'].size  
-        elif signals['associated_regressor'] == all_categories[3]:
-            n_in_categories[3] += signals['associated_neurons'].size
-    print(n_in_categories)
-        
+    print('counts per category for fish ' + str(fish_ind) + ': fish_type : ' + str(fish_type) + ', counts: ' + str(counts_per_category))
+
+category_labels = selected_regressor_names + ["Unassigned"]
+records = []
+for entry in regressor_associated_signals:
+    total_counts = int(np.sum(entry["counts_per_category"]))
+    if total_counts < 1000:
+        continue
+    row = {"fish_type": entry["fish_type"]}
+    row.update(
+        {label: int(count) for label, count in zip(category_labels, entry["counts_per_category"])}
+    )
+    records.append(row)
+
+counts_df = pd.DataFrame(records)
+counts_by_genotype = counts_df.groupby("fish_type")[category_labels].median()
+
+print(counts_df)
+print(counts_by_genotype)
+
+
+#%%
+
+
+import seaborn as sns
+import pandas as pd
+import itertools
+from scipy.stats import kruskal, mannwhitneyu
+
+counts_df = pd.DataFrame(records)
+counts_df = counts_df[counts_df["fish_type"] != "Unknown"].copy()
+counts_by_genotype = counts_df.groupby("fish_type")[category_labels].median()
+
+print(counts_df)
+print(counts_by_genotype)
+
+plot_df = counts_df.melt(id_vars="fish_type", value_vars=category_labels,
+                         var_name="category", value_name="count")
+plot_df["count_plot"] = plot_df["count"].clip(lower=1)
+
+genotype_order = ["+/+", "+/-", "-/-"]
+plot_df["fish_type"] = pd.Categorical(plot_df["fish_type"], categories=genotype_order, ordered=True)
+counts_df["fish_type"] = pd.Categorical(counts_df["fish_type"], categories=genotype_order, ordered=True)
+
+kruskal_rows = []
+pairwise_rows = []
+valid_genos = [g for g in genotype_order if (counts_df["fish_type"] == g).sum() > 1]
+
+for cat in category_labels:
+    data_per_geno = [counts_df[counts_df["fish_type"] == geno][cat].values for geno in valid_genos]
+    if len([arr for arr in data_per_geno if arr.size > 0]) < 2:
+        continue
+    stat, pval = kruskal(*data_per_geno)
+    kruskal_rows.append({"category": cat, "stat": stat, "pval": pval})
+    for g1, g2 in itertools.combinations(valid_genos, 2):
+        vals1 = counts_df[counts_df["fish_type"] == g1][cat].values
+        vals2 = counts_df[counts_df["fish_type"] == g2][cat].values
+        if len(vals1) == 0 or len(vals2) == 0:
+            continue
+        stat, p = mannwhitneyu(vals1, vals2, alternative="two-sided")
+        pairwise_rows.append({"category": cat, "geno_a": g1, "geno_b": g2, "stat": stat, "pval": p})
+
+kruskal_df = pd.DataFrame(kruskal_rows)
+pairwise_df = pd.DataFrame(pairwise_rows)
+pairwise_lookup = {}
+for _, row in pairwise_df.iterrows():
+    pairwise_lookup[(row["category"], row["geno_a"], row["geno_b"])] = float(row["pval"])
+
+def p_to_stars(p):
+    if p <= 1e-4:
+        return "****"
+    if p <= 1e-3:
+        return "***"
+    if p <= 1e-2:
+        return "**"
+    if p <= 0.05:
+        return "*"
+    return "ns"
+
+def annotate_sig(ax, x1, x2, y, text):
+    y_top = y * 1.05
+    ax.plot([x1, x1, x2, x2], [y, y_top, y_top, y], color="black", linewidth=1)
+    ax.text((x1 + x2) / 2, y_top * 1.05, text, ha="center", va="bottom", fontsize=10)
+
+palette = {"+/+": "#1f77b4", "+/-": "#ff7f0e", "-/-": "#2ca02c"}
+fig, axes = plt.subplots(len(category_labels), 1, figsize=(5, 4 * len(category_labels)))
+
+if len(category_labels) == 1:
+    axes = [axes]
+
+order_index = {geno: idx for idx, geno in enumerate(genotype_order)}
+
+for ax, category in zip(axes, category_labels):
+    cat_df = plot_df[plot_df["category"] == category]
+    if cat_df.empty:
+        ax.set_visible(False)
+        continue
+    sns.stripplot(
+        data=cat_df,
+        x="fish_type",
+        y="count_plot",
+        order=genotype_order,
+        palette=palette,
+        ax=ax,
+        jitter=0.15,
+        linewidth=0.5,
+        alpha=0.6
+    )
+    for idx, geno in enumerate(genotype_order):
+        vals = cat_df[cat_df["fish_type"] == geno]["count_plot"].dropna().to_numpy()
+        if vals.size == 0:
+            continue
+        median_val = np.median(vals)
+        ax.plot([idx - 0.2, idx + 0.2], [median_val, median_val],
+                color="black", linewidth=2, solid_capstyle="butt")
+
+    max_val = cat_df["count_plot"].max()
+    if np.isfinite(max_val) and max_val > 0:
+        current_height = max_val * 1.05
+        step = 1.2
+        for g1, g2 in itertools.combinations(genotype_order, 2):
+            pval = (pairwise_lookup.get((category, g1, g2)) or
+                    pairwise_lookup.get((category, g2, g1)))
+            if pval is None or pval > 0.05:
+                continue
+            annotate_sig(ax, order_index[g1], order_index[g2], current_height, p_to_stars(pval))
+            current_height *= step
+
+    ax.set_title(category)
+    ax.set_xlabel("Genotype")
+    # ax.set_yscale("log")
+    ax.set_ylabel("Neuron count" if ax is axes[0] else "")
+    ax.grid(True, axis="y", linestyle="--", alpha=0.3)
+
+plt.tight_layout()
+plt.show()
+
+print("Kruskal-Wallis comparisons:")
+print(kruskal_df)
+print("Pairwise Mann-Whitney comparisons:")
+print(pairwise_df)
+#%%
+
 
 #%%
     
