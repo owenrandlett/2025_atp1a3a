@@ -1,7 +1,8 @@
 from numba import njit, prange
 import numpy as np
 from matplotlib.colors import hsv_to_rgb  # HSV → RGB conversion for cluster coloring
-
+from scipy.ndimage import zoom
+import matplotlib.cm as cm
 
 def safe_filename(s: str, replacement: str = "_", max_length: int = 255) -> str:
     import re
@@ -121,3 +122,71 @@ def cluster_hsv_palette(n_clusters, hue_start=0.07, hue_end=1.0, saturation=1.0)
     )
     return hsv_to_rgb(hsv).astype(np.float32)
 
+
+def draw_hit_volume_provideROIstats(hits_inds, roi_stats, ref_meta, outline = None, values = [1], draw_centroid=False, add_write=True, proj_mean=True, save_name = None, normalize=True):
+    height = ref_meta['height']
+    width = ref_meta['width']
+    Zs = ref_meta['Zs']
+    xy_rez = ref_meta['xy_rez']
+    z_rez = ref_meta['z_rez']
+    [xmin, xmax, ymin, ymax, zmin, zmax] = ref_meta['crop_extents']  # 
+
+    IM_roi = np.zeros((Zs, height, width))
+    for j in range(len(hits_inds)):
+        roi_coords_y = roi_stats[hits_inds[j]]['ypix_zbrain'].astype('int')
+        roi_coords_x = roi_stats[hits_inds[j]]['xpix_zbrain'].astype('int')
+        roi_coords_z = roi_stats[hits_inds[j]]['centroid_zbrain'][2].astype('int')
+        roi_coords_z = np.arange(roi_coords_z-2, roi_coords_z+2) # take a 5 z-planes to make it more comparable with xy size
+        roi_coords_y[roi_coords_y > height-1] = height-1
+        roi_coords_x[roi_coords_x > width-1] = width-1
+        roi_coords_z[roi_coords_z > Zs-1] = Zs-1
+        # if roi_coords_z > Zs-1:
+        #     roi_coords_z = Zs-1
+        if draw_centroid:
+            roi_coords_y = np.mean(roi_coords_y).astype('int')
+            roi_coords_x = np.mean(roi_coords_x).astype('int')
+            roi_coords_z = np.mean(roi_coords_z).astype('int')
+        if add_write:
+            if len(values) == 1:
+                for z in roi_coords_z:  
+                    IM_roi[z, roi_coords_y, roi_coords_x]  += values
+            else:
+                for z in roi_coords_z:  
+                    IM_roi[z, roi_coords_y, roi_coords_x]  += values[j]
+        else:
+            if len(values) == 1:  
+                for z in roi_coords_z:  
+                    IM_roi[z, roi_coords_y, roi_coords_x]  = values
+            else:
+                for z in roi_coords_z:  
+                    IM_roi[z, roi_coords_y, roi_coords_x]  = values[j]
+
+    IM_roi = IM_roi[zmin:zmax, ymin:ymax, xmin:xmax]
+    if proj_mean:
+        im_proj_z = np.mean(IM_roi[:,:, :], axis=0)
+        im_proj_x = zoom(np.mean(IM_roi[:,:, :], axis=2).T, [1, z_rez/xy_rez])
+    else:
+        im_proj_z = np.max(IM_roi[:,:, :], axis=0)
+        im_proj_x = zoom(np.max(IM_roi[:,:, :], axis=2).T, [1, z_rez/xy_rez])
+    
+    if normalize:
+        im_proj = np.hstack((im_proj_z/np.max(im_proj_z), im_proj_x/np.max(im_proj_x)))
+    else:
+        im_proj = np.hstack((im_proj_z, im_proj_x))
+
+    if outline is not None:
+        im_proj[outline > 0.01] = np.max(im_proj)
+
+    # if not save_name==None:
+    #     imsave(os.path.join(analysis_out, save_name+'_proj_image.tif'), im_proj)
+    return IM_roi, im_proj
+
+
+def to_rgb(image, cmap_name="gray", vmin=None, vmax=None):
+    
+    """Convert scalar image to RGB using a colormap."""
+    cmap = cm.get_cmap(cmap_name)
+    normed = np.clip((image - (vmin if vmin is not None else image.min())) /
+                     ((vmax if vmax is not None else image.max()) -
+                      (vmin if vmin is not None else image.min()) + 1e-8), 0, 1)
+    return cmap(normed)[..., :3]  # drop alpha channel

@@ -14,6 +14,7 @@ import tifffile
 from scipy.ndimage import zoom, morphology
 import nrrd
 import tqdm
+import Ca2ImagingFns
 
 
 def ffill_cols(a, startfillval=0):
@@ -2168,4 +2169,192 @@ for measure_name, groups in stacks_by_measure.items():
             tifffile.imwrite(os.path.join(comparisons_dir, f"{safe_filename(measure_name)}_{key}.tif"), diff)
         except Exception:
             pass
+
+
+
+#%% transform ROIs to z-brain coordiantes
+
+z_brain_2 = tifffile.imread(os.path.realpath(r'/media/BigBoy/ciqle/ref_brains/ZBrain2_0.tif')) 
+bigwarp_transform_folder = os.path.realpath(r'/media/BigBoy/ciqle/ref_brains/Atp1a3_bigwarp')
+bigwarp_transform = tifffile.imread(os.path.join(bigwarp_transform_folder, 'transform.tif'))
+bigwarp_transform = np.moveaxis(bigwarp_transform, 1, -1)  # shape (Z, Y, X, 3 (x,y,z? )) 
+
+
+# %%
+
+z_brain_stack_path = r'/media/BigBoy/ciqle/ref_brains/HuC-H2BRFP_ZBrain.nrrd'
+z_brain_stack, z_brain_meta = nrrd.read(z_brain_stack_path)
+width_zbrain, height_zbrain, Zs_zbrain = z_brain_stack.shape
+z_brain_stack = np.moveaxis(z_brain_stack, [0,1,2], [2,1,0])
+
+
+xy_rez_zbrain = z_brain_meta['space directions'][0][0]
+z_rez_zbrain = z_brain_meta['space directions'][-1][-1]
+#%%
+
+z_brain_centroids = []
+
+centroid_records = []
+for idx, roi in enumerate(tqdm.tqdm(roi_stats)):
+    centroid_refbrain = np.asarray(roi["centroid_refbrain"], dtype=float)
+    centroid_records.append({
+        "x_refbrain": centroid_refbrain[0] * xy_rez,
+        "y_refbrain": centroid_refbrain[1] * xy_rez,
+        "z_refbrain": centroid_refbrain[2] * z_rez,
+    })
+
+centroids_df = pd.DataFrame(centroid_records)
+centroids_csv = os.path.join(bigwarp_transform_folder, "roi_centroids_refbrain.csv")
+centroids_df.to_csv(centroids_csv, index=False, header=False)
+print(f"Saved {len(centroid_records)} centroids → {centroids_csv}")
+
+# now I am using this script to transform the centroids in ImageJ using bigwarp into z-brain coordinates:
+# https://raw.githubusercontent.com/saalfeldlab/bigwarp/master/scripts/Apply_Bigwarp_Xfm_csvPts.groovy
+
+#%%
+
+centroids_zbrain_file = os.path.join(bigwarp_transform_folder, "roi_centroids_zbrain.csv")
+centroids_zbrain = np.loadtxt(centroids_zbrain_file, delimiter=',')
+
+
+
+roi_image = np.zeros(z_brain_2.shape, dtype=float)
+for roi in centroids_zbrain:
+    roi = roi / np.array([xy_rez_zbrain, xy_rez_zbrain, z_rez_zbrain])  # convert to pixel coordinates
+    roi = roi.astype(int)
+    roi_image[roi[2], roi[1], roi[0]] +=1
+
+#%
+
+plt.imshow(np.max(roi_image, axis=0), vmin=0, vmax=3,cmap='inferno')
+plt.show()
+plt.imshow(np.max(roi_image, axis=2), vmin=0, vmax=3,cmap='inferno')
+#
+#%%
+# put the centroids and shifted ROI definitions back into the roi_stats structure
+
+roi_stats_with_zbrain = roi_stats.copy()
+for idx, roi in enumerate(roi_stats_with_zbrain):
+    centroid_zbrain = centroids_zbrain[idx]  
+    centroid_zbrain = centroid_zbrain/np.array([xy_rez_zbrain, xy_rez_zbrain, z_rez_zbrain])  # convert to pixel coordinates
+    centroid_zbrain = centroid_zbrain.astype(int).flatten()
+    centroid_refbrain = roi["centroid_refbrain"]
+    roi["centroid_zbrain"] = centroid_zbrain
+    
+
+    x_offsets, y_offsets, z_offsets = centroid_zbrain - centroid_refbrain
+
+    roi['xpix_zbrain'] = roi['xpix_refbrain'] + x_offsets
+    roi['ypix_zbrain'] = roi['ypix_refbrain'] + y_offsets
+#%%
+crop_extents = [175, 450, 85, 550,  50, 110] # minX , maxX, minY, maxY, minZ, maxZ
+full_extents = [0, width_zbrain, 0, height_zbrain, 0, Zs_zbrain]
+metadata_zbrain = {'height': height_zbrain,
+    'width': width_zbrain,
+    'Zs': Zs_zbrain,
+    'xy_rez': xy_rez_zbrain,
+    'z_rez': z_rez_zbrain,
+    'crop_extents': crop_extents
+}   
+
+# set up outlines image
+def make_cropped_outline(crop_extents):
+
+    [xmin, xmax, ymin, ymax, zmin, zmax] = crop_extents
+
+    crop_height = ymax - ymin
+    crop_width = xmax - xmin
+    crop_Zs = zmax - zmin   
+
+    zbrain_outline_z = np.zeros((crop_height, crop_width))
+    zbrain_outline_x = zoom(np.zeros((crop_Zs, crop_height)).T, [1, z_rez_zbrain/xy_rez_zbrain])
+
+    z_brain_2_cropped = z_brain_2[zmin:zmax, ymin:ymax, xmin:xmax]
+    IDs = [
+        np.where(z_brain_2_cropped == 43), # olfactory epithelium
+        np.where(z_brain_2_cropped == 29), # olfactory bulb
+        np.where(z_brain_2_cropped == 30), # pallium
+        np.where(z_brain_2_cropped == 31), # subpallium
+        np.where(z_brain_2_cropped == 2), # habenula
+        # np.where(z_brain_2_cropped == 23), # pretectum
+        # np.where(z_brain_2_cropped == 118), # retina
+        np.where(z_brain_2_cropped == 119), # spinal cord
+        # np.where((z_brain_2_cropped >=27) & (z_brain_2_cropped <= 28)), # thalamus
+        np.where((z_brain_2_cropped >=1) & (z_brain_2_cropped <= 28)), #  entire diencephalon
+        # np.where((z_brain_2_cropped >=17) & (z_brain_2_cropped <= 18)), # posterior tuberculum
+        np.where((z_brain_2_cropped >=111) & (z_brain_2_cropped <= 112)), # tectum
+        # np.where((z_brain_2_cropped >=113) & (z_brain_2_cropped <= 115)), # tegmentum
+        np.where((z_brain_2_cropped >=48) & (z_brain_2_cropped <= 110)), # hindbrain
+
+        
+    ]
+    mask_3d = np.zeros((crop_Zs, crop_height, crop_width))
+
+    for ids in IDs:
+        mask_3d[:] = 0
+        mask_3d[ids] = 1
+        
+        mask = np.max(mask_3d, axis=0)
+        outline = morphology.distance_transform_edt(1-mask) == 1
+        #outline = morphology.binary_dilation(outline, iterations=1)
+        zbrain_outline_z[outline==1] =1
+
+        mask = zoom(np.max(mask_3d, axis=2).T, [1, z_rez_zbrain/xy_rez_zbrain], order=0)
+        outline = morphology.distance_transform_edt(1-mask) == 1
+        #outline = morphology.binary_dilation(outline, iterations=1)
+        zbrain_outline_x[outline==1] =1
+    zbrain_outline_z[:, -1] = 1
+    proj = np.hstack((zbrain_outline_z, zbrain_outline_x))
+    proj = proj * 2
+    proj = proj.astype(np.uint8)
+    proj[proj>0] = 255
+    proj[proj < 255] = 0
+    outline = proj
+    return outline
+
+outline_crop = make_cropped_outline(metadata_zbrain['crop_extents'])
+plt.imshow(outline_crop, cmap='gray')
+plt.title('Z-brain forebrain outlines _ crop')
+plt.show()
+
+outline_full = make_cropped_outline(full_extents)
+plt.imshow(outline_full, cmap='gray')
+plt.title('Z-brain forebrain outlines _ full brain')
+plt.show()
+#%%
+
+reload(Ca2ImagingFns)
+
+
+IM_roi, im_proj = Ca2ImagingFns.draw_hit_volume_provideROIstats(np.arange(len(roi_stats_with_zbrain)), roi_stats_with_zbrain, metadata_zbrain, normalize=True, outline=outline_crop)
+
+#%
+
+plt.imshow(im_proj, cmap='inferno')
+plt.axis('off')
+plt.show()
+
+metadata_zbrain['crop_extents'] = full_extents
+
+IM_roi, im_proj = Ca2ImagingFns.draw_hit_volume_provideROIstats(np.arange(len(roi_stats_with_zbrain)), roi_stats_with_zbrain, metadata_zbrain, normalize=True, outline=outline_full)
+
+#
+plt.imshow(im_proj, cmap='inferno')
+plt.axis('off')
+plt.show()
+#%%buildTransform
+
+roi_image = np.zeros(z_brain_2.shape, dtype=float)
+for roi in roi_stats_with_zbrain:
+    xpixs = roi['xpix_zbrain'].astype(int)
+    ypixs = roi['ypix_zbrain'].astype(int)
+    z = roi['centroid_zbrain'][2].astype('int')
+    for i in range(len(xpixs)):
+
+        roi_image[z, ypixs[i], xpixs[i]] +=1
+
+plt.imshow(np.max(roi_image, axis=0), vmin=0, vmax=55,cmap='inferno')
+
+#%%
+
 

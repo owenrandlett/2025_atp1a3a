@@ -8,84 +8,81 @@ images_list = natsorted(glob.glob(images_fld + '/*.nrrd'))
 bridge_template = r'/media/FastDrive/atp1a3a_data/registration/telen_template_allfish_HuC-H2BGCaMP.nrrd'
 zbrain_ref = r'/media/BigBoy/ciqle/ref_brains/HuC-H2BRFP_ZBrain_onlyTelenLeft.nrrd'
 #%% build the common template bridge reference bran 
-template_list = []
-for image_name in images_list:
-    print(os.path.split(image_name)[-1])
-    image = ants.image_read(image_name)
-    template_list.append(image)
+
+rebuild_template = False
+
+if rebuild_template:
+    template_list = []
+    for image_name in images_list:
+        print(os.path.split(image_name)[-1])
+        image = ants.image_read(image_name)
+        template_list.append(image)
 
 
-args = {
-    "type_of_transform": "SyNAggro"
-}
+    args = {
+        "type_of_transform": "SyNAggro"
+    }
 
-timage = ants.build_template( image_list = template_list, kwargs = args)
+    timage = ants.build_template( image_list = template_list, kwargs = args)
 
-ants.image_write(timage, bridge_template)
+    ants.image_write(timage, bridge_template)
 
 #%% load in the bridge template and align to zbrain ref brain
 
-IM_bridge_template = ants.image_read(bridge_template)
-IM_zbrain_ref = ants.image_read(zbrain_ref)
+re_align_to_zbrain = True
 
-moving_dir = os.path.dirname(bridge_template)
-out_dir = os.path.join(moving_dir, "registration_ANTs")
+if re_align_to_zbrain:
+    IM_bridge_template = ants.image_read(bridge_template)
+    IM_zbrain_ref = ants.image_read(zbrain_ref)
 
-reg = ants.registration(
-    fixed=IM_zbrain_ref, moving=IM_bridge_template,
-    type_of_transform='SyNAggro',
-    # affine multiresolution schedule (coarse->fine)
-    aff_iterations=(2100, 1200, 1200, 10),
-    aff_shrink_factors=(8,4,2,1),
-    aff_smoothing_sigmas=(3,2,1,0),
-    aff_metric='CC',       # affine metric; ok for inter-sample intensity differences
-    # SyN parameters
-    reg_iterations=(200,100,50,20),   # nonlinear iterations (coarse->fine)
-    syn_metric='CC',                  # cross-correlation (same-modality confocal)
-    syn_sampling=2,                   # metric sampling
-    grad_step=0.1,                    # integration step
-    flow_sigma=6, total_sigma=1,      # smoothing parameters for updates
-    outprefix=out_dir,
-    verbose=True
-)
+    moving_dir = os.path.dirname(bridge_template)
+    out_dir = os.path.join(moving_dir, "registration_ANTs")
 
+    reg = ants.registration(
+        fixed=IM_zbrain_ref, moving=IM_bridge_template,
+        type_of_transform='SyNAggro',
+        # affine multiresolution schedule (coarse->fine)
+        aff_iterations=(2100, 1200, 1200, 10),
+        aff_shrink_factors=(8,4,2,1),
+        aff_smoothing_sigmas=(3,2,1,0),
+        aff_metric='CC',       # affine metric; ok for inter-sample intensity differences
+        # SyN parameters
+        reg_iterations=(200,100,50,20),   # nonlinear iterations (coarse->fine)
+        syn_metric='CC',                  # cross-correlation (same-modality confocal)
+        syn_sampling=2,                   # metric sampling
+        grad_step=0.1,                    # integration step
+        flow_sigma=6, total_sigma=1,      # smoothing parameters for updates
+        outprefix=out_dir,
+        verbose=True
+    )
 
-#%%
+    # --- Inspect the results visually (optional) ---
+    ants.plot(IM_zbrain_ref, overlay=reg['warpedmovout'], overlay_alpha=0.7, title='Registered Result', axis=2)
 
-# --- Inspect the results visually (optional) ---
-ants.plot(IM_zbrain_ref, overlay=reg['warpedmovout'], overlay_alpha=0.7, title='Registered Result', axis=2)
+    # --- Prepare output folder ---
+    os.makedirs(out_dir, exist_ok=True)
 
-#%%
-# --- Prepare output folder ---
+    # --- Define output paths ---
+    aligned_path = os.path.join(out_dir, "bridge_template_registered_wParams_CC_CC.nii.gz")
 
-os.makedirs(out_dir, exist_ok=True)
+    # --- Save registered image ---
+    ants.image_write(reg['warpedmovout'], aligned_path)
 
-# --- Define output paths ---
-aligned_path = os.path.join(out_dir, "bridge_template_registered_wParams_CC_CC.nii.gz")
+    params_dir = os.path.join(out_dir, "ANTs_Registration_Parameters")
+    os.makedirs(params_dir, exist_ok=True)
 
-# --- Save registered image ---
-ants.image_write(reg['warpedmovout'], aligned_path)
+    # The forward and inverse transforms returned by ANTsPy are file paths (to .mat and .nii.gz)
+    fwd_transform_paths = reg['fwdtransforms']
+    inv_transform_paths = reg['invtransforms']
 
-params_dir = os.path.join(out_dir, "ANTs_Registration_Parameters")
-os.makedirs(params_dir, exist_ok=True)
+    # Copy transform files to the parameters subfolder
+    for tf_path in fwd_transform_paths + inv_transform_paths:
+        if os.path.exists(tf_path):
+            shutil.copy2(tf_path, params_dir)
 
-# The forward and inverse transforms returned by ANTsPy are file paths (to .mat and .nii.gz)
-fwd_transform_paths = reg['fwdtransforms']
-inv_transform_paths = reg['invtransforms']
-
-# Copy transform files to the parameters subfolder
-for tf_path in fwd_transform_paths + inv_transform_paths:
-    if os.path.exists(tf_path):
-        shutil.copy2(tf_path, params_dir)
-
-
-
-print(f"\n✅ Registration complete!")
-print(f"Aligned image saved to: {aligned_path}")
-print(f"Transform files saved in: {params_dir}")
-
-
-
+    print(f"\n✅ Registration complete!")
+    print(f"Aligned image saved to: {aligned_path}")
+    print(f"Transform files saved in: {params_dir}")
 
 #%% register template to reference brain
 ref_brain = r'/media/BigBoy/ciqle/ref_brains/HuC-H2BRFP_ZBrain_onlyTelenLeft.nrrd'
@@ -223,3 +220,4 @@ def register_zebrafish_brain(moving_path, fixed_path, out_dir="registration_ANTs
     return syn
 
 register_zebrafish_brain(bridge_template, zbrain_ref, out_dir=out_dir, live=False, verbose=True)
+# %%
