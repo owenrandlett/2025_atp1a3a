@@ -123,13 +123,13 @@ def cluster_hsv_palette(n_clusters, hue_start=0.07, hue_end=1.0, saturation=1.0)
     return hsv_to_rgb(hsv).astype(np.float32)
 
 
-def draw_hit_volume_provideROIstats(hits_inds, roi_stats, ref_meta, outline = None, values = [1], draw_centroid=False, add_write=True, proj_mean=True, save_name = None, normalize=True):
+def draw_hit_volume_provideROIstats(hits_inds, roi_stats, ref_meta, crop_str = 'crop_extents', outline = None, values = [1], draw_centroid=False, add_write=True, proj_mean=True, save_name = None, normalize=True):
     height = ref_meta['height']
     width = ref_meta['width']
     Zs = ref_meta['Zs']
     xy_rez = ref_meta['xy_rez']
     z_rez = ref_meta['z_rez']
-    [xmin, xmax, ymin, ymax, zmin, zmax] = ref_meta['crop_extents']  # 
+    [xmin, xmax, ymin, ymax, zmin, zmax] = ref_meta[crop_str]  # 
 
     IM_roi = np.zeros((Zs, height, width))
     for j in range(len(hits_inds)):
