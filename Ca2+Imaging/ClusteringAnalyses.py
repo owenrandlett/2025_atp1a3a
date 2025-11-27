@@ -19,6 +19,9 @@ import seaborn as sns
 import pandas as pd
 import itertools
 from scipy.stats import kruskal, mannwhitneyu
+from scipy.ndimage import zoom
+from statsmodels.stats.multitest import multipletests
+import openpyxl
 
 raw_data_fldrs_path = r'/media/BigBoy/ciqle/2p/20250902-11_atp1a3a_experiments'
 processed_data_flds_path = r'/media/FastDrive/atp1a3a_data'
@@ -61,8 +64,9 @@ selected_regressor_names = [regressor_names[i] for i in selected_regressor_indic
 out_dir_regressor_association = os.path.join(out_dir, 'regressor_cluster_association')
 os.makedirs(out_dir_regressor_association, exist_ok=True)
 
+all_categories = selected_regressor_names + ['Unassigned']
 start_analyze_frame = 200
-re_analyze_signals = True
+re_analyze_signals = False
 
 if re_analyze_signals:
     regressor_associated_signals = []
@@ -200,7 +204,7 @@ if re_analyze_signals:
         separator[:] = np.nan
 
 
-        all_categories = selected_regressor_names + ['Unassigned']
+        
 
         n_unassinged = 0
         for i in range(len(signal_associations)):
@@ -609,9 +613,8 @@ for fish_ind in range(len(regressor_associated_signals)):
 
 z_brain_2 = tifffile.imread(os.path.realpath(r'/media/BigBoy/ciqle/ref_brains/ZBrain2_0.tif')) 
 
-IDs = {
-
-        'olfactory bulb' : z_brain_2 == 29, # olfactory bulb
+IDs = { 
+        # 'olfactory bulb' : z_brain_2 == 29, # olfactory bulb
         'pallium': z_brain_2 == 30, # pallium
         'subpallium': z_brain_2 == 31, # subpallium
         'habenula': z_brain_2 == 2, # habenula
@@ -619,7 +622,7 @@ IDs = {
         'thalamus': (z_brain_2 >=27) & (z_brain_2 <= 28), # thalamus
         'posterior tuberculum': z_brain_2 == 23, # posterior tuberculum
         'tectum': (z_brain_2 >=111) & (z_brain_2 <= 112), # tectum
-        'tegmentum': (z_brain_2 >=113) & (z_brain_2 <= 115), # tegmentum
+        # 'tegmentum': (z_brain_2 >=113) & (z_brain_2 <= 115), # tegmentum
 }
 
 for key in IDs.keys():
@@ -632,25 +635,306 @@ for key in IDs.keys():
 #%%
 n_fish = len(regressor_associated_signals)
 valid_fish = []
-categories_labels = np.zeros((Zs_zbrain, height_zbrain, width_zbrain, len(valid_fish)),dtype='uint8')
+
+dict_categories = {
+    'Dark Flashes' :1,
+    'OMR':2,
+    'Tail Power':3,
+    'Unassigned':4, 
+}
+
+dict_fishypes = {
+    '+/+':1,
+    '+/-':2,
+    '-/-':3,
+    }
+
+reversed_fistypes = {value: key for key, value in dict_fishypes.items()}
+
+minX , maxX, minY, maxY, minZ, maxZ = metadata_zbrain['crop_extents']
+
 fish_types_valid = []
 fish_names_valid = []
 for fish_ind in range(n_fish):
     if fish_ind not in insufficient_data:
         valid_fish.append(fish_ind)
+Zs_zbrain = metadata_zbrain['Zs']
+height_zbrain = metadata_zbrain['height']
+width_zbrain = metadata_zbrain['width']
+labels_centroids = np.zeros((Zs_zbrain, height_zbrain, width_zbrain, len(valid_fish)),dtype='uint8')
+labels_footprints = np.zeros((Zs_zbrain, height_zbrain, width_zbrain, len(valid_fish)),dtype='uint8')   
+roi_stats_categories_perfish = []
+for ind, fish_ind in enumerate(valid_fish):
 
-for fish_ind in valid_fish:
-    #%%
-fish_names_valid.append(regressor_associated_signals[fish_ind]['fish_name'])
-fish_types_valid.append(regressor_associated_signals[fish_ind]['fish_type'])
-
-signal_associations = regressor_associated_signals[fish_ind]['signal_associations']
-roi_stats_in_category = {}
+    fish_names_valid.append(regressor_associated_signals[fish_ind]['fish_name'])
+    fish_types_valid.append(dict_fishypes[regressor_associated_signals[fish_ind]['fish_type']])
 
 
-for reg_ind, regressor_name in enumerate(all_categories):
-    roi_stats_in_category[regressor_name] = []
-    for signals in signal_associations:
-        if signals['associated_regressor'] == regressor_name:
-            for roi in signals['roi_stats_in_signal']:
-                roi_stats_in_category[regressor_name].append(roi)
+    signal_associations = regressor_associated_signals[fish_ind]['signal_associations']
+    roi_stats_in_category = {}
+
+
+    for reg_ind, regressor_name in enumerate(all_categories):
+        roi_stats_in_category[regressor_name] = []
+        for signals in signal_associations:
+            if signals['associated_regressor'] == str(regressor_name):
+                for roi in signals['roi_stats_in_signal']:
+                    roi_stats_in_category[regressor_name].append(roi)
+                    cent_x, cent_y, cent_z = roi['centroid_zbrain']
+                    labels_centroids[cent_z, cent_y, cent_x, ind] = dict_categories[regressor_name]
+                    ypix = roi['ypix_zbrain'].astype('int')
+                    xpix = roi['xpix_zbrain'].astype('int')
+                    z_idx = np.full_like(ypix, cent_z, dtype=int)
+                    labels_footprints[z_idx, ypix, xpix, ind] = dict_categories[regressor_name]
+
+    roi_stats_categories_perfish.append(roi_stats_in_category)
+
+    fig, ax  = plt.subplots(1,4, figsize=(10,5))
+    for ax_ind in range(4):
+
+        ax[ax_ind].imshow(np.sum(labels_footprints[minZ:maxZ,minY:maxY,minX:maxX,ind]==ax_ind+1, axis=0), vmin=0,vmax=5)
+        ax[ax_ind].set_title(f'Category: {list(dict_categories.keys())[ax_ind]}')
+
+    plt.suptitle(f"fish name: {fish_names_valid[ind]}, fish type: {reversed_fistypes[fish_types_valid[ind]]}")
+    plt.show()
+
+#%%
+
+n_fish_per_category = []
+for cat in list(reversed_fistypes.keys()):
+    n_fish_per_category.append(np.sum(np.array(fish_types_valid)==cat))
+
+min_fish_group = np.min(n_fish_per_category)
+print('minimum number of fish per genotype group:', min_fish_group)
+
+rng = np.random.default_rng(1)  # fix the seed if you want reproducible draws
+balanced_samples = {}
+for geno_code in (1, 2, 3):
+    geno_pool = [idx for idx, g in enumerate(fish_types_valid) if g == geno_code]
+    if len(geno_pool) < min_fish_group:
+        raise ValueError(f"Not enough fish for genotype {geno_code}")
+    balanced_samples[geno_code] = rng.choice(geno_pool, size=min_fish_group, replace=False)
+
+print(balanced_samples)  # indices within fish_types_valid for each genotype
+
+
+
+#%
+proj_images_category_genotype = {cat: {} for cat in dict_categories}
+
+#%
+for category, cat_id in tqdm.tqdm(dict_categories.items()):
+    for geno_code in (1, 2, 3):
+        footprints_stack = np.zeros((Zs_zbrain, height_zbrain, width_zbrain), dtype='uint16')
+        fish_sel = balanced_samples[geno_code]
+        for fish_idx in fish_sel:
+            footprints_stack += (labels_footprints[:, :, :, fish_idx] == cat_id).astype('uint16')
+        im_proj_z = np.mean(footprints_stack[minZ:maxZ, minY:maxY, minX:maxX], axis=0)  # collapse z, or change axis as desired
+        im_proj_x = zoom(np.mean(footprints_stack[minZ:maxZ, minY:maxY, minX:maxX], axis=2).T, [1, metadata_zbrain['z_rez']/metadata_zbrain['xy_rez']])
+        im_proj = np.hstack((im_proj_z, im_proj_x))
+        proj_images_category_genotype[category][geno_code] = im_proj
+#%
+out_dir_spatial_maps = os.path.join(out_dir, 'spatial_maps_per_category_genotype')
+os.makedirs(out_dir_spatial_maps, exist_ok=True)
+category_vmax = {}
+for category in dict_categories.keys():
+    concatenated = np.concatenate([
+        proj_images_category_genotype[category][geno_code].ravel()
+        for geno_code in (1, 2, 3)
+    ])
+    vmax = np.percentile(concatenated, 98)
+    category_vmax[category] = vmax if vmax > 0 else 1.0
+
+for category in dict_categories.keys():
+    fig, ax = plt.subplots(1, 3, figsize=(15, 7.5))
+    vmax = category_vmax[category]
+    for geno_code in (1, 2, 3):
+        im_proj = proj_images_category_genotype[category][geno_code].copy()
+        im_proj[metadata_zbrain['outline_crop']==255] = vmax # mask outside outline
+        ax[geno_code - 1].imshow(im_proj, cmap="magma", vmin=0, vmax=vmax, rasterized=True)
+        ax[geno_code - 1].set_title(
+            f"Category: {category}, Genotype: {reversed_fistypes[geno_code]}, n={len(balanced_samples[geno_code])}"
+        )
+        ax[geno_code - 1].axis('off')
+    plt.tight_layout(rect=[0, 0.03, 1, 0.95])
+    plt.suptitle(f"Spatial distribution for category: {category}")
+    plt.savefig(os.path.join(out_dir_spatial_maps, f"spatial_distribution_{category}.svg"), dpi=300)
+    plt.savefig(os.path.join(out_dir_spatial_maps, f"spatial_distribution_{category}.png"), dpi=300)
+    plt.show()
+
+#%% now we will count the number of cells per fish for each category that fall into the z-brain regions defined in IDs, and compare across genotypes 
+
+cat_to_idx = {cat: i for i, cat in enumerate(dict_categories)}
+region_counts = {
+    region: np.zeros((len(valid_fish), len(dict_categories)), dtype=int)
+    for region in IDs
+}
+
+for fish_idx, roi_dict in enumerate(roi_stats_categories_perfish):
+    for category, cat_rois in roi_dict.items():
+        if not cat_rois:
+            continue
+        cat_idx = cat_to_idx[category]
+        centroids = np.array([roi["centroid_zbrain"] for roi in cat_rois], dtype=int)
+        zc, yc, xc = centroids[:, 2], centroids[:, 1], centroids[:, 0]  # z,y,x order
+        for region, region_mask in IDs.items():
+            region_counts[region][fish_idx, cat_idx] = np.count_nonzero(region_mask[zc, yc, xc])
+
+# convert to tidy DataFrame if needed
+region_records = []
+for region, counts in region_counts.items():
+    for fish_idx, fish_id in enumerate(valid_fish):
+        geno = reversed_fistypes[fish_types_valid[fish_idx]]
+        for category, cat_idx in cat_to_idx.items():
+            region_records.append({
+                "region": region,
+                "fish_idx": fish_id,
+                "fish_type": geno,
+                "category": category,
+                "count": counts[fish_idx, cat_idx],
+            })
+
+region_df = pd.DataFrame(region_records)
+
+genotype_order = ["+/+", "+/-", "-/-"]
+palette = {"+/+": "#1f77b4", "+/-": "#ff7f0e", "-/-": "#2ca02c"}
+region_df["fish_type"] = pd.Categorical(region_df["fish_type"], categories=genotype_order, ordered=True)
+
+category_stats = {}
+for category in dict_categories.keys():
+    cat_subset = region_df[region_df["category"] == category].copy()
+    if cat_subset.empty:
+        continue
+    cat_subset["count_plot"] = cat_subset["count"].clip(lower=1)
+
+    fig, axes = plt.subplots(1, len(IDs), figsize=(4 * len(IDs), 4), sharex=True)
+    if len(IDs) == 1:
+        axes = [axes]
+
+    category_stats[category] = {}
+    order_index = {geno: idx for idx, geno in enumerate(genotype_order)}
+
+    for ax, (region_name, _) in zip(axes, IDs.items()):
+        region_slice = cat_subset[cat_subset["region"] == region_name]
+        if region_slice.empty:
+            ax.set_visible(False)
+            continue
+
+        sns.stripplot(
+            data=region_slice,
+            x="fish_type",
+            y="count_plot",
+            order=genotype_order,
+            palette=palette,
+            jitter=0.15,
+            linewidth=0.5,
+            alpha=0.6,
+            ax=ax,
+        )
+        for idx, geno in enumerate(genotype_order):
+            vals = region_slice[region_slice["fish_type"] == geno]["count_plot"].to_numpy()
+            if vals.size:
+                ax.plot([idx - 0.2, idx + 0.2], [np.median(vals)] * 2, color="black", linewidth=2)
+
+        valid_genos = [g for g in genotype_order if (region_slice["fish_type"] == g).sum() > 1]
+        kruskal_rows, pairwise_rows = [], []
+        data_per_geno = [region_slice[region_slice["fish_type"] == g]["count"].to_numpy() for g in valid_genos]
+        data_per_geno = [arr for arr in data_per_geno if arr.size > 0]
+        if len(data_per_geno) >= 2:
+            stat, pval = kruskal(*data_per_geno)
+            kruskal_rows.append({"region": region_name, "stat": stat, "pval": pval})
+        for g1, g2 in itertools.combinations(valid_genos, 2):
+            vals1 = region_slice[region_slice["fish_type"] == g1]["count"].to_numpy()
+            vals2 = region_slice[region_slice["fish_type"] == g2]["count"].to_numpy()
+            if len(vals1) and len(vals2):
+                stat, p = mannwhitneyu(vals1, vals2, alternative="two-sided")
+                pairwise_rows.append({"region": region_name, "geno_a": g1, "geno_b": g2, "stat": stat, "pval": p})
+
+        if kruskal_rows:
+            raw = [row["pval"] for row in kruskal_rows]
+            _, qvals, _, _ = multipletests(raw, alpha=0.05, method="fdr_bh")
+            for row, q in zip(kruskal_rows, qvals):
+                row["pval_adj"] = q
+
+        if pairwise_rows:
+            raw = [row["pval"] for row in pairwise_rows]
+            _, qvals, _, _ = multipletests(raw, alpha=0.05, method="fdr_bh")
+            for row, q in zip(pairwise_rows, qvals):
+                row["pval_adj"] = q
+
+        pairwise_lookup = {
+            (row["geno_a"], row["geno_b"]): float(row["pval_adj"])
+            for row in pairwise_rows
+        }
+        max_val = region_slice["count_plot"].max()
+        if np.isfinite(max_val) and max_val > 0:
+            current_height = max_val * 1.1
+            step = 1.2
+            for g1, g2 in itertools.combinations(genotype_order, 2):
+                pval = pairwise_lookup.get((g1, g2)) or pairwise_lookup.get((g2, g1))
+                if pval is None or pval > 0.05:
+                    continue
+                annotate_sig(ax, order_index[g1], order_index[g2], current_height, p_to_stars(pval))
+                current_height *= step
+
+        ax.set_title(region_name)
+        ax.set_ylabel("Neuron count")
+        ax.set_xticks(range(len(genotype_order)))
+        ax.set_xticklabels([f"{geno} (n={region_slice[region_slice['fish_type']==geno].shape[0]})" for geno in genotype_order])
+
+        category_stats[category][region_name] = {
+            "kruskal": pd.DataFrame(kruskal_rows),
+            "pairwise": pd.DataFrame(pairwise_rows),
+        }
+
+    axes[-1].set_xlabel("Genotype")
+    plt.tight_layout()
+    plt.suptitle(f"Category: {category}", y=1.02)
+    plt.savefig(os.path.join(out_dir_spatial_maps, f"Neuron_counts_spatial_distribution_{category}.svg"), dpi=300)
+    plt.savefig(os.path.join(out_dir_spatial_maps, f"Neuron_counts_spatial_distribution_{category}.png"), dpi=300)
+    plt.show()
+
+
+print("Category → region stats:")
+for category, regions in category_stats.items():
+    print(f"\nCategory: {category}")
+    for region_name, stats in regions.items():
+        print(region_name)
+        print(stats["kruskal"])
+        print(stats["pairwise"])
+
+
+kruskal_export = []
+pairwise_export = []
+for category, regions in category_stats.items():
+    for region_name, stats in regions.items():
+        if not stats["kruskal"].empty:
+            df = stats["kruskal"].copy()
+            df["category"] = category
+            df["region"] = region_name
+            ordered = ["category", "region"] + [c for c in df.columns if c not in {"category", "region"}]
+            kruskal_export.append(df[ordered])
+        if not stats["pairwise"].empty:
+            df = stats["pairwise"].copy()
+            df["category"] = category
+            df["region"] = region_name
+            ordered = ["category", "region"] + [c for c in df.columns if c not in {"category", "region"}]
+            pairwise_export.append(df[ordered])
+
+kruskal_export_df = (
+    pd.concat(kruskal_export, ignore_index=True)
+    if kruskal_export else pd.DataFrame(columns=["category", "region", "stat", "pval", "pval_adj"])
+)
+pairwise_export_df = (
+    pd.concat(pairwise_export, ignore_index=True)
+    if pairwise_export else pd.DataFrame(columns=["category", "region", "geno_a", "geno_b", "stat", "pval", "pval_adj"])
+)
+
+script_dir = out_dir_spatial_maps
+excel_output_path = os.path.join(script_dir, "category_region_stats.xlsx")
+
+with pd.ExcelWriter(excel_output_path) as writer:
+    kruskal_export_df.to_excel(writer, sheet_name="Kruskal", index=False)
+    pairwise_export_df.to_excel(writer, sheet_name="Pairwise", index=False)
+
+print(f"Saved category-region stats to {excel_output_path}")
