@@ -1428,27 +1428,29 @@ print(f"Saved enriched clustering metadata to: {cluster_results_enriched_path}")
 
 
 
-#%% Plot per fish category: std and mean fluorescence
-
-common_normalize = True
+#%% Plot per fish category: std and mean fluorescence. This is a bit janky, so I will leave this for now and concentrate on clustering. 
+reload(Ca2ImagingFns)
+common_normalize = False
 
 n_fish_in_category = [len(fish_dict[ft]) for ft in fish_dict.keys()]
 fish_type_labels = ['WT', 'HET', 'MUT']
 
 
-
+z_score_thresh = 2.5
 # Define all metrics to plot
 metrics = [
-    (np.nansum(abs(F_norm), axis=1), "Sum z_score", "viridis"),
-    (np.nanmean(F, axis=1), "Mean_F", "viridis"),
-    (np.nanstd(F_dff, axis=1), "Std_dF/F", "viridis"),
+    # (np.nansum(abs(F_norm), axis=1), "Sum z_score", "viridis"),
+    # (np.nanmean(F, axis=1), "Mean_F", "viridis"),
+    # (np.nanstd(F_dff, axis=1), "Std_dF/F", "viridis"),
+    (np.sum(F_norm > z_score_thresh, axis=1), "Active_frames_zscore_gt_1", "inferno"),
 ]
 
 # --- Find global maximum for each metric ---
+
 global_max_per_metric = []
 for measure, _, _ in metrics:
     # For each metric, draw hit volume for all neurons and get max value in projection
-    IM_rois, im_rois_proj = draw_hit_volume(np.arange(len(measure)), values=measure, normalize=False)
+    IM_rois, im_rois_proj = Ca2ImagingFns.draw_hit_volume_provideROIstats(np.arange(len(measure)), roi_stats, metadata_zbrain, values=measure, normalize=False)
     # Normalize by total number of fish for fair comparison
     im_rois_proj = im_rois_proj / sum(n_fish_in_category)
     global_max_per_metric.append(np.nanmax(im_rois_proj))
@@ -1468,7 +1470,7 @@ for (measure, measure_name, cmap), norm_value in zip(metrics, global_max_per_met
         values = measure[inds_type]
 
         # produce stacks
-        IM_rois, im_rois_proj = draw_hit_volume(inds_type, values=values, normalize=False)
+        IM_rois, im_rois_proj = Ca2ImagingFns.draw_hit_volume_provideROIstats(inds_type, roi_stats, metadata_zbrain, values=values, outline=metadata_zbrain['outline_crop'], normalize=False)
 
         # normalize by number of fish in category for fair comparison
         IM_rois_norm = IM_rois / n_fish_in_category[fish_type]
@@ -1496,17 +1498,17 @@ for (measure, measure_name, cmap), norm_value in zip(metrics, global_max_per_met
             pass
 
         # Normalize overlay for visualization (use metric global norm if available)
-        ref_rgb = Ca2ImagingFns.to_rgb(ref_proj, cmap_name="gray", vmin=0, vmax=np.percentile(ref_proj, 95))
+        # ref_rgb = Ca2ImagingFns.to_rgb(ref_proj, cmap_name="gray", vmin=0, vmax=np.percentile(ref_proj, 95))
         v_max = norm_value if (norm_value is not None and not np.isnan(norm_value)) else np.nanmax(im_rois_proj_norm)
-        rois_rgb = Ca2ImagingFns.to_rgb(im_rois_proj_norm, cmap_name=cmap, vmin=0, vmax=v_max * 0.3)
+        rois_rgb = Ca2ImagingFns.to_rgb(im_rois_proj_norm, cmap_name=cmap, vmin=0, vmax=v_max * 0.5)
 
-        # Weighted additive blending
-        w_ref = 0.4
-        w_rois = 1.0
-        blended = np.clip(w_ref * ref_rgb + w_rois * rois_rgb, 0, 1)
+        # # Weighted additive blending
+        # w_ref = 0.4
+        # w_rois = 1.0
+        # blended = np.clip(w_ref * ref_rgb + w_rois * rois_rgb, 0, 1)
 
         plt.figure(figsize=(20, 20))
-        plt.imshow(blended)
+        plt.imshow(rois_rgb)
         title_str = f"Neuron {measure_name} fluorescence, fish type: {fish_type_str}"
         plt.title(title_str, fontsize=30)
         plt.savefig(os.path.join(out_dir, safe_filename(title_str + '.png')))
@@ -1520,7 +1522,7 @@ for (measure, measure_name, cmap), norm_value in zip(metrics, global_max_per_met
 from scipy.ndimage import gaussian_filter, zoom as ndi_zoom
 
 # 3D gaussian blur params (radii in pixels)
-blurr_size = 30 # in microns
+blurr_size = 10 # in microns
 blur_radius = (blurr_size/z_rez, blurr_size/xy_rez, blurr_size/xy_rez)   # (Z, Y, X) as you requested ~20x20x10 px (Z first)
 truncate = 4.0
 sigma = tuple(r / truncate for r in blur_radius)
@@ -1552,7 +1554,7 @@ cmap_mag_black_green = LinearSegmentedColormap.from_list(
     "mag_black_green", ["magenta", "black", "green"], N=256
 )
 cmap_mag_black_green.set_bad("black")
-
+#%
 for measure_name, groups in stacks_by_measure.items():
     # ensure storage containers
     groups.setdefault("blurred", {})
@@ -1579,6 +1581,7 @@ for measure_name, groups in stacks_by_measure.items():
 
     # compute pairwise diffs (blurred a - blurred b) and projections
     diff_projs = {}
+    valid_keys = []
     for a,b in pairs:
         if a not in groups["blurred"] or b not in groups["blurred"]:
             continue
@@ -1586,6 +1589,7 @@ for measure_name, groups in stacks_by_measure.items():
         key = f"{a}_minus_{b}"
         groups["diffs"][key] = diff
         diff_projs[key] = project_stack(diff, proj_mean=True)
+        valid_keys.append(key)
         # save diffs
         np.save(os.path.join(comparisons_dir, f"{safe_filename(measure_name)}_{key}.npy"), diff)
         try:
@@ -1593,11 +1597,30 @@ for measure_name, groups in stacks_by_measure.items():
         except Exception:
             pass
 
+    # # visualize each diff projection using the magenta-black-green map
+    # for key, proj in diff_projs.items():
+    #     vmax = np.nanmax(np.abs(proj))
+    #     plt.figure(figsize=(10, 5))
+    #     plt.imshow(proj, cmap=cmap_mag_black_green, vmin=-vmax, vmax=vmax)
+    #     plt.title(f"{measure_name}: {key} (blurred diff projection)")
+    #     plt.axis("off")
+    #     plt.colorbar(label="Δ intensity")
+    #     plt.show()
 
-
-
-
-
+    # visualize genotype comparisons side‑by‑side with shared LUT
+    if diff_projs:
+        vmax = max(np.nanmax(np.abs(proj)) for proj in diff_projs.values())
+        fig, axes = plt.subplots(1, len(valid_keys), figsize=(6 * len(valid_keys), 5), constrained_layout=True)
+        if len(valid_keys) == 1:
+            axes = [axes]
+        last_im = None
+        for ax, key in zip(axes, valid_keys):
+            proj = diff_projs[key]
+            last_im = ax.imshow(proj, cmap=cmap_mag_black_green, vmin=-vmax, vmax=vmax)
+            ax.set_title(f"{measure_name}: {key}")
+            ax.axis("off")
+        fig.colorbar(last_im, ax=axes, fraction=0.025, pad=0.04, label="Δ intensity")
+        plt.show()
 #%%
 
 
