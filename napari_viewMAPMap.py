@@ -101,19 +101,19 @@ viewer.dims.order = [0, 2, 1]
 stacks_list = {
     'names': [
         'H2BGCaMP_zBrain',
-        'tac1_Thiele',
-        'penka_Thiele',
-        'penkb_MapZeBrain',
-        'npy_MapZeBrain',
+        'tac1_HCR',
+        'penka_HCR_thiele',
+        'penkb_HCR',
+        'npy_HCR',
 
         ]
         ,
     'paths': [
-        r'/media/BigBoy/ciqle/ref_brains/AnatomyDatabases/zbrain_AnatomyLabelDatabase/Elavl3-H2BRFP_6dpf_MeanImageOf10Fish.tif',
-        r'/media/BigBoy/ciqle/tmp_analysis/atp1a3a/THIELE_tac_penk_in_situ_7dpf/reformatted/Elavl3-GCaMP5G_Tac1_02_warp_m0g80c8e1e-1x52r3.nrrd',
-        r'/media/BigBoy/ciqle/tmp_analysis/atp1a3a/THIELE_tac_penk_in_situ_7dpf/reformatted/Elavl3-GCaMP5G_penka_02_warp_m0g80c8e1e-1x52r3.nrrd',
-        r'/media/BigBoy/ciqle/ref_brains/AnatomyDatabases/mapzebrain_20220504_inzbrain/T_AVG_penkb.tif',
-        r'/media/BigBoy/ciqle/ref_brains/AnatomyDatabases/mapzebrain_20220504_inzbrain/T_AVG_npy.tif',
+        r'/media/BigBoy/Common/atp1a3a_Data/pERKData/ZBrainLabels/HuC-H2BRFP_ZBrain.nrrd',
+        r'/media/BigBoy/Common/atp1a3a_Data/pERKData/ZBrainLabels/tac1_HCR_meanOf_9fish.nrrd',
+        r'/media/BigBoy/Common/atp1a3a_Data/pERKData/ZBrainLabels/Elavl3-GCaMP5G_penka_02_warp_m0g80c8e1e-1x52r3.nrrd',
+        r'/media/BigBoy/Common/atp1a3a_Data/pERKData/ZBrainLabels/penkb_HCR_meanOf_9fish.nrrd',
+        r'/media/BigBoy/Common/atp1a3a_Data/pERKData/ZBrainLabels/npy_HCR_meanOf_10fish.nrrd',
         ]
 
 }
@@ -204,7 +204,7 @@ for layer in viewer.layers:
 
 center_viewer(viewer)
 
-out_dir = r'/media/BigBoy/ciqle/tmp_analysis/atp1a3a/MAPMaps_atp1a3a/napari_videos'
+out_dir = r'/media/BigBoy/Common/atp1a3a_Data/pERKData/napari_videos'
 anim = Animation(viewer)
 
 
@@ -226,7 +226,7 @@ anim.animate(os.path.join(out_dir, video_name), fps=15)
 #%%
 
 
-out_dir = r'/media/BigBoy/ciqle/tmp_analysis/atp1a3a/MAPMaps_atp1a3a/napari_videos'
+out_dir = r'/media/BigBoy/Common/atp1a3a_Data/pERKData/napari_videos'
 anim = Animation(viewer)
 center_viewer(viewer)
 anim.capture_keyframe()
@@ -249,17 +249,31 @@ anim.animate(os.path.join(out_dir, video_name), fps=23, quality=7)
 from moviepy.editor import VideoFileClip, concatenate_videoclips
 
 # List your mp4 files
+dir = out_dir
+
+# mp4_files = [
+#     'scroll_InstersectionPlusHuCHB_20260122_103953_.mp4',
+#     'scroll_Itersection_AllLabels_andHuCH2B_20260122_104615_.mp4',
+#     'scroll_Itersection_AllLabels_20260122_104916_.mp4',
+# ]
+
 mp4_files = [
-    '/media/BigBoy/ciqle/tmp_analysis/atp1a3a/MAPMaps_atp1a3a/napari_videos/3DRotation_IntersectionMap_Telencephalon_HuCGCAMP.mp4',
-    '/media/BigBoy/ciqle/tmp_analysis/atp1a3a/MAPMaps_atp1a3a/napari_videos/3DRotation_IntersectionMap_Telencephalon_HuCGCAMP_NPY.mp4.mp4',
-    '/media/BigBoy/ciqle/tmp_analysis/atp1a3a/MAPMaps_atp1a3a/napari_videos/3DRotation_IntersectionMap_Telencephalon_tac1_penka_penkb.mp4.mp4',
+    'rotate_barbecue_Intersection_HuCH2B_20260122_105222_.mp4',
+    'rotate_barbecue_Intersection_AllLables_HuCH2B20260122_111026_.mp4',
+    'rotate_barbecue_Intersection_AllLables_20260122_105547_.mp4',
+    'rotate_barbecue_IntersectionPositive_NPY_20260122_110058_.mp4',
+    'rotate_barbecue_IntersectionNegative_penk_tac1_20260122_110623_.mp4',
+
 ]
 
 # Load clips
-clips = [VideoFileClip(f) for f in mp4_files]
+clips = [VideoFileClip(os.path.join(dir, f)) for f in mp4_files]
 
 # Concatenate
 final_clip = concatenate_videoclips(clips)
 
+
+tstamp = datetime.datetime.now().strftime('%Y%m%d_%H%M%S_')
+video_name = f'Concatenated_video_{tstamp}.mp4'
 # Save result
-final_clip.write_videofile('/media/BigBoy/ciqle/tmp_analysis/atp1a3a/MAPMaps_atp1a3a/napari_videos/concatenated_IntersectionMap_Telencephalon.mp4', codec='libx264')
+final_clip.write_videofile(os.path.join(out_dir, video_name), codec='libx264')

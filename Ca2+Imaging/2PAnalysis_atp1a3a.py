@@ -93,9 +93,9 @@ def draw_hit_volume(hits_inds, values = [1], draw_centroid=False, add_write=True
     return IM_roi, im_proj
 
 
-re_analyze = True # set to True to re-process all data from raw
+re_analyze = False # set to True to re-process all data from raw
 raw_data_fldrs_path = r'/media/BigBoy/ciqle/2p/20250902-11_atp1a3a_experiments'
-processed_data_flds_path = r'/media/FastDrive/atp1a3a_data'
+processed_data_flds_path = r'/media/BigBoy/Common/atp1a3a_Data/Ca2ImagingData/atp1a3a_data'
 out_dir = os.path.join(processed_data_flds_path, 'Outputs_2pAnalysis')
 os.makedirs(out_dir, exist_ok=True)
 
@@ -355,7 +355,7 @@ if re_analyze:
     xy_rez_zbrain = z_brain_meta['space directions'][0][0]
     z_rez_zbrain = z_brain_meta['space directions'][-1][-1]
 
-    ref_brain_path = r'/media/FastDrive/atp1a3a_data/registration/telen_template_allfish_HuC-H2BGCaMP.nrrd' 
+    ref_brain_path = r'/media/BigBoy/Common/atp1a3a_Data/Ca2ImagingData/atp1a3a_data/registration/telen_template_allfish_HuC-H2BGCaMP.nrrd' 
     ref_brain, ref_meta = nrrd.read(ref_brain_path)
     width, height, Zs = ref_brain.shape
     ref_brain = np.moveaxis(ref_brain, [0,1,2], [2,1,0])
@@ -533,7 +533,7 @@ F_dff = (F - Fo) / Fo
 # Remove NaNs from F_dff (set them to zero)
 F_dff[~np.isfinite(F_dff)] = 0
 
-ref_brain_path = r'/media/FastDrive/atp1a3a_data/registration/telen_template_allfish_HuC-H2BGCaMP.nrrd' 
+ref_brain_path = r'/media/BigBoy/Common/atp1a3a_Data/Ca2ImagingData/atp1a3a_data/registration/telen_template_allfish_HuC-H2BGCaMP.nrrd' 
 ref_brain, ref_meta = nrrd.read(ref_brain_path)
 width, height, Zs = ref_brain.shape
 ref_brain = np.moveaxis(ref_brain, [0,1,2], [2,1,0])
@@ -946,6 +946,7 @@ corr_thresh = 0.1
 corr_above_thresh = np.max(abs(corrMat), axis=1) >= corr_thresh
 
 active_neurons = np.where(np.logical_or(std_above_thresh, corr_above_thresh))[0]
+
 
 plt.hist(F_dff_std, bins=np.arange(0, 2, 0.01))
 plt.vlines(std_thresh, 0, 5000, colors='r', linestyles='dashed')
