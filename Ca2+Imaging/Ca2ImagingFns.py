@@ -130,9 +130,11 @@ def draw_hit_volume_provideROIstats(hits_inds, roi_stats, ref_meta, crop_str = '
     xy_rez = ref_meta['xy_rez']
     z_rez = ref_meta['z_rez']
     [xmin, xmax, ymin, ymax, zmin, zmax] = ref_meta[crop_str]  # 
+    
 
     IM_roi = np.zeros((Zs, height, width))
     for j in range(len(hits_inds)):
+        
         roi_coords_y = roi_stats[hits_inds[j]]['ypix_zbrain'].astype('int')
         roi_coords_x = roi_stats[hits_inds[j]]['xpix_zbrain'].astype('int')
         roi_coords_z = roi_stats[hits_inds[j]]['centroid_zbrain'][2].astype('int')
