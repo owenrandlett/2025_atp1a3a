@@ -1,0 +1,423 @@
+
+%%% PREAMBLE 
+\documentclass[9.5pt,lineno]{RandlettLab_elife}
+\nolinenumbers
+\usepackage{setspace}
+\usepackage{lipsum} % Required to insert dummy text
+\usepackage{listings}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\usepackage{gensymb}
+\DeclareSIUnit\Molar{M}
+\usepackage{cancel}
+\usepackage{xcolor}
+\usepackage{textgreek}
+\usepackage{soul} 
+\usepackage{caption}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.96,0.96,0.96}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+\tolerance=9999
+\emergencystretch=10pt
+\hyphenpenalty=1000000
+\exhyphenpenalty=100
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% ARTICLE SETUP
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{Focalized forebrain dysregulation and widespread behavioural abnormalities in a larval zebrafish model of ATP1A3-related disorders.
+}
+
+\author[1] 
+{Abdel Rahman El Hassan}
+
+\author[2]
+{Shahrzad Rahmanian}
+
+\author[1] 
+{Adria Martinez Perez}
+
+\author[1] 
+{Yuanqi Gu}
+
+\author[*, 2, 3]
+{Tod Thiele}
+
+\author[ *,1] 
+{Owen Randlett}
+
+
+\affil[1]{
+Laboratoire MeLiS, Université Claude Bernard Lyon 1 - CNRS UMR5284 - Inserm U1314, Institut NeuroMyoGène, Faculté de Médecine et de Pharmacie, 8 avenue Rockefeller, 69008 Lyon, France
+}
+
+\affil[2]{
+TOD's Affiliation UTORONTO
+}
+
+\affil[3]{
+TOD's Affiliation PEPPERDINE
+}
+% \affil[!]{equal contribution}
+
+\affil[*]{equal contribution}
+
+
+% \affil[@]{correspondence: \href{mailto:owen.randlett@univ-lyon1.fr}{owen.randlett@univ-lyon1.fr}, ORCID: \href{https://orcid.org/0000-0003-0181-5239}{0000-0003-0181-5239}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% ARTICLE START
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\doublespacing
+\maketitle
+
+% \section{Disclosures}
+
+% The authors have nothing to disclose.
+
+% \section{Keywords}
+
+% ATP1A3, dystonia, hemiplesia, zebrafish, behaviour, imaging
+
+% \section{Corresponding Author}
+% Owen Randlett
+% \\ Team ZeNeB: Zebrafish Neurogenetics and Behaviour
+% \\ Laboratoire MeLiS, UCBL - CNRS UMR5284 - Inserm U1314, Institut NeuroMyoGène, 
+% \\ Faculté de Médecine et de Pharmacie, 8 avenue Rockefeller, 69008 Lyon
+% \\ \emph{email:} \href{mailto:owen.randlett@univ-lyon1.fr}{owen.randlett@univ-lyon1.fr}
+% \\ \emph{ORCID:} \href{https://orcid.org/0000-0003-0181-5239}{0000-0003-0181-5239}
+
+
+% \newpage
+\begin{abstract}
+Mutations in ATP1A3, encoding the neuron-enriched Na$^+$/K$^+$-ATPase $\alpha$3 subunit, cause a spectrum of severe neurological disorders that commonly feature episodic and stress-triggered motor symptoms, including dystonia, ataxia, and hemiplegic attacks.
+Despite strong evidence that impaired ionic homeostasis underlies these conditions, the specific brain regions, circuit mechanisms, and physiological dynamics most vulnerable to ATP1A3 loss remain unclear.
+Here we generated a larval zebrafish model of ATP1A3-related disease by creating a frameshift knockout of the zebrafish \emph{atp1a3a} gene and characterized resulting behavioural and neurophysiological abnormalities.
+Mutant larvae exhibit robust disruptions in both spontaneous and stimulus-evoked behaviour, including abnormal postures and dyscoordination consistent with key clinical features.
+To identify affected circuit substrates, we performed whole-brain functional imaging and found a reproducible forebrain network exhibiting pronounced dysregulation, including reduced stimulus tuning and episodes of broadly coordinated activity followed by sustained silencing.
+Together, these findings support a model in which forebrain circuits are particularly sensitive to \emph{atp1a3a} loss and establish larval zebrafish as a tractable platform for dissecting molecular, cellular, and circuit-level mechanisms that may drive ATP1A3-related neurological symptoms.
+
+\end{abstract}
+
+\section{Introduction}
+
+Mutations in the ATP1A3 gene, encoding the Na$^+$/K$^+$-ATPase $\alpha$3 subunit, are responsible for a spectrum of rare neurological disorders collectively termed ATP1A3-related disorders.
+The Na$^+$/K$^+$-ATPase is an ATP-driven membrane pump that exports three Na$^+$ ions and imports two K$^+$ ions per cycle to maintain the ionic gradients that set neuronal excitability, and the neuron-enriched $\alpha$3 subunit is particularly important for rapidly restoring Na$^+$ homeostasis after high-frequency firing, providing “reserve” pumping capacity during periods of high demand.
+ATP1A3-related disorders include Alternating Hemiplegia of Childhood (AHC), Rapid-Onset Dystonia-Parkinsonism (RDP), Cerebellar Ataxia, Areflexia, Pes Cavus, Optic Atrophy, Sensorineural Hearing Loss (CAPOS), Relapsing febrile encephalopathies (RECA / FIPWE), and certain forms of early-onset disorders such as Developmental/Early-Onset Epileptic Encephalopathy (DEE), sometimes accompanied by polymicrogyria (PMG)1–3.
+
+While distinct diagnoses, these diseases share the common genetic basis of the ATP1A3 gene, and commonly exhibit both strongly disordered movements patterns (dystonia, ataxia, etc), as well as other cognitive impairments, often affecting memory, processing speed, and executive function, as well as psychiatric manifestations such as mood disorders and anxiety (DOI: 10.1542/peds.2008-2027 , DOI: 10.1212/wnl.55.7.991).
+While dysregulation of ionic gradients and neuronal excitability due to the dysfunctional pump is very likely the root cause of most of these disease symptoms, the variability among disorders associated with specific genetic alleles of ATP1A3, and the variability among patients, suggests a relatively complex and somehow specified pathology that may have differing involvement of different neurological systems (DOI: 10.3389/fneur.2022.924788).
+Interestingly, symptoms are often triggered or exacerbated by stress, fever, or exertion, and come in waves/attacks, indicating that the underlying disease condition is somehow transitory and correctable, or varies in severity across time (DOI: 10.3389/fneur.2021.637890).
+The brain areas, circuit- and cellular-level mechanisms that are vulnerable to ATP1A3-loss and underlie disease states, as well as these sources of symptomatic transience, are not clear (DOI: 10.3389/fneur.2021.637890).
+
+Dystonia is a common feature of many ATP1A3-related disorders, characterized by sustained or intermittent muscle contractions that cause abnormal postures or twisting movements (DOI: 10.1002/mds.25475).
+In RDP, dystonia is a central symptom that often has an abrupt onset in adolescence or early adulthood (DOI: 10.1002/mds.27801).
+The neurological basis of dystonia is thought to be centered in the basal ganglia (BG), which are important for refining motor programs, such as selecting appropriate actions and suppressing unwanted movements (doi: 10.1016/j.ejpn.2018.01.005).
+Disruptions of these systems are thought to lead to excessive facilitation of motor output in dystonia and a reduced ability to suppress movements (DOI: 10.1001/archneur.60.10.1365).
+However, dystonia has been increasingly understood as a disorder of distributed brain networks.
+Functional imaging studies reveal abnormal connectivity between the BG, cerebellum, thalamus, and sensorimotor cortex (doi: 10.1093/cercor/bhad012).
+Lesions of the cerebellum in animals can produce dystonic movements (doi: 10.1038/nn.2753), and patients with cerebellar disease may also develop dystonia (DOI: 10.1001/archneur.58.7.1125).
+Ataxia, which is characterized by a loss of coordinated, accurate movements, often arises from cerebellar dysfunction (doi: 10.1212/CON.0000000000000753), and is also often observed in ATP1A3-related disorders, thus further implicating the cerebellum as a core locus of vulnerability in ATP1A3-related disease.
+In support of this model, using localized pharmacological inhibition of the Na$^+$/K$^+$-ATPase to model ATP1A3-related disorders, Calderon et al., found that application in the cerebellum, rather than the BG, led to ataxia and dystonic-like postures (doi: https://doi.org/10.1038/nn.2753), and shRNA-based knockdown of ATP1A3 specifically in mouse cerebellar purkinje neurons led to similar dystonia-like features (doi: https://doi.org/10.1016/j.nbd.2015.06.004).
+
+In addition to dystonia and ataxia, episodic hemiplegia is a defining feature of AHC, reflecting transient, lateralized failures of motor output that are inconsistent with focal structural lesions.
+Instead, hemiplegia points to dynamic dysfunction of distributed motor networks and impaired control of neuronal excitability.
+A leading mechanistic hypothesis is increased susceptibility to spreading depolarization (SD)—a slowly propagating wave of near-complete neuronal depolarization followed by prolonged synaptic silencing, driven by failure of ionic homeostasis.
+Because recovery from SD critically depends on Na$^+$/K$^+$-ATPase activity, ATP1A3 dysfunction is predicted to lower the threshold for SD initiation and prolong recovery, particularly in motor cortex.
+This framework accounts for the defining features of AHC hemiplegic episodes, including abrupt onset, reversibility, sleep-related resolution, and alternating laterality across attacks.
+More broadly, an SD-based model could provide a unifying explanation for the coexistence of hemiplegia, dystonia, and ataxia in ATP1A3-related disorders, with differential motor symptoms arising from transient SD-based silencing of different brain regions or cell types.
+
+Here we have generated a larval zebrafish model to better understand the role of ATP1A3 in neuronal circuits and to gain insights into potential cellular and circuit underpinnings of ATP1A3-related disorders.
+Previous experiments in zebrafish using morpholino-based knockdown of the zebrafish homologs of ATP1A3 (\emph{atp1a3a} and \emph{atp1a3b}) found brain ventricle dilation, as well as depolarization of the Rohon-beard neurons and motility deficits (10.1074/jbc.M112.421529).
+However, mutants for these genes did not exhibit these morphological abnormalities in the brain or ventricles (10.7554/eLife.87521), but did exhibit hyperactivity and insomnia phenotypes (dreammist paper).
+Finally, overexpression of human ATP1A3 mRNA, or a mutated form associated with RDP and AHC (c.823G>C, p.Ala275Pro) resulted in reduced brain size, reduced touch-evoked escape responses, and hypoactivity phenotypes (10.3389/fnins.2024.1415576).
+While such inconsistencies likely relate to the methods employed, the relatively mild behavioural phenotypes reported make it unclear if larval zebrafish would recapitulate any of the more dramatic clinical symptoms of ATP1A3-related diseases, such as dystonia and ataxia.
+We generated a frameshift knockout of the zebrafish \emph{atp1a3a}, and characterized its behavioural and neurophysiological abnormalities.
+Our mutants exhibit strong and widespread disruptions in both spontaneous and stimulus-evoked behaviour, some of which mirror clinical features of ATP1A3-related disorders, including aberrant postures and dyscoordination.
+Whole-brain functional imaging identified a common network in the forebrain that consistently shows dysregulated activity patterns including areas of the pallium, subpallium and habenula, characterized by a lack of stimulus-tuning and large bursts of coordinated activity among different groupings of neurons, followed by sustained silencing.
+Collectively, our data support a model in which forebrain circuits are particularly sensitive to ATP1A3-loss, and lay the foundation for using the larval zebrafish model to study both the molecular/cellular- and circuit-level mechanisms underlying forebrain-derived neurological symptoms in these diseases.
+
+\section{Materials and Methods}
+
+\subsection{Animals}
+
+All experiments were performed on larval zebrafish at 5 days post fertilization (dpf), raised at a density of $\approx$1 larvae/mL of E3 media supplemented with 0.02\% HEPES pH 7.2. 
+Larvae were raised in a 14:10h light/dark cycle at 28-29\degree{}C. 
+Adult zebrafish were housed, cared for, and bred at the following zebrafish facilities: Plateau de Recherche Expérimentale en Criblage In Vivo (PRECI, SFR Biosciences, Lyon) and the Animalerie Zebrafish Rockefeller (AZR, SFR Santé Lyon Est, Lyon). Adult zebrafish used to generate larvae were housed in accordance with regulations of the PRECI and AZR facilities, which are regulated by an internal animal wellbeing committee, and were approved by the animal welfare committee (comité d’éthique en expérimentation animale de la Région Rhône-Alpes: CECCAPP, Agreement \# C693870602). 
+Behaviour experiments were performed at the 5dpf stage, and are thus not subject to ethical review, but these procedures do not harm the larvae. 
+
+Mutant lines were obtained from D. Gorelick's lab, and were of the following alleles: 
+
+\emph{esr1\textsuperscript{uab118}} is a 4bp deletion (ZDB-ALT-180420-2), yielding a predicted null frameshift/stop mutation, confirmed by a lack of estradiol responsiveness in the heart as assayed by \emph{Tg(5xERE:GFP)\textsuperscript{c262}} expression \citep{Romano2017-ep}. 
+
+\emph{esr2a\textsuperscript{uab134}} is a 2bp deletion (ZDB-ALT-180420-3), yielding a predicted null frameshift/stop mutation \citep{Romano2017-ep}
+
+\emph{esr2b\textsuperscript{uab127}} is a 4bp deletion (ZDB-ALT-180420-4), yielding a predicted null frameshift/stop mutation, confirmed by a lack of estradiol responsiveness in the liver as assayed by \emph{Tg(5xERE:GFP)\textsuperscript{c262}} expression \citep{Romano2017-ep}. 
+
+\emph{gper1\textsuperscript{uab102}} is a 133bp deletion (ZDB-ALT-180420-1), yielding a predicted null frameshift/stop mutation, confirmed by a lack of estradiol responsiveness in heart beating rate in maternal-zygotic mutants \citep{Romano2017-ep}.
+
+\subsection{Genotyping}
+
+\emph{esr1\textsuperscript{uab118}} was genotyped by PCR using the forward/reverse primer pair:
+\\ \mbox{GCTGGTCACCTTGAATGCTT/TGAGATGTGAGAGATGACTAGGA} with a T\textsubscript{M} of 58°C yielding a 381 bp PCR product that was digested with the restriction enzyme ApeKI. 
+The mutant product is not digested, and the wild type has two bands at 177 and 204 bp.
+
+\emph{esr2a\textsuperscript{uab134}} was genotypes by PCR using the forward/reverse primer pair:
+\\ \mbox{CTTCAGCTGCAGGAAGTGGA/AAAGTCGGGCTTAGCGACTG} with a T\textsubscript{M} of 58°C yielding a 236 bp PCR product that was digested with the restriction enzyme MboI.
+The mutant product is not digested, and the wild type has two bands at 180 and 56 bp 
+
+\emph{esr2b\textsuperscript{uab127}} was genotypes by PCR using the forward/reverse primer pair:
+\\ \mbox{TGGGCCTGAGATGCAGTAGT/GTGTGTGTCTTGGCCTCCTC} with a T\textsubscript{M} of 60°C yielding a 431 bp PCR product that was digested with the restriction enzyme MbiI.
+The mutant product is digested into two bands of 150 and 281 bp and the wild type into 3 bands of 78, 150 and 198 bp. 
+
+\emph{gper1\textsuperscript{uab102}} was genotypes by PCR using the forward/reverse primer pair:
+\\ \mbox{ATGGAGGAGCAGACTACCAATGTG/CCATCCAGATGAGGCTGCAA} with a T\textsubscript{M} of 60°C yielding a mutant product of 372bp and a wild type product of 505 bp.
+
+
+\subsection{Pharmacology}
+
+\textbeta-Estradiol (Sigma E2758, here referred to as "estradiol") was dissolved in dimethyl sulfoxide (DMSO) and stored at -20\degree C. 
+Larvae were treated with estradiol immediately before the behavioural assay by pipetting 10-30uL of 10x solution directly into the behavioural wells, always with a final concentration of 0.1\% DMSO in E3.
+
+\subsection{Habituation behaviour testing}
+
+Larval behavior was evaluated in 300-well plates using an updated version of the experimental setup previously described \citep{Randlett2019-fj,Lamire2023-he}. 
+Briefly, 300-well plates were custom made using laser-cut acrylic sheets where each well measures 8 mm in diameter and 6 mm in depth, corresponding to an approximate water volume of 300 \textmu L.
+These plates are suspended under a water bath held at 31°C, acting as a heated lid to minimize condensation and maintain a 29°C water temperature within each well. 
+Behavioral recordings were made using a Mikrotron CXP-4 camera running at 444hz in conjunction with a Silicon Software frame grabber (Marathon ACX-QP, Basler), illuminated by IR LEDs (TSHF5410, digikey.com). Visual stimuli were presented using a rectangular array of 155 WS2813 RGB LEDs (144LED/M, aliexpress.com). 
+For the DF stimulus, the LEDs were briefly switched off (1 s), then linearly returned to the original brightness over a 20 s interval. 
+Vibration/Tap stimuli were administered using a solenoid (ROB-10391, Sparkfun). 
+This behavioral paradigm was designed to be symmetrical: each 1 hr block of stimulation was followed by 1 hr of rest. 
+During these rest periods, the camera was moves using a stepper motor controlled linear actuator (Hanpose HPV4, 500cm), which moved the camera between two plates, allowing us to screen up to 600 fish per experiment across two 300-well plates. 
+
+Control of the apparatus (RGB LEDs, solenoid, camera linear actuator) was implemented via a Raspberry Pi Pico microcontroller running  CircuitPython (https://circuitpython.org/) (code : \href{https://github.com/owenrandlett/2025_HabEstrogen/tree/main/code/RigControl/PiPicro}{code.py}) and custom Python software which handled the camera acquisition via the \href{https://docs.baslerweb.com/frame-grabbers/python-wrapper}{Python wrapper of the Silicon Software Framegrabber SDK}, triggered stimuli via the Raspberry Pi Pico, and tracked the head and tail coordinates of the larvae across the 300-wells at a baseline framerate of between 20-30hz  (code : \href{https://github.com/owenrandlett/2025_HabEstrogen/blob/main/code/RigControl/Run_BigRig2.py}{Run\_BigRig2.py}). 
+When a stimulus is delivered (DF or Vibration/Tap), a 1-second "Burst" video is recorded at the full frame rate as a Tiff file, from which the head and tail coordinates are subsequently tracked offline (code : \href{https://github.com/owenrandlett/2025_HabEstrogen/blob/main/code/RigControl/TrackBurst_BigRig.py}{TrackBurst\_BigRig.py}).
+Larval zebrafish tracking was done via background subtraction and morphological operations implemented using multiple open-source packages, including: 
+OpenCV \citep{Bradski2000-qo}, 
+scikit-image \citep{van2014scikit}, 
+NumPy \citep{Harris2020-bg}, 
+SciPy \citep{Virtanen2020-sz}, 
+and Numba \citep{lam2015numba}.
+
+
+\subsection{Data analysis}
+
+Data was analyzed in Python using custom written analysis scripts (code : \href{https://github.com/owenrandlett/2025_HabEstrogen/blob/main/code/Analyze_EsrHab.py}{Analyze\_EsrHab.py}). 
+Responses to DFs and vibration/taps were identified as movement events that had a cumulative tail bend angle greater than 3 radian (O-bend)and 1 radian (C-bend), respectively. Data was analyzed using multiple open-source packages, including: NumPy \citep{Harris2020-bg}, SciPy \citep{Virtanen2020-sz},Numba \citep{lam2015numba} and Pandas \citep{mckinney-proc-scipy-2010}.
+Data was plotted using Matplotlib \citep{Hunter2007-ub} and seaborn \citep{Waskom2021-ah}.
+Statistical "significance" between the distributions was tested using the Mann-Whitney U test implemented in Scipy \citep{Virtanen2020-sz}.
+
+The cumulative difference plots to assess changes in habituation performance for the treatments were calculated as previously \citep{Randlett2019-fj}, where we first
+calculated the average response across larvae for each group for each DF.
+This generated a mean vector for each group. 
+These two vectors were normalized by dividing them by the naive response (mean response to the first 5 DFs), and then the treatment group was subtracted from the control group, yielding a "mean difference" vector between stimulus and controls at each flash. 
+From this mean difference vector we calculated the cumulative mean distribution using Numpy's 'nancumsum' function divided by the number of stimuli experienced, or the index of the vector. 
+To generate statistical confidence in these distributions, we bootstrapped 2000 replicates, and calculated the 99.5\% confidence intervals using SciPy's 'stats.norm.interval' function.
+The assumption of this analysis is that if the two groups are habituating similarly, then the "mean difference" vector will exhibit a noise distribution centered at a mean of 0, and thus the cumulative mean distribution would remain near 0. 
+Treatments that affect habituation will show strong increasing or decreasing cumulative mean distributions, reflecting increased or decreased habituation performance throughout
+training, respectively.
+We use an empirically defined threshold of $\pm0.05$ as the statistically meaningful effect size in this analysis, as is reflected in the shaded gray regions in the plots \citep{Randlett2019-fj}.
+
+\subsection{Software and Datasets}
+
+Software and analysis code is available here:  \href{https://github.com/owenrandlett/2025_HabEstrogen}{https://github.com/owenrandlett/2025\_HabEstrogen}. 
+All datasets used in these analyses are available here: \href{https://gofile.me/5sdws/xF6oQhqTA}{HabEstrogen\_Datasets}.
+
+
+\section{Results}
+
+\subsection{Estradiol increases visual habituation learning}
+
+
+In response to a sudden global darkening stimulus, which we refer to as a dark flash (DF), larval zebrafish execute an "O-bend" maneuver, characterized by a deep "O"-shaped bend and a high-amplitude turn (\citep{Burgess2007}, \autoref{fig:1}a). 
+Habituation learning manifests as a progressive reduction in response to repeated stimuli, and this learning can be retained for seconds/minutes, or hours/days for short-, and long-term habituation, respectively \citep{Rankin2009-no}. 
+We use high-speed cameras, machine-vision analysis, and 300-well plates to quantify habituation across large populations of larvae to identify molecular/genetic mechanisms of long-term habituation ({\autoref{fig:1}A,B, \citep{Randlett2019-fj,Lamire2023-he}). 
+When stimulated with DFs repeated at 1-minute intervals in blocks of 60 stimuli, larval zebrafish exhibit long-term habituation, reducing not only the probability of executing a response, but also modulating the latency and other kinematic aspects of the response \citep{Randlett2019-fj}.  
+
+
+Our previous small-molecule screening experiments identified multiple synthetic Estrogen Receptor agonists as positive modulators of DF habituation learning at 5-10 \textmu M doses, including ethinyl estradiol, estradiol valerate, and hexestrol  \citep{Lamire2023-he}. 
+The major effect we observed was a stronger decrease in the probability of executing a O-bend response during the training/learning blocks. 
+We have confirmed and extended these results using estradiol, which is the major natural estrogen in vertebrates. 
+
+An acute dose of 10\textmu M estradiol potently increases habituation learning, which is observable when the response probability of the population of estradiol-treated larvae is compared with DMSO-treated vehicle controls (\autoref{fig:1}C-H).
+Consistent with our previous experiments \citep{Lamire2023-he}, there is a reduction in the naive responsiveness of the estradiol-treated larvae to the first DF stimuli (\autoref{fig:1}D), but the major effect is observed during the training phase (\autoref{fig:1}C,E,F), as is revealed by the consistent positive deviation in the cumulative mean difference (CMD) plots that are normalized to the naive response level in order to quantify response suppression indicative of habituation performance (\autoref{fig:1}H, \citep{Randlett2019-fj}).
+Importantly, the responsiveness of the larvae to vibration stimuli delivered after the DF stimulation (\autoref{fig:1}Ci), which elicit c-bend escape responses \citep{Kimmel1974-jh}, is indistinguishable from controls (\autoref{fig:1}G). From this we conclude that estradiol does not affect global arousal levels but rather has specific effects on habituation learning. 
+
+
+\begin{figure}
+% \internallinenumbers
+
+\begin{center}
+\includegraphics[width=0.65\linewidth]{Figures/Figure_MutationAndQualitativePhenotype.png}
+
+\caption{\textbf{Estradiol increases habituation learning.} \doublespacing
+\\ \textbf{A)} In response to a dark flash (DF), larval zebrafish perform a large turning manoeuvre termed an "O-bend" response.
+\\ \textbf{B)} High-throughput setup for recording and quantifying responsiveness using a high-speed camera recording at 444hz observing larvae in 300-well plates. Scale bar = 10mm.
+\\ \textbf{C)} Treatment with estradiol (red) results in more rapid and profound decreases in the probability of response to DF stimuli during habituation training relative to DMSO vehicle controls (black). DF stimuli are delivered at 1-minute intervals, in 4 blocks of 60 stimuli, separated by 1hr of rest (from 0:00-7:00). 1.5 hours later a block of 30 vibration stimuli are delivered at 1-minute intervals (\textbf{i}). Each dot is the probability of response to one DF. Lines are smoothed in time with a Savitzky–Golay filter (window = 15 stimuli, order = 2). 
+\\ \textbf{D-G)} Distributions responsiveness for different epochs of the experiment. Each dot is the per-fish average of the epoch. Statistical significance was calculated using Mann-Whitney U test, *** = p < 0.001.  \textbf{D)} the naive response to the first 5 DF stimuli; \textbf{E)} the mean response to the remaining DF stimuli in the Block 1 (DFs 6:60); \textbf{F)} the trained response to the last 45 DFs in all four training blocks (DFs 16:60,76:120,136:180,196:240); \textbf{G)} the 30 vibration stimuli delivered with a tap from a solenoid on the 300-well plate platform. 
+\\ \textbf{H)} Cumulative mean difference (CMD) plot quantifying relative habituation performance after estradiol treatment. These plots display the cumulative average differences in the mean response across larvae of the treatment group (estradiol) relative to the control group (DMSO). Difference from 0 reflect a divergence in the change in responsiveness across the 240 DF stimuli in the 4 training blocks, with positive values reflecting increased habituation. The widths of the line is a bootstrapped 99.5\% confidence intervals. The gray boxed region reflects the expected non-significant effect size \citep{Randlett2019-fj}.
+\\ Treatment groups are: Estradiol = 10\textmu M estradiol treatment (n = 345 fish); DMSO = 0.1\% DMSO vehicle controls (n = 548 fish)
+}
+
+\label{fig:1}
+
+\end{center}
+
+% \endinternallinenumbers
+\end{figure}
+
+\subsection{Gper1 is dispensable for estradiol-promoted habituation learning}
+
+
+The effects of estradiol that we have observed occur very rapidly -- larvae are only pretreated with estradiol for $\approx$25min-1hr before the first DF. 
+This is the time necessary to set the apparatus and begin the experiment.
+Since ERα and ERβ are thought to primarily exert their effects via transcriptional alterations, this necessitates a delay in this aspect of their signaling.
+For this reason, we first hypothesized that membrane-initiated signaling through Gper1 was the most likely mechanism. 
+
+To test this we used the \emph{gper1\textsuperscript{uab102}} mutant \citep{Romano2017-ep}, and generated larvae from \emph{gper1\textsuperscript{uab102}} heterozygous or homo/heterozygous crosses to generate clutches of larvae of mixed genotypes. 
+Larvae were treated with estradiol during habituation, and were subsequently genotyped. 
+We reasoned that if \emph{gper1} is required for the effect of estradiol on habituation, mutants would be insensitive to estradiol and habituate significantly less than sibling controls. 
+Contrary to this hypothesis, we found that \emph{gper1} mutants showed no deficits in habituation (\autoref{fig:2}). 
+Remarkably, rather than observing the anticipated inhibition of habituation, \emph{gper1} mutants appeared to habituate slightly more than controls, with the responsiveness level slightly but consistently below the sibling controls across stimuli (\autoref{fig:2}A). 
+This is further supported by a weak but statistically significant decrease in the responsiveness of the larvae during the training period (\autoref{fig:2}D), and a deviation towards positive values in the CMD plot (\autoref{fig:2}F). 
+From these experiments we conclude that Gper1 agonism does not promote habituation learning, but rather may act to suppress it.  
+
+
+\subsection{ERα and ERβ are dispensable for estradiol-promoted habituation learning}
+
+
+Since we found that \emph{gper1} was unnecessary for the habituating-promoting effects of estradiol, we next focused on the three other ERs in the zebrafish genome: \emph{esr1}, \emph{esr2a} and \emph{esr2a}. 
+While we initially prioritized Gper1 due to its rapid signaling properties that aligned with the rapid actions of estradiol on habituation, it is equally possible that the rapid membrane-initiated actions of ERα and/or ERβ could underlie these effects.
+Using the same strategy as for \emph{gper1}, we analyzed previously established mutants (\emph{esr2a\textsuperscript{uab134}}, \emph{esr2a\textsuperscript{uab134}}, and \emph{esr2b\textsuperscript{uab127}}), looking for a mutant with insensitivity to estradiol. 
+However, we failed to identify any deficits in habituation (\autoref{fig:3}).
+To our surprise, we again found that both \emph{esr1} and \emph{esr2a} mutants showed subtle increases in habituation (\autoref{fig:3}Avi,Bvi), similar in magnitude to what we had seen for \emph{gper1} mutants (\autoref{fig:2}F). 
+From these data we conclude that none of the identified ERs are required for the effects of estradiol on promoting habituation. As for Gper1, ER1 and ER2a show a weak inhibitory effect on habituation, indicating that they also act to suppress habituation learning.
+
+\subsection{ERα and ERβ are simultaneously dispensable for estradiol-promoted habituation learning}
+
+
+While our experiments demonstrated that \emph{esr1}, \emph{esr2a} and \emph{esr2a} mutants remain sensitive to estradiol, it is plausible that they could act in a redundant fashion to mediate the effects of estradiol on habituation, perhaps via co-expression in a critical cell type, or via genetic compensation \citep{El-Brolosy2019-uq}. 
+To test for this possibility, we generated combinations of mutants by crossing individual lines together (\autoref{fig:4}). 
+A likely scenario could be that the two ERβ paralogs, ER2a and ER2b, act redundantly. 
+However, we found that double mutants for \emph{esr2a;esr2b} did not show habituation deficits (\autoref{fig:4}A).
+Neither did we observe suppression of habituation in double mutants for \emph{esr1;esr2a} (\autoref{fig:4}B), or \emph{esr1;esr2b} (\autoref{fig:4}C). 
+Finally, we tested triple mutants (\emph{esr1;esr2a;esr2b}), but again failed to identify suppressions in habituation (\autoref{fig:4}D).
+
+We note that we did see a statistically "significant" increase in DF responsiveness in the \emph{esr1;esr2b} double mutants (\autoref{fig:4}Cii-iv). 
+This is attributable to a small increase in naive responsiveness, and did not result from habituation deficits according to our normalized CMD analysis (\autoref{fig:4}Cvi).
+Considering that we did not observe any increased responsiveness in the triple mutants (\autoref{fig:4}D), we conclude that the observed increased responsiveness in the double mutants is likely a result of biological noise, that only rose to statistical "significance" due to the very large number of larvae tested in our high-throughput experiments.
+
+Consistent with the paradoxical effect of increased habituation in \emph{esr1} and \emph{esr2a} single mutants (\autoref{fig:3}A,B), we again observed that double and triple mutants containing these genes also showed a slight increase in habituation (with the exception of the {esr1;esr2b} double mutants).
+This adds further support to the model in which ER1 and ER2b act to suppress learning in this context, rather than promote it. 
+
+
+\subsection{Gper1, ERα, and ERβ are simultaneously dispensable for estradiol-promoted habituation learning}
+
+
+While it is unclear to us how Gper1 might act redundantly with ERα/β, we nevertheless decided to test this possibility by combining the \emph{gper1} and the \emph{esr1}, \emph{esr2a}, and \emph{esr2b} mutations (\autoref{fig:5}). 
+As with the previous iterations of this experiment, we did not find combinations of mutants with suppressed habituation (\autoref{fig:5}). 
+Consistent with our model of (\emph{gper1}, \emph{esr1} and \emph{esr2a}) having inhibitory affects on learning, we again found that most of these combinations of mutants showed evidence of increased habituation (\autoref{fig:5}i,vi).
+While the  responsiveness distributions did not show significant differences (\autoref{fig:5}ii-iv), the normalized CMD plots consistently showed positive deviations, which reflect increased habituation (\autoref{fig:5}vi).
+
+Despite the fact that we analyzed the behaviour of 1152 larvae and successfully genotyping all 4 ER genes in 373 individuals (after \textgreater 4600 genotyping PCRs), we were only able to identify a single quadruple mutant larva lacking all known ERs (\autoref{fig:5}E). 
+This is likely simply due to the limitations of combinatorial Mendelian inheritance, and the fact that \emph{esr1} and \emph{esr2a} are linked on chromosome 20.   
+While it is dubious to conclude much from an n = 1 experiment, we find it remarkable that this larva exhibits the strongest increased habituation of all of our experiments, with suppression of responses (\autoref{fig:5}Ei), and strong positive deviation in the CMD plot (\autoref{fig:5}Evi). 
+
+\section{Discussion}
+
+\subsection{The promotion of habituation learning by estradiol is mediated by an unidentified target} 
+Our experiments indicate that Gper1, ER1, ER2a and ER2b do not mediate the positive effects of estradiol on habituation learning. 
+As this is fundamentally a negative result, it is difficult to conclusively demonstrate this beyond any doubt. 
+One major caveat relates to the actual functional nature of the mutant alleles that we have used. 
+These are all Cas9-generated small deletions resulting in frameshift mutations that lead to early stop codons, and are thus predicted null/knockout lines. 
+Despite this genetic confidence, it is always possible that residual activity could still remain, perhaps via alternate splicing or alternate start codons. 
+This could be further complicated by genetic/transcriptional compensation, where frameshift alleles can lead to the upregulation of paralogs in some circumstances \citep{El-Brolosy2019-uq}.
+As with all negative results, it is not possible to rule out all possible alternative explanations. 
+However, we recognize that this bias against publishing negative results is bad for science. 
+Negative results from well-designed and executed experiments are of value for the community and making this knowledge public is our duty as responsible scientists \citep{Mlinaric2017-kr}. 
+
+While the possibility of "residual activity" in our mutants is a clear limitation of our approach, we argue that this alternative interpretation is very unlikely. The \emph{esr1\textsuperscript{uab118}} and \emph{esr2b\textsuperscript{uab127}} alleles both exhibited a lack of estradiol responsiveness in other tissues \citep{Romano2017-ep}, and \emph{esr2b\textsuperscript{uab127}} mutants are female sterile/subfertile (D. Gorelick, personal communication), indicating a non-functional receptor.
+Similarly, \emph{gper1\textsuperscript{uab102}} mutants show a lack of estradiol responsiveness in heart rate modulation \citep{Romano2017-ep}. 
+Interestingly this was only observed in maternal-zygotic mutants. 
+While it seems unlikely that sufficient maternal mRNA/protein for Gper1 could persist in 5dpf larvae, we can formally rule this out with our current datasets. 
+The \emph{esr2a\textsuperscript{uab134}} mutants have no previously published phenotype, and so we do not have an independent positive control for the nature of this allele. However, the best evidence we have against the "residual activity" hypothesis is that we actually found phenotypes in our assays for \emph{esr1\textsuperscript{uab118}}, \emph{esr2a\textsuperscript{uab134}},  and \emph{gper1\textsuperscript{uab102}} mutants. 
+These phenotypes are just of the unexpected sign, where mutants show increased habituation (discussed below). 
+
+\subsection{Candidate estradiol targets that could promote habituation learning}
+
+We have concluded that the lack of habituation deficits in our mutants is due to the presence of an alternative receptor or pathway that mediates the learning-promoting effects of estradiol.
+What might this unidentified target be? 
+Various leads exist in the literature. 
+One hypothesis posits the existence of an unidentified “Gq-mER” (Gq-coupled membrane estrogen receptor) \citep{Qiu2006-ml, Vail2019-lx}, and therefore estradiol may signal via additional GPCRs beyond Gper1. 
+Another possibility is an interaction between estradiol and other membrane receptors, for example: the Voltage-Gated Sodium Channel Nav1.2 \citep{Sula2021-vs, Trevino2021-wl}, transient receptor potential (TRP) channels \citep{Payrits2017-cd, Ramirez-Barrantes2020-iv}, or various other ion channels \citep{Kow2016-dl}.
+The robust nature of our "non-canonical" but clearly estradiol-dependent phenotype, combined with the high-throughput nature of our behavioural assays, could be an ideal assay for future screening efforts to attempt to identify novel estradiol target(s). 
+
+\subsection{Multiple Estrogen Receptors act to suppress habituation learning.}
+ 
+While we were surprised to find that the classical ERs do not promote habituation, we were shocked to find evidence of the opposite!
+We found that \emph{esr1\textsuperscript{uab118}}, \emph{esr2a\textsuperscript{uab134}},  and \emph{gper1\textsuperscript{uab102}} mutants habituate more than their sibling controls (\autoref{fig:1}, \autoref{fig:2}), consistent with a role for these ERs in inhibiting habituation.
+While effect sizes of these magnitudes border on those that are easily dismissible as "noise", they were not only observed in the single mutants experiments, but also in the double and triple mutant combinations of these alleles (\autoref{fig:3}-\autoref{fig:5}), providing good evidence that they are biologically meaningful effects. 
+In fact, these multi-mutants generally exhibited larger effect sizes, consistent with an additive interaction. 
+ 
+Untangling the mechanisms of ER1-, ER2a- and Gper1-dependent suppression of habituation will require considerable further work. 
+The additive interaction we observed genetically indicates that the ERs act cooperatively to suppress habituation learning.
+All three receptors are expressed in the larval zebrafish brain \citep{Thisse2008-vr,Romano2017-ep}, but whether they are acting in the same or different cell types awaits characterization. 
+The study of this inhibitory pathway may be challenging since it opposes the major learning-promoting effect of estradiol, and therefore may be more straightforward to study after the identification and deletion of the estradiol target that promotes habituation. 
+One attractive hypothesis relates to the observation that estradiol exposure increases aromatase expression in the zebrafish brain \citep{Menuet2005-hn, Hao2013-ik}. 
+Since aromatase catalyzes the conversion of androgens into estrogens, ER mutants may have reduced levels of endogenous endogeous estrogens in the brain, which could lead to inhibited habituation.
+Future experiments aimed at manipulating the aromatase system in wild-type and ER mutant backgrounds could be used to test this hypothesis. 
+
+\subsection{Conclusion}
+
+What began as a straightforward study to identify the receptor(s) that mediate the habituation-promoting effects of estradiol has instead led us to a surprising and paradoxical result; 
+canonical ERs do regulate habituation, but are suppressive and act in opposition to the habituation-promoting effects of estradiol. 
+This fits with the general theme of our studies of this habituation paradigm -- we find increasing complexity and contradiction within this "simple" learning process the deeper we look. 
+This began with our detailed observations of behaviour, leading us to conclude that habituation results from a distributed plasticity process that adapts different aspects of behavior independently \citep{Randlett2019-fj}. 
+We believe that this property underlies our subsequent discoveries of pharmacological and genetic manipulations that can result in either specific changes in specific aspects of habituation (but not others), or even opposing effects, where a single manipulation can simultaneously increase and decrease habituation, depending on which component of behavior is measured \citep{Randlett2019-fj,Lamire2023-he}.
+This complexity appears to be a fundamental property of habituation \citep{McDiarmid2019-td}, and that the study of habituation will likely continue to surprise us, hopefully leading to unexpected insights into the nature of plasticity underlying learning and memory.
+
+\section{Data Availability Statement}
+
+Original data generated and analyzed during this study are included in this published article or in the data repositories listed in References.
+
+\section{Acknowledgments}
+
+We thank the Gorelick lab for sharing the ER-mutant zebrafish lines, and for sharing genotyping protocols and expertise, and the Randlett group members for helpful advice regarding the manuscript and work.
+We are grateful to the staff of the PRECI and AZR zebrafish facilities, including Laure Benard, Robert Renard, Annie Desenfant, Olivier Lohez, for the expert care provided to the zebrafish. 
+We also gratefully acknowledge the communities that develop and maintain the numerous open-source software packages we rely on, most of which could not be cited here.
+
+
+\section{Funding}
+This work was supported by funding from the ATIP-Avenir program of the CNRS and Inserm, a Fondation Fyssen research grant, and the IDEX-Impulsion initiative of the University of Lyon.
+
+\bibliography{References_Atp1a3}
+
+
+
+
+
+
+\end{document}
