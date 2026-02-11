@@ -150,10 +150,6 @@ This framework accounts for the defining features of AHC hemiplegic episodes, in
 More broadly, an SD-based model could provide a unifying explanation for the coexistence of hemiplegia, dystonia, and ataxia in ATP1A3-related disorders, with differential motor symptoms arising from transient SD-based silencing of different brain regions or cell types.
 
 Here we have generated a larval zebrafish model to better understand the role of ATP1A3 in neuronal circuits and to gain insights into potential cellular and circuit underpinnings of ATP1A3-related disorders.
-Previous experiments in zebrafish using morpholino-based knockdown of the zebrafish homologs of ATP1A3 (\emph{atp1a3a} and \emph{atp1a3b}) found brain ventricle dilation, as well as depolarization of the Rohon-beard neurons and motility deficits \citep{Doanl2013}.
-However, mutants for these genes did not exhibit these morphological abnormalities in the brain or ventricles, but did exhibit hyperactivity and insomnia phenotypes \citep{Barlow2023}.
-Finally, overexpression of human ATP1A3 mRNA, or a mutated form associated with RDP and AHC (p.Ala275Pro) resulted in reduced brain size, reduced touch-evoked escape responses, and hypoactivity phenotypes \citep{Ruan2024}.
-While such inconsistencies likely relate to the methods employed, the relatively mild behavioural phenotypes reported make it unclear if larval zebrafish would recapitulate any of the more dramatic clinical symptoms of ATP1A3-related diseases, such as dystonia and ataxia.
 We generated a frameshift knockout of the zebrafish \emph{atp1a3a}, and characterized its behavioural and neurophysiological abnormalities.
 Our mutants exhibit strong and widespread disruptions in both spontaneous and stimulus-evoked behaviour, some of which mirror clinical features of ATP1A3-related disorders, including aberrant postures and dyscoordination.
 Whole-brain functional imaging identified a common network in the forebrain that consistently shows dysregulated activity patterns including areas of the pallium, subpallium and habenula, characterized by a lack of stimulus-tuning and large bursts of coordinated activity among different groupings of neurons, followed by sustained silencing.
@@ -163,12 +159,15 @@ Collectively, our data support a model in which forebrain circuits are particula
 \section{Results}
 \subsection{Generation of a larval zebrafish model of ATP1A3-related disorders.}
 
-Due to the teleost genome duplication, zebrafish possess two genes that are orthologous to human ATP1A3: atp1a3a and atp1a3b. Zebrafish atp1a3a has 21 exons and shares 92\% amino acid conservation with human ATP1A3, and a similarly broad gene expression in neurons throughout the central nervous system ( Doǧanli et al., 2013; Rajarao et al., 2001). 
+Due to the teleost genome duplication, zebrafish possess two genes that are orthologous to human ATP1A3: \emph{atp1a3a} and \emph{atp1a3b}. Zebrafish atp1a3a has 21 exons and shares 92\% amino acid conservation with human ATP1A3, and a similarly broad gene expression in neurons throughout the central nervous system ( Doǧanli et al., 2013; Rajarao et al., 2001). 
 The \emph{atp1a3b} gene also shows very high conservation (91\%), but its expression is highly localized to certain brain areas in the midbrain and hindbrain (Doǧanli et al., 2013). 
-For this project have focused on the more highly-conserved and more broadly-expressed atp1a3a gene. We generated a mutant line using CRISPR-Cas9, generating an 8 base pair deletion in exon 8 yielding a frameshift and premature stop codon in exon 9 (Fig 1). 
-qRT-PCR experiments show a strong loss of \emph{atp1a3a} mRNA levels, indicating that the transcript is degraded through nonsense-mediated decay (Fig 1). 
-We tested for genetic compensation through paralog upregulation (REF), and indeed found that atp1a3b mRNA levels are significantly higher in \emph{atp1a3a} mutants, indicating that atp1a3b overexpression may compensate for atp1a3a loss. 
+For this project have focused on the more highly-conserved and more broadly-expressed atp1a3a gene. 
+We generated a mutant line using CRISPR-Cas9, generating an 8 base pair deletion in exon 8 yielding a frameshift and premature stop codon in exon 9 (\autoref{fig:1}A). 
+qRT-PCR experiments show a strong loss of \emph{atp1a3a} mRNA levels, indicating that the transcript is degraded through nonsense-mediated decay (\autoref{fig:1}B).
+We tested for genetic compensation through paralog upregulation \citep{Rossi2015}, and indeed found that \emph{atp1a3b} mRNA levels are significantly higher in \emph{atp1a3a} mutants, indicating that atp1a3b overexpression may compensate for \emph{atp1a3a} loss. 
 Therefore, while we expect the \emph{atp1a3a} allele to be completely non-functional, this may be partially compensated for by both the presence and upregulation of the \emph{atp1a3b} paralog. 
+
+
 
 \begin{figure}
 % \internallinenumbers
@@ -177,16 +176,35 @@ Therefore, while we expect the \emph{atp1a3a} allele to be completely non-functi
 \includegraphics[width=0.9\linewidth]{Figures/Figure_MutationAndQualitativePhenotype.png}
 
 \caption{\textbf{\emph{atp1a3a} mutants display abnormal postures and swimming patterns}
-\\ \textbf{A)} atp1a3a gene structure highlighting the location of the 8 bp deletion in exon 8 that leads to a premature stop codon in exon 9. DNA sequence of target site and predicted atp1a3a protein length in wildtype and mutant zebrafish. gRNA target sequence is underlined. Wildtype atp1a3a consists of 1023 amino acids; atp1a3a mutant protein consists of 272 amino acids identical to wildtype and 78 frameshifted amino acids, yielding a total protein length of 350 amino acids.
-\\ \textbf{B)} Comparison of \emph{atp1a3a} and \emph{atp1a3b} expression levels in \emph{atp1a3a} mutants. Expression was quantified using RT-qPCR and normalized to actb2 expression. Relative expression levels are normalized to expression levels in atp1a3a(+/+) larvae. Data are presented as means ± SEM. * p < 0.05; ** p < 0.01; *** p < 0.001.
+\\ \textbf{A)} \emph{atp1a3a} gene structure highlighting the location of the 8 bp deletion in exon 8 that leads to a premature stop codon in exon 9. DNA sequence of target site and predicted atp1a3a protein length in wildtype and mutant zebrafish. gRNA target sequence is underlined. Wildtype atp1a3a consists of 1023 amino acids; atp1a3a mutant protein consists of 272 amino acids identical to wildtype and 78 frameshifted amino acids, yielding a total protein length of 350 amino acids.
+\\ \textbf{B)} Comparison of \emph{atp1a3a} and \emph{atp1a3b} expression levels in \emph{atp1a3a} mutants. Expression was quantified using RT-qPCR and normalized to \emph{actb2} expression. Relative expression levels are normalized to expression levels in \emph{atp1a3a}\textsuperscript{+/+} larvae. Data are presented as means $\pm$ SEM. * $p < 0.05$; ** $p < 0.01$; *** $p < 0.001$.
+\\ \textbf{C)} Unbalanced postures and abnormal swimming patterns in \emph{atp1a3a} mutants, including corkscrew swimming, and 
+\\ \textbf{D)} stable postures with the tail bent to one side.
+\\ \textbf{E)} Head-embedded behavioural setup for quantifying tail kinematics in response to visual stimuli. Based on pi\_tailtrack \citep{Randlett2023}
+\\ \textbf{F)} \emph{atp1a3a} mutants display:  \textbf{i)} Periods of normal swimming interspersed with \textbf{ii)} periods with the "bent tail" phenotype with a persistent bend to the left of the midline (dashed line) in this instance.
+\\ \textbf{G)} Tail tracking traces of 3 WT larvae showing normal bursts of swimming/tail flicks (blue), with few substantial or long-lasting deviations in the tail angle relative to the midline. 
+\\ \textbf{H)} Tail tracking traces of 3 \emph{atp1a3a} mutant larvae showing very bursty swimming patterns with vigorous activity followed by periods of quiescence, and many periods of persistent tail bends reflected as large deviations in the Tail Angle. 
 }
 
 \label{fig:1}
 
 \end{center}
-
 % \endinternallinenumbers
 \end{figure}
+
+Previous experiments in zebrafish using morpholino-based knockdown of the zebrafish homologs of ATP1A3 (\emph{atp1a3a} and \emph{atp1a3b}) found brain ventricle dilation, as well as depolarization of the Rohon-beard neurons and motility deficits \citep{Doanl2013}.
+However, mutants for these genes did not exhibit these morphological abnormalities in the brain or ventricles, but did exhibit hyperactivity and insomnia phenotypes \citep{Barlow2023}.
+Finally, overexpression of human ATP1A3 mRNA, or a mutated form associated with RDP and AHC (p.Ala275Pro) resulted in reduced brain size, reduced touch-evoked escape responses, and hypoactivity phenotypes \citep{Ruan2024}.
+While such inconsistencies likely relate to the methods employed, the relatively mild behavioural phenotypes reported make it unclear if larval zebrafish would recapitulate any of the more dramatic clinical symptoms of ATP1A3-related diseases, such as dystonia and ataxia.
+Our mutants also appeared morpholgically normal, with the exception of a deflated swim bladders in some larvae, which is often thought to be reflective behavioural abnormalities as inflation requires coordinated swimming to the surface to gulp air. 
+Visual observation in 6-7dpf larvae revealed abnormal swimming patterns and postures, including unbalanced postures with the tail persistently bent to one side, and corkscrew swimming patterns (\autoref{fig:1}C-D).
+These phenotypes are reminiscent of the abnormal postures and dyscoordination observed in patients with ATP1A3-related disorders, and thus we sought to further characterize these phenotypes and their underlying neural circuit dysfunction.
+
+To more carefully observe the tail-bending phenotype, we used a head-embedded preparation in which the larva is embedded in agarose with the tail free to move, and presented visual stimuli to elicit swimming behaviour using a projector and screen below the larvae (\autoref{fig:1}E).
+Observing \emph{atp1a3a} mutants in this setup revealed periods of normal swimming interspersed with periods of persistent tail bends, with the tail often stably bent to one side for many seconds (\autoref{fig:1}F).
+Tail tracking and swimming kinematic analyses \citep{Randlett2023} confirmed that WT sibling fish exhibit the normal bouting swimming pattern, and the time-averaged tail angle position rarely deviates from the midline (\autoref{fig:1}E). 
+In contrast, \emph{atp1a3a} mutants show a very bursty swimming pattern, with vigorous bouts of swimming followed by periods of quiescence, and many periods of persistent tail bends reflected as large deviations in the tail angle, lasting many seconds or minutes (\autoref{fig:1}F-H).
+
 
 \section{Materials and Methods}
 

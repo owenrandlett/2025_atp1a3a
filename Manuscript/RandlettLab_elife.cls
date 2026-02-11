@@ -258,7 +258,7 @@
 
 \renewcommand{\maketitle}{%
   \vskip36pt%
-  {\color{RandlettDarkOrange}\raggedright\bfseries\fontsize{24}{18}\selectfont \@title\par}%
+  {\noindent\color{RandlettDarkOrange}\bfseries\fontsize{24}{22}\selectfont \@title\par}%
   \vskip16pt
   {\@author\par}
   \vskip8pt

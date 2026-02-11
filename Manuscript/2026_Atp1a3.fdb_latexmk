@@ -1,21 +1,21 @@
 # Fdb version 4
-["bibtex 2026_Atp1a3"] 1770739577.92076 "2026_Atp1a3.aux" "2026_Atp1a3.bbl" "2026_Atp1a3" 1770739581.99971 0
-  "./References_Atp1a3.bib" 1770735596 170803 5df7e9a629169e0d26d932a6a210a517 ""
-  "2026_Atp1a3.aux" 1770739581 10766 12b7734868c238711d9f6de2f60a3092 "pdflatex"
+["bibtex 2026_Atp1a3"] 1770803174.59799 "2026_Atp1a3.aux" "2026_Atp1a3.bbl" "2026_Atp1a3" 1770803277.66179 0
+  "./References_Atp1a3.bib" 1770800681 171823 0f95744af5b20e001ca401132c52c668 ""
+  "2026_Atp1a3.aux" 1770803276 13214 a557109bd1a78d2c970fcf0c3adf0ade "pdflatex"
   "c:/texlive/2024/texmf-dist/bibtex/bst/natbib/plainnat.bst" 1734439290 26816 ffe5423d2019860bad9f54bc402fac15 ""
   (generated)
   "2026_Atp1a3.bbl"
   "2026_Atp1a3.blg"
   (rewritten before read)
-["pdflatex"] 1770739578.34024 "c:/Users/owen.randlett/Documents/GitHub/2025_atp1a3a/Manuscript/2026_Atp1a3.tex" "2026_Atp1a3.pdf" "2026_Atp1a3" 1770739582.00012 0
-  "2026_Atp1a3.aux" 1770739581 10766 12b7734868c238711d9f6de2f60a3092 "pdflatex"
-  "2026_Atp1a3.bbl" 1770739578 17072 2ce3403bd5eee6172bd55127a05f73ee "bibtex 2026_Atp1a3"
-  "2026_Atp1a3.out" 1770739581 4670 69647dab85c5db6a1b7d2e3734189c0c "pdflatex"
-  "2026_Atp1a3.suppinfo" 1770739581 73 147ba256b24c4ec54a3ad5fb91a190d2 "pdflatex"
-  "2026_Atp1a3.tex" 1770739573 34700 f2c711e014d0f6e5f0abd78ce2dff573 ""
-  "Figures/Figure_MutationAndQualitativePhenotype.png" 1770739528 2734248 267969b697558020d2de6e8952a6517d ""
-  "RandlettLab_elife.cls" 1770738301 16908 c0c8942908893070869c3dc1f12784dd ""
-  "c:/Users/owen.randlett/Documents/GitHub/2025_atp1a3a/Manuscript/2026_Atp1a3.tex" 1770739573 34700 f2c711e014d0f6e5f0abd78ce2dff573 ""
+["pdflatex"] 1770803273.5009 "c:/Users/owen.randlett/Documents/GitHub/2025_atp1a3a/Manuscript/2026_Atp1a3.tex" "2026_Atp1a3.pdf" "2026_Atp1a3" 1770803277.66229 0
+  "2026_Atp1a3.aux" 1770803276 13214 a557109bd1a78d2c970fcf0c3adf0ade "pdflatex"
+  "2026_Atp1a3.bbl" 1770803174 17981 89e3bfe597cae622d48e05e4d8ff5584 "bibtex 2026_Atp1a3"
+  "2026_Atp1a3.out" 1770803276 4670 69647dab85c5db6a1b7d2e3734189c0c "pdflatex"
+  "2026_Atp1a3.suppinfo" 1770803276 73 147ba256b24c4ec54a3ad5fb91a190d2 "pdflatex"
+  "2026_Atp1a3.tex" 1770803272 37597 acc07ced03a24a44717062a5eb7f6c55 ""
+  "Figures/Figure_MutationAndQualitativePhenotype.png" 1770797409 2016479 d20d7e058c3c0c2ddc14ef30cd44c02c ""
+  "RandlettLab_elife.cls" 1770796978 16905 5c6cc134268d224070b6638dbbf08126 ""
+  "c:/Users/owen.randlett/Documents/GitHub/2025_atp1a3a/Manuscript/2026_Atp1a3.tex" 1770803272 37597 acc07ced03a24a44717062a5eb7f6c55 ""
   "c:/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1734437800 2971 def0b6c1f0b107b3b936def894055589 ""
   "c:/texlive/2024/texmf-dist/fonts/enc/dvips/opensans/a_jg4h6q.enc" 1734439404 2952 84fda6c8ae8be17712e9d998ffe48bad ""
   "c:/texlive/2024/texmf-dist/fonts/enc/dvips/opensans/a_nvvucy.enc" 1734439404 3364 7c78cdd102714be824555fc722b51d02 ""
