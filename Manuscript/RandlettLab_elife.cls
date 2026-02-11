@@ -103,11 +103,11 @@
 % \captionsetup*[table]{skip=\medskipamount}
 
 
-\usepackage[numbers]{natbib}
+\usepackage[authoryear,round]{natbib}
 \renewcommand{\bibfont}{\small}
 
-% changing citation style to numbered to fit with Endocrinology submission, old stuff commented out below
-\bibliographystyle{vancouver}
+% author--year citation style
+\bibliographystyle{plainnat}
 
 
 
@@ -258,7 +258,7 @@
 
 \renewcommand{\maketitle}{%
   \vskip36pt%
-  {\color{RandlettDarkOrange}\raggedright\bfseries\fontsize{24}{16}\selectfont \@title\par}%
+  {\color{RandlettDarkOrange}\raggedright\bfseries\fontsize{24}{18}\selectfont \@title\par}%
   \vskip16pt
   {\@author\par}
   \vskip8pt

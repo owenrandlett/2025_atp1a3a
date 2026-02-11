@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.12.17)  10 FEB 2026 09:29
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.12.17)  10 FEB 2026 17:06
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1470,187 +1470,101 @@ LaTeX Font Info:    Font shape `T1/opensans-TLF/m/n' will be
 [1
 
 {c:/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{c:/texlive/2024/texmf-dist/fonts/enc/dvips/opensans/a_jg4h6q.enc}]
-Underfull \hbox (badness 1237) in paragraph at lines 136--145
-\T1/opensans-TLF/m/n/10 (DOI: 10.1002/mds.27801). The neu-ro-log-i-cal ba-sis of dys-to-nia is thought to be cen-tered in the basal
- []
-
-
-Underfull \hbox (badness 1527) in paragraph at lines 136--145
-\T1/opensans-TLF/m/n/10 move-ments (DOI: 10.1001/arch-neur.60.10.1365). How-ever, dys-to-nia has been in-creas-ingly un-der-stood
- []
-
-
-Underfull \hbox (badness 1337) in paragraph at lines 136--145
-\T1/opensans-TLF/m/n/10 as a dis-or-der of dis-tributed brain net-works. Func-tional imag-ing stud-ies re-veal ab-nor-mal con-nec-tiv-ity
- []
-
-
-Underfull \hbox (badness 1895) in paragraph at lines 136--145
-\T1/opensans-TLF/m/n/10 of the cere-bel-lum in an-i-mals can pro-duce dys-tonic move-ments (doi: 10.1038/nn.2753), and pa-tients
- []
-
-
-Underfull \hbox (badness 1009) in paragraph at lines 136--145
-\T1/opensans-TLF/m/n/10 with cere-bel-lar dis-ease may also de-velop dys-to-nia (DOI: 10.1001/arch-neur.58.7.1125). Ataxia, which is
+Underfull \hbox (badness 1152) in paragraph at lines 131--135
+\T1/opensans-TLF/m/n/10 man-i-fes-ta-tions such as mood dis-or-ders and anx-i-ety ([][]Pit-tock et al.[][], [][]2000[][]; [][]Sweney et al.[][], [][]2009[][]). While
  []
 
 
 
 [2]
-
-[3]
-LaTeX Font Info:    Font shape `T1/opensans-TLF/m/it' will be
-(Font)              scaled to size 7.5pt on input line 174.
-
-Underfull \hbox (badness 1701) in paragraph at lines 174--175
-[]\T1/opensans-TLF/m/it/10 esr1$[]$ \T1/opensans-TLF/m/n/10 is a 4bp dele-tion (ZDB-ALT-180420-2), yield-ing a pre-dicted null frameshift/stop mu-ta-tion,
- []
-
-
-Underfull \hbox (badness 1033) in paragraph at lines 178--179
-[]\T1/opensans-TLF/m/it/10 esr2b$[]$ \T1/opensans-TLF/m/n/10 is a 4bp dele-tion (ZDB-ALT-180420-4), yield-ing a pre-dicted null frameshift/stop mu-ta-tion,
- []
-
-LaTeX Font Info:    Font shape `T1/opensans-TLF/m/n' will be
-(Font)              scaled to size 7.5pt on input line 185.
-
-
-[4{c:/texlive/2024/texmf-dist/fonts/enc/dvips/opensans/a_nvvucy.enc}]
-LaTeX Font Info:    Trying to load font information for LGR+opensans-TLF on input line 202.
- (c:/texlive/2024/texmf-dist/tex/latex/opensans/LGRopensans-TLF.fd
-File: LGRopensans-TLF.fd 2019/06/24 Font definitions for LGR/opensans-TLF.
-)
-LaTeX Font Info:    Font shape `LGR/opensans-TLF/m/n' will be
-(Font)              scaled to size 10.0pt on input line 202.
-
-
-[5{c:/texlive/2024/texmf-dist/fonts/enc/dvips/opensans/a_uv4o4i.enc}]
-
-[6]
-LaTeX Font Info:    Font shape `T1/opensans-TLF/b/it' will be
-(Font)              scaled to size 10.0pt on input line 255.
-
-Underfull \hbox (badness 1824) in paragraph at lines 261--264
-[]\T1/opensans-TLF/m/n/10 Our pre-vi-ous small-molecule screen-ing ex-per-i-ments iden-ti-fied mul-ti-ple syn-thetic Es-tro-gen Re-cep-tor
- []
-
-<Figures/Figure_MutationAndQualitativePhenotype.png, id=188, 383.031pt x 749.6808pt>
+<Figures/Figure_MutationAndQualitativePhenotype.png, id=173, 625.6173pt x 365.2044pt>
 File: Figures/Figure_MutationAndQualitativePhenotype.png Graphic file (type png)
 <use Figures/Figure_MutationAndQualitativePhenotype.png>
-Package pdftex.def Info: Figures/Figure_MutationAndQualitativePhenotype.png  used on input line 274.
-(pdftex.def)             Requested size: 330.85953pt x 647.61848pt.
+Package pdftex.def Info: Figures/Figure_MutationAndQualitativePhenotype.png  used on input line 177.
+(pdftex.def)             Requested size: 458.1144pt x 267.43288pt.
 LaTeX Font Info:    Font shape `T1/opensans-TLF/b/n' will be
-(Font)              scaled to size 9.0pt on input line 283.
+(Font)              scaled to size 9.0pt on input line 182.
+LaTeX Font Info:    Font shape `T1/opensans-TLF/b/it' will be
+(Font)              scaled to size 9.0pt on input line 182.
+LaTeX Font Info:    Font shape `T1/opensans-TLF/m/it' will be
+(Font)              scaled to size 9.0pt on input line 182.
 LaTeX Font Info:    Font shape `TS1/opensans-TLF/m/n' will be
-(Font)              scaled to size 9.0pt on input line 283.
+(Font)              scaled to size 9.0pt on input line 182.
 
-LaTeX Warning: Float too large for page by 380.62866pt on input line 290.
+
+[3{c:/texlive/2024/texmf-dist/fonts/enc/dvips/opensans/a_nvvucy.enc}]
+
+[4 <./Figures/Figure_MutationAndQualitativePhenotype.png>]
+LaTeX Font Info:    Font shape `T1/opensans-TLF/b/it' will be
+(Font)              scaled to size 12.0pt on input line 203.
+LaTeX Font Info:    Font shape `T1/opensans-TLF/m/n' will be
+(Font)              scaled to size 7.5pt on input line 208.
+LaTeX Font Info:    Font shape `T1/opensans-TLF/m/it' will be
+(Font)              scaled to size 7.5pt on input line 208.
+
+
+[5]
+Underfull \hbox (badness 1152) in paragraph at lines 255--256
+[]\T1/opensans-TLF/m/n/10 Control of the LEDs, solenoid, and cam-era ac-tu-a-tor was man-aged by a Rasp-berry Pi Pico run-ning
+ []
+
+
+
+[6]
+Underfull \hbox (badness 1117) in paragraph at lines 309--310
+[]\T1/opensans-TLF/m/n/10 Behavioral events were op-er-a-tionally de-fined based on cu-mu-la-tive tail bend an-gle thresh-olds, with
+ []
 
 
 
 [7]
+Underfull \hbox (badness 1132) in paragraph at lines 330--336
+\T1/opensans-TLF/m/n/10 ster-ile/-sub-fer-tile (D. Gore-lick, per-sonal com-mu-ni-ca-tion), in-di-cat-ing a non-functional re-cep-tor. Sim-i-larly,
+ []
 
-[8 <./Figures/Figure_MutationAndQualitativePhenotype.png>]
+LaTeX Font Info:    Font shape `T1/opensans-TLF/b/it' will be
+(Font)              scaled to size 10.0pt on input line 349.
 
-LaTeX Warning: Reference `fig:2' on page 9 undefined on input line 303.
-
-
-LaTeX Warning: Reference `fig:2' on page 9 undefined on input line 304.
-
-
-LaTeX Warning: Reference `fig:2' on page 9 undefined on input line 305.
+LaTeX Warning: Reference `fig:2' on page 8 undefined on input line 349.
 
 
-LaTeX Warning: Reference `fig:2' on page 9 undefined on input line 305.
-
-LaTeX Font Info:    Font shape `LGR/opensans-TLF/b/n' will be
-(Font)              scaled to size 12.0pt on input line 309.
-
-LaTeX Warning: Reference `fig:3' on page 9 undefined on input line 315.
+LaTeX Warning: Reference `fig:3' on page 8 undefined on input line 350.
 
 
-LaTeX Warning: Reference `fig:3' on page 9 undefined on input line 316.
+LaTeX Warning: Reference `fig:5' on page 8 undefined on input line 350.
 
 
-LaTeX Warning: Reference `fig:2' on page 9 undefined on input line 316.
 
-
-LaTeX Warning: Reference `fig:4' on page 9 undefined on input line 323.
-
-
-LaTeX Warning: Reference `fig:4' on page 9 undefined on input line 325.
-
-
-LaTeX Warning: Reference `fig:4' on page 9 undefined on input line 326.
-
-
-LaTeX Warning: Reference `fig:4' on page 9 undefined on input line 326.
-
-
-LaTeX Warning: Reference `fig:4' on page 9 undefined on input line 327.
-
+[8] (./2026_Atp1a3.bbl
+LaTeX Font Info:    Trying to load font information for T1+stix on input line 23.
+ (c:/texlive/2024/texmf-dist/tex/latex/stix/t1stix.fd
+File: t1stix.fd 2015/04/17 v1.1.2-latex STIX T1 font definitions
+)
+Package microtype Info: Loading generic protrusion settings for font family
+(microtype)             `cmss' (encoding: T1).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
 
 
 [9]
+LaTeX Font Info:    Trying to load font information for LGR+opensans-TLF on input line 41.
+ (c:/texlive/2024/texmf-dist/tex/latex/opensans/LGRopensans-TLF.fd
+File: LGRopensans-TLF.fd 2019/06/24 Font definitions for LGR/opensans-TLF.
+)
+LaTeX Font Info:    Font shape `LGR/opensans-TLF/m/n' will be
+(Font)              scaled to size 9.0pt on input line 41.
 
-LaTeX Warning: Reference `fig:4' on page 10 undefined on input line 329.
-
-
-LaTeX Warning: Reference `fig:4' on page 10 undefined on input line 330.
-
-
-LaTeX Warning: Reference `fig:4' on page 10 undefined on input line 331.
-
-
-LaTeX Warning: Reference `fig:3' on page 10 undefined on input line 333.
-
-
-LaTeX Warning: Reference `fig:5' on page 10 undefined on input line 340.
-
-
-LaTeX Warning: Reference `fig:5' on page 10 undefined on input line 341.
-
-
-LaTeX Warning: Reference `fig:5' on page 10 undefined on input line 342.
-
-
-LaTeX Warning: Reference `fig:5' on page 10 undefined on input line 343.
-
-
-LaTeX Warning: Reference `fig:5' on page 10 undefined on input line 343.
-
-
-LaTeX Warning: Reference `fig:5' on page 10 undefined on input line 345.
-
-
-LaTeX Warning: Reference `fig:5' on page 10 undefined on input line 347.
-
-
-LaTeX Warning: Reference `fig:5' on page 10 undefined on input line 347.
+Underfull \hbox (badness 1735) in paragraph at lines 102--105
+[]\T1/opensans-TLF/m/n/9 Laurie Anne Lamiré, Mar-tin Haese-meyer, Flo-rian En-gert, Michael Granato, and Owen Ran-dlett.  Func-tional and
+ []
 
 
 
-[10]
+[10{c:/texlive/2024/texmf-dist/fonts/enc/dvips/stix/stix-t1.enc}{c:/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}{c:/texlive/2024/texmf-dist/fonts/enc/dvips/opensans/a_uv4o4i.enc}]
 
-[11]
+[11]) (./2026_Atp1a3.suppinfo)
 
-LaTeX Warning: Reference `fig:2' on page 12 undefined on input line 381.
-
-
-LaTeX Warning: Reference `fig:3' on page 12 undefined on input line 382.
-
-
-LaTeX Warning: Reference `fig:5' on page 12 undefined on input line 382.
-
-
-
-[12] (./2026_Atp1a3.bbl
-
-[13]
-
-[14]) (./2026_Atp1a3.suppinfo)
-
-[15] 
+[12] 
 enddocument/afterlastpage (AED): lastpage setting LastPage.
 (./2026_Atp1a3.aux)
  ***********
@@ -1662,25 +1576,21 @@ L3 programming layer <2021/03/21>
 LaTeX Warning: There were undefined references.
 
 Package rerunfilecheck Info: File `2026_Atp1a3.out' has not changed.
-(rerunfilecheck)             Checksum: FCC308EACA0F964FA711FC1FA9FDC7E1;5342.
- )
-(\end occurred inside a group at level 1)
-
-### simple group (level 1) entered at line 257 ({)
-### bottom level 
+(rerunfilecheck)             Checksum: 69647DAB85C5DB6A1B7D2E3734189C0C;4670.
+ ) 
 Here is how much of TeX's memory you used:
- 30415 strings out of 473330
- 558708 string characters out of 5723877
- 1057259 words of memory out of 5000000
- 53037 multiletter control sequences out of 15000+600000
- 614235 words of font info for 152 fonts, out of 8000000 for 9000
+ 30546 strings out of 473330
+ 561043 string characters out of 5723877
+ 1054134 words of memory out of 5000000
+ 53143 multiletter control sequences out of 15000+600000
+ 626664 words of font info for 174 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 91i,11n,131p,2545b,1432s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<c:/texlive/2024/texmf-dist/fonts/type1/ascender/opensans/OpenSans-Bold.pfb><c:/texlive/2024/texmf-dist/fonts/type1/ascender/opensans/OpenSans-BoldItalic.pfb><c:/texlive/2024/texmf-dist/fonts/type1/ascender/opensans/OpenSans-Italic.pfb><c:/texlive/2024/texmf-dist/fonts/type1/ascender/opensans/OpenSans-Regular.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/stix/stix-mathit.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/stix/stix-mathrm.pfb>
-Output written on 2026_Atp1a3.pdf (15 pages, 4175248 bytes).
+ 91i,11n,131p,1144b,1311s stack positions out of 10000i,1000n,20000p,200000b,200000s
+<c:/texlive/2024/texmf-dist/fonts/type1/ascender/opensans/OpenSans-Bold.pfb><c:/texlive/2024/texmf-dist/fonts/type1/ascender/opensans/OpenSans-BoldItalic.pfb><c:/texlive/2024/texmf-dist/fonts/type1/ascender/opensans/OpenSans-Italic.pfb><c:/texlive/2024/texmf-dist/fonts/type1/ascender/opensans/OpenSans-Regular.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/stix/STIXGeneral-Regular.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfss0900.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/stix/stix-mathit.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/stix/stix-mathrm.pfb>
+Output written on 2026_Atp1a3.pdf (12 pages, 3701349 bytes).
 PDF statistics:
- 333 PDF objects out of 1000 (max. 8388607)
- 296 compressed objects within 3 object streams
- 67 named destinations out of 1000 (max. 500000)
- 11958 words of extra memory for PDF output out of 12000 (max. 10000000)
+ 380 PDF objects out of 1000 (max. 8388607)
+ 342 compressed objects within 4 object streams
+ 76 named destinations out of 1000 (max. 500000)
+ 17590 words of extra memory for PDF output out of 20736 (max. 10000000)
 
