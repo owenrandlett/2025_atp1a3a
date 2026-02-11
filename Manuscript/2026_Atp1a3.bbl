@@ -1,4 +1,4 @@
-\begin{thebibliography}{41}
+\begin{thebibliography}{42}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -176,6 +176,14 @@ Owen Randlett.
 \newblock ISSN 1477-9145.
 \newblock \doi{10.1242/jeb.246335}.
 \newblock URL \url{http://dx.doi.org/10.1242/jeb.246335}.
+
+\bibitem[Randlett et~al.(2015)Randlett, Wee, Naumann, Nnaemeka, Schoppik, Fitzgerald, Portugues, Lacoste, Riegler, Engert, and Schier]{Randlett2015}
+Owen Randlett, Caroline~L Wee, Eva~A Naumann, Onyeka Nnaemeka, David Schoppik, James~E Fitzgerald, Ruben Portugues, Alix M~B Lacoste, Clemens Riegler, Florian Engert, and Alexander~F Schier.
+\newblock Whole-brain activity mapping onto a zebrafish brain atlas.
+\newblock \emph{Nature Methods}, 12\penalty0 (11):\penalty0 1039–1046, September 2015.
+\newblock ISSN 1548-7105.
+\newblock \doi{10.1038/nmeth.3581}.
+\newblock URL \url{http://dx.doi.org/10.1038/nmeth.3581}.
 
 \bibitem[Randlett et~al.(2019)Randlett, Haesemeyer, Forkin, Shoenhard, Schier, Engert, and Granato]{Randlett2019-fj}
 Owen Randlett, Martin Haesemeyer, Greg Forkin, Hannah Shoenhard, Alexander~F Schier, Florian Engert, and Michael Granato.
