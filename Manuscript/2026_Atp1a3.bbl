@@ -1,4 +1,4 @@
-\begin{thebibliography}{42}
+\begin{thebibliography}{43}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -30,6 +30,14 @@ Ida~L Barlow, Eirinn Mackay, Emily Wheater, Aimee Goel, Sumi Lim, Steve Zimmerma
 \newblock ISSN 2050-084X.
 \newblock \doi{10.7554/elife.87521}.
 \newblock URL \url{http://dx.doi.org/10.7554/eLife.87521}.
+
+\bibitem[Burgess and Granato(2007)]{Burgess2007-2}
+Harold~A. Burgess and Michael Granato.
+\newblock Modulation of locomotor activity in larval zebrafish during light adaptation.
+\newblock \emph{Journal of Experimental Biology}, 210\penalty0 (14):\penalty0 2526–2539, July 2007.
+\newblock ISSN 0022-0949.
+\newblock \doi{10.1242/jeb.003939}.
+\newblock URL \url{http://dx.doi.org/10.1242/jeb.003939}.
 
 \bibitem[Calderon et~al.(2011)Calderon, Fremont, Kraenzlin, and Khodakhah]{Calderon2011-no}
 D~Paola Calderon, Rachel Fremont, Franca Kraenzlin, and Kamran Khodakhah.

@@ -97,7 +97,7 @@
                 labelsep=period,%
                 justification=raggedright,%
                 singlelinecheck=false,%
-                tableposition=top,font=small]
+                tableposition=top,font=scriptsize]
                 {caption}
 
 % \captionsetup*[table]{skip=\medskipamount}
