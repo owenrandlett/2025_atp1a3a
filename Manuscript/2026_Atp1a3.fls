@@ -493,11 +493,11 @@ INPUT ./Figures/Figure_DarkFlash.png
 INPUT ./Figures/Figure_DarkFlash.png
 INPUT c:/texlive/2024/texmf-dist/fonts/vf/ascender/opensans/OpenSans-Regular-TS1-TLF.vf
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/ascender/opensans/OpenSans-Regular-TS1-TLF--base.tfm
-INPUT c:/texlive/2024/texmf-dist/fonts/vf/ascender/opensans/OpenSans-Bold-T1-TLF.vf
-INPUT c:/texlive/2024/texmf-dist/fonts/tfm/ascender/opensans/OpenSans-Bold-T1-TLF--base.tfm
 INPUT ./2026_Atp1a3.bbl
 INPUT ./2026_Atp1a3.bbl
 INPUT 2026_Atp1a3.bbl
+INPUT c:/texlive/2024/texmf-dist/fonts/vf/ascender/opensans/OpenSans-Bold-T1-TLF.vf
+INPUT c:/texlive/2024/texmf-dist/fonts/tfm/ascender/opensans/OpenSans-Bold-T1-TLF--base.tfm
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/ascender/opensans/OpenSans-Italic-T1-TLF.tfm
 INPUT c:/texlive/2024/texmf-dist/tex/latex/stix/t1stix.fd
 INPUT c:/texlive/2024/texmf-dist/tex/latex/stix/t1stix.fd
