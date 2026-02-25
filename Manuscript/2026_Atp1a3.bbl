@@ -1,0 +1,334 @@
+\begin{thebibliography}{52}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Alarc{\'o}n et~al.(2001)Alarc{\'o}n, Tolosa, and Mu{\~n}oz]{Alarcon2001-gx}
+F~Alarc{\'o}n, E~Tolosa, and E~Mu{\~n}oz.
+\newblock Focal limb dystonia in a patient with a cerebellar mass.
+\newblock \emph{Arch. Neurol.}, 58\penalty0 (7):\penalty0 1125--1127, July 2001.
+
+\bibitem[Albanese et~al.(2013)Albanese, Bhatia, Bressman, Delong, Fahn, Fung, Hallett, Jankovic, Jinnah, Klein, Lang, Mink, and Teller]{Albanese2013-eo}
+Alberto Albanese, Kailash Bhatia, Susan~B Bressman, Mahlon~R Delong, Stanley Fahn, Victor S~C Fung, Mark Hallett, Joseph Jankovic, Hyder~A Jinnah, Christine Klein, Anthony~E Lang, Jonathan~W Mink, and Jan~K Teller.
+\newblock Phenomenology and classification of dystonia: a consensus update.
+\newblock \emph{Mov. Disord.}, 28\penalty0 (7):\penalty0 863--873, June 2013.
+
+\bibitem[Balestrino et~al.(1999)Balestrino, Young, and Aitken]{Balestrino1999}
+Maurizio Balestrino, Jacob Young, and Peter Aitken.
+\newblock Block of (na+, k+)atpase with ouabain induces spreading depression-like depolarization in hippocampal slices.
+\newblock \emph{Brain Research}, 838\penalty0 (1–2):\penalty0 37–44, August 1999.
+\newblock ISSN 0006-8993.
+\newblock \doi{10.1016/s0006-8993(99)01674-1}.
+\newblock URL \url{http://dx.doi.org/10.1016/s0006-8993(99)01674-1}.
+
+\bibitem[Barlow et~al.(2023)Barlow, Mackay, Wheater, Goel, Lim, Zimmerman, Woods, Prober, and Rihel]{Barlow2023}
+Ida~L Barlow, Eirinn Mackay, Emily Wheater, Aimee Goel, Sumi Lim, Steve Zimmerman, Ian Woods, David~A Prober, and Jason Rihel.
+\newblock The zebrafish mutant dreammist implicates sodium homeostasis in sleep regulation.
+\newblock \emph{eLife}, 12, August 2023.
+\newblock ISSN 2050-084X.
+\newblock \doi{10.7554/elife.87521}.
+\newblock URL \url{http://dx.doi.org/10.7554/eLife.87521}.
+
+\bibitem[Br\"{u}ggemann(2021)]{Brggemann2021}
+Norbert Br\"{u}ggemann.
+\newblock Contemporary functional neuroanatomy and pathophysiology of dystonia.
+\newblock \emph{Journal of Neural Transmission}, 128\penalty0 (4):\penalty0 499–508, January 2021.
+\newblock ISSN 1435-1463.
+\newblock \doi{10.1007/s00702-021-02299-y}.
+\newblock URL \url{http://dx.doi.org/10.1007/s00702-021-02299-y}.
+
+\bibitem[Burgess and Granato(2007)]{Burgess2007-2}
+Harold~A. Burgess and Michael Granato.
+\newblock Modulation of locomotor activity in larval zebrafish during light adaptation.
+\newblock \emph{Journal of Experimental Biology}, 210\penalty0 (14):\penalty0 2526–2539, July 2007.
+\newblock ISSN 0022-0949.
+\newblock \doi{10.1242/jeb.003939}.
+\newblock URL \url{http://dx.doi.org/10.1242/jeb.003939}.
+
+\bibitem[Calderon et~al.(2011)Calderon, Fremont, Kraenzlin, and Khodakhah]{Calderon2011-no}
+D~Paola Calderon, Rachel Fremont, Franca Kraenzlin, and Kamran Khodakhah.
+\newblock The neural substrates of rapid-onset {Dystonia-Parkinsonism}.
+\newblock \emph{Nat. Neurosci.}, 14\penalty0 (3):\penalty0 357--365, March 2011.
+
+\bibitem[Chen et~al.(2018)Chen, Mu, Hu, Kuan, Nikitchenko, Randlett, Chen, Gavornik, Sompolinsky, Engert, and Ahrens]{Chen2018-sdf}
+Xiuye Chen, Yu~Mu, Yu~Hu, Aaron~T. Kuan, Maxim Nikitchenko, Owen Randlett, Alex~B. Chen, Jeffery~P. Gavornik, Haim Sompolinsky, Florian Engert, and Misha~B. Ahrens.
+\newblock Brain-wide organization of neuronal activity and convergent sensorimotor transformations in larval zebrafish.
+\newblock \emph{Neuron}, 100\penalty0 (4):\penalty0 876--890.e5, November 2018.
+\newblock ISSN 0896-6273.
+\newblock \doi{10.1016/j.neuron.2018.09.042}.
+\newblock URL \url{http://dx.doi.org/10.1016/j.neuron.2018.09.042}.
+
+\bibitem[Doğanlı et~al.(2013)Doğanlı, Beck, Ribera, Oxvig, and Lykke-Hartmann]{Doanl2013}
+Canan Doğanlı, Hans~C. Beck, Angeles~B. Ribera, Claus Oxvig, and Karin Lykke-Hartmann.
+\newblock α3na+/k+-atpase deficiency causes brain ventricle dilation and abrupt embryonic motility in zebrafish.
+\newblock \emph{Journal of Biological Chemistry}, 288\penalty0 (13):\penalty0 8862–8874, March 2013.
+\newblock ISSN 0021-9258.
+\newblock \doi{10.1074/jbc.m112.421529}.
+\newblock URL \url{http://dx.doi.org/10.1074/jbc.M112.421529}.
+
+\bibitem[Dreier(2011)]{Dreier2011}
+Jens~P Dreier.
+\newblock The role of spreading depression, spreading depolarization and spreading ischemia in neurological disease.
+\newblock \emph{Nature Medicine}, 17\penalty0 (4):\penalty0 439–447, April 2011.
+\newblock ISSN 1546-170X.
+\newblock \doi{10.1038/nm.2333}.
+\newblock URL \url{http://dx.doi.org/10.1038/nm.2333}.
+
+\bibitem[Dunn et~al.(2016)Dunn, Mu, Narayan, Randlett, Naumann, Yang, Schier, Freeman, Engert, and Ahrens]{Dunn2016-asd}
+Timothy~W Dunn, Yu~Mu, Sujatha Narayan, Owen Randlett, Eva~A Naumann, Chao-Tsung Yang, Alexander~F Schier, Jeremy Freeman, Florian Engert, and Misha~B Ahrens.
+\newblock Brain-wide mapping of neural activity controlling zebrafish exploratory locomotion.
+\newblock \emph{eLife}, 5, March 2016.
+\newblock ISSN 2050-084X.
+\newblock \doi{10.7554/elife.12741}.
+\newblock URL \url{http://dx.doi.org/10.7554/eLife.12741}.
+
+\bibitem[El-Brolosy et~al.(2019)El-Brolosy, Kontarakis, Rossi, Kuenne, G{\"u}nther, Fukuda, Kikhi, Boezio, Takacs, Lai, Fukuda, Gerri, Giraldez, and Stainier]{El-Brolosy2019-uq}
+Mohamed~A El-Brolosy, Zacharias Kontarakis, Andrea Rossi, Carsten Kuenne, Stefan G{\"u}nther, Nana Fukuda, Khrievono Kikhi, Giulia L~M Boezio, Carter~M Takacs, Shih-Lei Lai, Ryuichi Fukuda, Claudia Gerri, Antonio~J Giraldez, and Didier Y~R Stainier.
+\newblock Genetic compensation triggered by mutant {mRNA} degradation.
+\newblock \emph{Nature}, 568\penalty0 (7751):\penalty0 193--197, April 2019.
+
+\bibitem[Guilbeault et~al.(2021)Guilbeault, Guerguiev, Martin, Tate, and Thiele]{Guilbeault2021}
+Nicholas~C. Guilbeault, Jordan Guerguiev, Michael Martin, Isabelle Tate, and Tod~R. Thiele.
+\newblock Bonzeb: open-source, modular software tools for high-resolution zebrafish tracking and analysis.
+\newblock \emph{Scientific Reports}, 11\penalty0 (1), April 2021.
+\newblock ISSN 2045-2322.
+\newblock \doi{10.1038/s41598-021-85896-x}.
+\newblock URL \url{http://dx.doi.org/10.1038/s41598-021-85896-x}.
+
+\bibitem[Hao et~al.(2013)Hao, Bondesson, Singh, Riu, McCollum, Knudsen, Gorelick, and Gustafsson]{Hao2013-ik}
+Ruixin Hao, Maria Bondesson, Amar~V Singh, Anne Riu, Catherine~W McCollum, Thomas~B Knudsen, Daniel~A Gorelick, and Jan-{\AA}ke Gustafsson.
+\newblock Identification of estrogen target genes during zebrafish embryonic development through transcriptomic analysis.
+\newblock \emph{PLoS One}, 8\penalty0 (11):\penalty0 e79020, November 2013.
+
+\bibitem[Haq et~al.(2019)Haq, Snively, Sweadner, Suerken, Cook, Ozelius, Miller, McCall, Whitlow, and Brashear]{Haq2019-sf}
+Ihtsham~U Haq, Beverly~M Snively, Kathleen~J Sweadner, Cynthia~K Suerken, Jared~F Cook, Laurie~J Ozelius, Charlotte Miller, William~V McCall, Christopher~T Whitlow, and Allison Brashear.
+\newblock Revising rapid-onset dystonia-parkinsonism: Broadening indications for {ATP1A3} testing.
+\newblock \emph{Mov. Disord.}, 34\penalty0 (10):\penalty0 1528--1536, October 2019.
+
+\bibitem[Holm and Lykke-Hartmann(2016)]{Holm2016-ru}
+Thomas~H Holm and Karin Lykke-Hartmann.
+\newblock Insights into the pathology of the $\alpha$3 {Na(+)/K(+)-ATPase} ion pump in neurological disorders; lessons from animal models.
+\newblock \emph{Front. Physiol.}, 7:\penalty0 209, June 2016.
+
+\bibitem[Hunanyan et~al.(2014)Hunanyan, Fainberg, Linabarger, Arehart, Leonard, Adil, Helseth, Swearingen, Forbes, Rodriguiz, Rhodes, Yao, Kibbi, Hochman, Wetsel, Hochgeschwender, and Mikati]{Hunanyan2014}
+Arsen~S. Hunanyan, Nina~A. Fainberg, Molly Linabarger, Eric Arehart, A.~Soren Leonard, Syed~M. Adil, Ashley~R. Helseth, Amanda~K. Swearingen, Stacy~L. Forbes, Ramona~M. Rodriguiz, Theodore Rhodes, Xiaodi Yao, Nadine Kibbi, Daryl~W. Hochman, William~C. Wetsel, Ute Hochgeschwender, and Mohamad~A. Mikati.
+\newblock Knock‐in mouse model of alternating hemiplegia of childhood: Behavioral and electrophysiologic characterization.
+\newblock \emph{Epilepsia}, 56\penalty0 (1):\penalty0 82–93, December 2014.
+\newblock ISSN 1528-1167.
+\newblock \doi{10.1111/epi.12878}.
+\newblock URL \url{http://dx.doi.org/10.1111/epi.12878}.
+
+\bibitem[Kow and Pfaff(2016)]{Kow2016-dl}
+Lee-Ming Kow and Donald~W Pfaff.
+\newblock Rapid estrogen actions on ion channels: A survey in search for mechanisms.
+\newblock \emph{Steroids}, 111:\penalty0 46--53, July 2016.
+
+\bibitem[Kuo(2019)]{Kuo2019-ei}
+Sheng-Han Kuo.
+\newblock Ataxia.
+\newblock \emph{Continuum (Minneap. Minn.)}, 25\penalty0 (4):\penalty0 1036--1054, August 2019.
+
+\bibitem[Lamir{\'e} et~al.(2023)Lamir{\'e}, Haesemeyer, Engert, Granato, and Randlett]{Lamire2023-he}
+Laurie~Anne Lamir{\'e}, Martin Haesemeyer, Florian Engert, Michael Granato, and Owen Randlett.
+\newblock Functional and pharmacological analyses of visual habituation learning in larval zebrafish.
+\newblock \emph{Elife}, 12, December 2023.
+
+\bibitem[Li et~al.(2022)Li, Liu, Wang, Su, Zhao, Yang, Chen, and Zhou]{Li2022-wx}
+Yinchao Li, Xianyue Liu, Chengzhe Wang, Zhengwei Su, Ke~Zhao, Man Yang, Shuda Chen, and Liemin Zhou.
+\newblock Molecular and clinical characteristics of {ATP1A3-related} diseases.
+\newblock \emph{Front. Neurol.}, 13:\penalty0 924788, July 2022.
+
+\bibitem[Lopes et~al.(2015)Lopes, Bonacchi, FrazÃ£o, Neto, Atallah, Soares, Moreira, Matias, Itskov, Correia, Medina, Calcaterra, Dreosti, Paton, and Kampff]{Lopes2015}
+GonÃ§alo Lopes, NiccolÃ² Bonacchi, JoÃ£o FrazÃ£o, Joana~P. Neto, Bassam~V. Atallah, Sofia Soares, LuÃ­s Moreira, Sara Matias, Pavel~M. Itskov, PatrÃ­cia~A. Correia, Roberto~E. Medina, Lorenza Calcaterra, Elena Dreosti, Joseph~J. Paton, and Adam~R. Kampff.
+\newblock Bonsai: an event-based framework for processing and controlling data streams.
+\newblock \emph{Frontiers in Neuroinformatics}, 9, April 2015.
+\newblock ISSN 1662-5196.
+\newblock \doi{10.3389/fninf.2015.00007}.
+\newblock URL \url{http://dx.doi.org/10.3389/fninf.2015.00007}.
+
+\bibitem[Matsuda and Kubo(2021)]{Matsuda2021-a}
+Koji Matsuda and Fumi Kubo.
+\newblock Circuit organization underlying optic flow processing in zebrafish.
+\newblock \emph{Frontiers in Neural Circuits}, 15, July 2021.
+\newblock ISSN 1662-5110.
+\newblock \doi{10.3389/fncir.2021.709048}.
+\newblock URL \url{http://dx.doi.org/10.3389/fncir.2021.709048}.
+
+\bibitem[McDiarmid et~al.(2019)McDiarmid, Yu, and Rankin]{McDiarmid2019-td}
+Troy~A McDiarmid, Alex~J Yu, and Catharine~H Rankin.
+\newblock Habituation is more than learning to ignore: Multiple mechanisms serve to facilitate shifts in behavioral strategy.
+\newblock \emph{Bioessays}, 41\penalty0 (9):\penalty0 e1900077, September 2019.
+
+\bibitem[Menuet et~al.(2005)Menuet, Pellegrini, Brion, Gueguen, Anglade, Pakdel, and Kah]{Menuet2005-hn}
+Arnaud Menuet, Elisabeth Pellegrini, Fran{\c c}ois Brion, Marie-Madeleine Gueguen, Isabelle Anglade, Farzad Pakdel, and Olivier Kah.
+\newblock Expression and estrogen-dependent regulation of the zebrafish brain aromatase gene.
+\newblock \emph{J. Comp. Neurol.}, 485\penalty0 (4):\penalty0 304--320, May 2005.
+
+\bibitem[Mink(2003)]{Mink2003-pf}
+Jonathan~W Mink.
+\newblock The basal ganglia and involuntary movements: impaired inhibition of competing motor patterns.
+\newblock \emph{Arch. Neurol.}, 60\penalty0 (10):\penalty0 1365--1368, October 2003.
+
+\bibitem[Mink(2018)]{Mink2018-hi}
+Jonathan~W Mink.
+\newblock Basal ganglia mechanisms in action selection, plasticity, and dystonia.
+\newblock \emph{Eur. J. Paediatr. Neurol.}, 22\penalty0 (2):\penalty0 225--229, March 2018.
+
+\bibitem[Mlinari{\'c} et~al.(2017)Mlinari{\'c}, Horvat, and {\v S}upak~Smol{\v c}i{\'c}]{Mlinaric2017-kr}
+Ana Mlinari{\'c}, Martina Horvat, and Vesna {\v S}upak~Smol{\v c}i{\'c}.
+\newblock Dealing with the positive publication bias: Why you should really publish your negative results.
+\newblock \emph{Biochem. Med. (Zagreb)}, 27\penalty0 (3):\penalty0 030201, October 2017.
+
+\bibitem[Okamoto et~al.(2021)Okamoto, Cherng, Nakajo, Chou, and Kinoshita]{Okamoto2021}
+Hitoshi Okamoto, Bor-Wei Cherng, Haruna Nakajo, Ming-Yi Chou, and Masae Kinoshita.
+\newblock Habenula as the experience-dependent controlling switchboard of behavior and attention in social conflict and learning.
+\newblock \emph{Current Opinion in Neurobiology}, 68:\penalty0 36–43, June 2021.
+\newblock ISSN 0959-4388.
+\newblock \doi{10.1016/j.conb.2020.12.005}.
+\newblock URL \url{http://dx.doi.org/10.1016/j.conb.2020.12.005}.
+
+\bibitem[Payrits et~al.(2017)Payrits, S{\'a}ghy, Csek{\H o}, Poh{\'o}czky, B{\"o}lcskei, Ernszt, Barab{\'a}s, Szolcs{\'a}nyi, {\'A}brah{\'a}m, Helyes, and Sz{\H o}ke]{Payrits2017-cd}
+Maja Payrits, {\'E}va S{\'a}ghy, Kata Csek{\H o}, Krisztina Poh{\'o}czky, Kata B{\"o}lcskei, D{\'a}vid Ernszt, Klaudia Barab{\'a}s, J{\'a}nos Szolcs{\'a}nyi, Istv{\'a}n~M {\'A}brah{\'a}m, Zsuzsanna Helyes, and {\'E}va Sz{\H o}ke.
+\newblock Estradiol sensitizes the transient receptor potential vanilloid 1 receptor in pain responses.
+\newblock \emph{Endocrinology}, 158\penalty0 (10):\penalty0 3249--3258, October 2017.
+
+\bibitem[Peirce(2007)]{Peirce2007}
+Jonathan~W. Peirce.
+\newblock Psychopy—psychophysics software in python.
+\newblock \emph{Journal of Neuroscience Methods}, 162\penalty0 (1–2):\penalty0 8–13, May 2007.
+\newblock ISSN 0165-0270.
+\newblock \doi{10.1016/j.jneumeth.2006.11.017}.
+\newblock URL \url{http://dx.doi.org/10.1016/j.jneumeth.2006.11.017}.
+
+\bibitem[Pittock et~al.(2000)Pittock, Joyce, O'Keane, Hugle, Hardiman, Brett, Green, Barton, King, and Webb]{Pittock2000-tq}
+S~J Pittock, C~Joyce, V~O'Keane, B~Hugle, M~O Hardiman, F~Brett, A~J Green, D~E Barton, M~D King, and D~W Webb.
+\newblock Rapid-onset dystonia-parkinsonism: a clinical and genetic analysis of a new kindred.
+\newblock \emph{Neurology}, 55\penalty0 (7):\penalty0 991--995, October 2000.
+
+\bibitem[Portugues and Engert(2009)]{Portugues2009}
+Ruben Portugues and Florian Engert.
+\newblock The neural basis of visual behaviors in the larval zebrafish.
+\newblock \emph{Current Opinion in Neurobiology}, 19\penalty0 (6):\penalty0 644–647, December 2009.
+\newblock ISSN 0959-4388.
+\newblock \doi{10.1016/j.conb.2009.10.007}.
+\newblock URL \url{http://dx.doi.org/10.1016/j.conb.2009.10.007}.
+
+\bibitem[Qiu et~al.(2006)Qiu, Bosch, Tobias, Krust, Graham, Murphy, Korach, Chambon, Scanlan, R{\o}nnekleiv, and Kelly]{Qiu2006-ml}
+Jian Qiu, Martha~A Bosch, Sandra~C Tobias, Andree Krust, Sharon~M Graham, Stephanie~J Murphy, Kenneth~S Korach, Pierre Chambon, Thomas~S Scanlan, Oline~K R{\o}nnekleiv, and Martin~J Kelly.
+\newblock A g-protein-coupled estrogen receptor is involved in hypothalamic control of energy homeostasis.
+\newblock \emph{J. Neurosci.}, 26\penalty0 (21):\penalty0 5649--5655, May 2006.
+
+\bibitem[Ram{\'\i}rez-Barrantes et~al.(2020)Ram{\'\i}rez-Barrantes, Carvajal-Zamorano, Rodriguez, Cordova, Lozano, Simon, D{\'\i}az, Mu{\~n}oz, Marchant, Latorre, Castillo, and Olivero]{Ramirez-Barrantes2020-iv}
+Ricardo Ram{\'\i}rez-Barrantes, Karina Carvajal-Zamorano, Belen Rodriguez, Claudio Cordova, Carlo Lozano, Felipe Simon, Paula D{\'\i}az, Pablo Mu{\~n}oz, Ivanny Marchant, Ram{\'o}n Latorre, Karen Castillo, and Pablo Olivero.
+\newblock {TRPV1-estradiol} stereospecific relationship underlies cell survival in oxidative cell death.
+\newblock \emph{Front. Physiol.}, 11:\penalty0 444, May 2020.
+
+\bibitem[Randlett(2023)]{Randlett2023}
+Owen Randlett.
+\newblock pi\_tailtrack: A compact, inexpensive and open-source behaviour-tracking system for head-restrained zebrafish.
+\newblock \emph{Journal of Experimental Biology}, 226\penalty0 (22), November 2023.
+\newblock ISSN 1477-9145.
+\newblock \doi{10.1242/jeb.246335}.
+\newblock URL \url{http://dx.doi.org/10.1242/jeb.246335}.
+
+\bibitem[Randlett et~al.(2015)Randlett, Wee, Naumann, Nnaemeka, Schoppik, Fitzgerald, Portugues, Lacoste, Riegler, Engert, and Schier]{Randlett2015}
+Owen Randlett, Caroline~L Wee, Eva~A Naumann, Onyeka Nnaemeka, David Schoppik, James~E Fitzgerald, Ruben Portugues, Alix M~B Lacoste, Clemens Riegler, Florian Engert, and Alexander~F Schier.
+\newblock Whole-brain activity mapping onto a zebrafish brain atlas.
+\newblock \emph{Nature Methods}, 12\penalty0 (11):\penalty0 1039–1046, September 2015.
+\newblock ISSN 1548-7105.
+\newblock \doi{10.1038/nmeth.3581}.
+\newblock URL \url{http://dx.doi.org/10.1038/nmeth.3581}.
+
+\bibitem[Randlett et~al.(2019)Randlett, Haesemeyer, Forkin, Shoenhard, Schier, Engert, and Granato]{Randlett2019-fj}
+Owen Randlett, Martin Haesemeyer, Greg Forkin, Hannah Shoenhard, Alexander~F Schier, Florian Engert, and Michael Granato.
+\newblock Distributed plasticity drives visual habituation learning in larval zebrafish.
+\newblock \emph{Curr. Biol.}, 29\penalty0 (8):\penalty0 1337--1345.e4, April 2019.
+
+\bibitem[Romano et~al.(2017)Romano, Edwards, Souder, Ryan, Cui, and Gorelick]{Romano2017-ep}
+Shannon~N Romano, Hailey~E Edwards, Jaclyn~Paige Souder, Kevin~J Ryan, Xiangqin Cui, and Daniel~A Gorelick.
+\newblock {G} protein-coupled estrogen receptor regulates embryonic heart rate in zebrafish.
+\newblock \emph{PLoS Genet.}, 13\penalty0 (10):\penalty0 e1007069, October 2017.
+
+\bibitem[Rossi et~al.(2015)Rossi, Kontarakis, Gerri, Nolte, H\"{o}lper, Kr\"{u}ger, and Stainier]{Rossi2015}
+Andrea Rossi, Zacharias Kontarakis, Claudia Gerri, Hendrik Nolte, Soraya H\"{o}lper, Marcus Kr\"{u}ger, and Didier Y.~R. Stainier.
+\newblock Genetic compensation induced by deleterious mutations but not gene knockdowns.
+\newblock \emph{Nature}, 524\penalty0 (7564):\penalty0 230–233, July 2015.
+\newblock ISSN 1476-4687.
+\newblock \doi{10.1038/nature14580}.
+\newblock URL \url{http://dx.doi.org/10.1038/nature14580}.
+
+\bibitem[Ruan et~al.(2024)Ruan, Zou, Liao, Ji, Wang, Zhang, Zhang, Gao, Chen, Yu, Wei, Li, Li, Lin, Luo, and Lin]{Ruan2024}
+Dan-dan Ruan, Jing Zou, Li-sheng Liao, Ming-dong Ji, Ruo-li Wang, Jian-hui Zhang, Li~Zhang, Mei-zhu Gao, Qian Chen, Hong-ping Yu, Wen Wei, Yun-fei Li, Hong Li, Fan Lin, Jie-wei Luo, and Xin-fu Lin.
+\newblock In vitro study of atp1a3 p.ala275pro mutant causing alternating hemiplegia of childhood and rapid-onset dystonia-parkinsonism.
+\newblock \emph{Frontiers in Neuroscience}, 18, July 2024.
+\newblock ISSN 1662-453X.
+\newblock \doi{10.3389/fnins.2024.1415576}.
+\newblock URL \url{http://dx.doi.org/10.3389/fnins.2024.1415576}.
+
+\bibitem[Salles et~al.(2021)Salles, Mata, Br{\"u}nger, Lal, and Fernandez]{Salles2021-bq}
+Philippe~A Salles, Ignacio~F Mata, Tobias Br{\"u}nger, Dennis Lal, and Hubert~H Fernandez.
+\newblock {ATP1A3-related} disorders: An ever-expanding clinical spectrum.
+\newblock \emph{Front. Neurol.}, 12:\penalty0 637890, April 2021.
+
+\bibitem[Sula et~al.(2021)Sula, Hollingworth, Ng, Larmore, DeCaen, and Wallace]{Sula2021-vs}
+Altin Sula, David Hollingworth, Leo C~T Ng, Megan Larmore, Paul~G DeCaen, and B~A Wallace.
+\newblock A tamoxifen receptor within a voltage-gated sodium channel.
+\newblock \emph{Mol. Cell}, 81\penalty0 (6):\penalty0 1160--1169.e5, March 2021.
+
+\bibitem[Sweney et~al.(2009)Sweney, Silver, Gerard-Blanluet, Pedespan, Renault, Arzimanoglou, Schlesinger-Massart, Lewelt, Reyna, and Swoboda]{Sweney2009-ky}
+Matthew~T Sweney, Kenneth Silver, Marion Gerard-Blanluet, Jean-Michel Pedespan, Francis Renault, Alexis Arzimanoglou, Mylynda Schlesinger-Massart, Aga~J Lewelt, Sandra~P Reyna, and Kathryn~J Swoboda.
+\newblock Alternating hemiplegia of childhood: early characteristics and evolution of a neurodevelopmental syndrome.
+\newblock \emph{Pediatrics}, 123\penalty0 (3):\penalty0 e534--41, March 2009.
+
+\bibitem[Tanimoto et~al.(2024)Tanimoto, Kakinuma, Aoki, Shiraki, Higashijima, and Okamoto]{Tanimoto2024}
+Yuki Tanimoto, Hisaya Kakinuma, Ryo Aoki, Toshiyuki Shiraki, Shin-ichi Higashijima, and Hitoshi Okamoto.
+\newblock Transgenic tools targeting the basal ganglia reveal both evolutionary conservation and specialization of neural circuits in zebrafish.
+\newblock \emph{Cell Reports}, 43\penalty0 (3):\penalty0 113916, March 2024.
+\newblock ISSN 2211-1247.
+\newblock \doi{10.1016/j.celrep.2024.113916}.
+\newblock URL \url{http://dx.doi.org/10.1016/j.celrep.2024.113916}.
+
+\bibitem[Thisse and Thisse(2008)]{Thisse2008-vr}
+Christine Thisse and Bernard Thisse.
+\newblock High-resolution in situ hybridization to whole-mount zebrafish embryos.
+\newblock \emph{Nat. Protoc.}, 3\penalty0 (1):\penalty0 59--69, 2008.
+
+\bibitem[Trevi{\~n}o and Gorelick(2021)]{Trevino2021-wl}
+Lindsey~S Trevi{\~n}o and Daniel~A Gorelick.
+\newblock The interface of nuclear and membrane steroid signaling.
+\newblock \emph{Endocrinology}, 162\penalty0 (8), August 2021.
+
+\bibitem[Vail and Roepke(2019)]{Vail2019-lx}
+Gwyndolin Vail and Troy~A Roepke.
+\newblock Membrane-initiated estrogen signaling via gq-coupled {GPCR} in the central nervous system.
+\newblock \emph{Steroids}, 142:\penalty0 77--83, February 2019.
+
+\bibitem[Vezyroglou et~al.(2022)Vezyroglou, Akilapa, Barwick, Koene, Brownstein, Holder-Espinasse, Fry, Nemeth, Tofaris, Hay, Hughes, Mansour, Mordekar, Splitt, Turnpenny, Demetriou, Koopmann, Ruivenkamp, Agrawal, Carr, Clowes, Ghali, Holder, Radley, Male, Sisodiya, Kurian, Cross, and Balasubramanian]{Vezyroglou2022-co}
+Aikaterini Vezyroglou, Rhoda Akilapa, Katy Barwick, Saskia Koene, Catherine~A Brownstein, Muriel Holder-Espinasse, Andrew~E Fry, Andrea~Hilary Nemeth, George~K Tofaris, Eleanor Hay, Imelda Hughes, Sahar Mansour, Santosh~R Mordekar, Miranda Splitt, Peter~D Turnpenny, Demetria Demetriou, Tamara~T Koopmann, Claudia A~L Ruivenkamp, Pankaj~B Agrawal, Lucinda Carr, Virginia Clowes, Neeti Ghali, Susan~Elizabeth Holder, Jessica Radley, Alison Male, Sanjay~M Sisodiya, Manju~A Kurian, J~Helen Cross, and Meena Balasubramanian.
+\newblock The phenotypic continuum of {ATPLA3-related} disorders.
+\newblock \emph{Neurology}, 99\penalty0 (14):\penalty0 e1511--e1526, July 2022.
+
+\bibitem[Vo et~al.(2023)Vo, Nguyen, Fujita, Schindlbeck, Rommal, Bressman, Niethammer, and Eidelberg]{Vo2023-sq}
+An~Vo, Nha Nguyen, Koji Fujita, Katharina~A Schindlbeck, Andrea Rommal, Susan~B Bressman, Martin Niethammer, and David Eidelberg.
+\newblock Disordered network structure and function in dystonia: pathological connectivity vs. adaptive responses.
+\newblock \emph{Cereb. Cortex}, 33\penalty0 (11):\penalty0 6943--6958, May 2023.
+
+\bibitem[Wang et~al.(2020)Wang, Hinz, Zhang, Thiele, and Arrenberg]{Wang2020-a}
+Kun Wang, Julian Hinz, Yue Zhang, Tod~R. Thiele, and Aristides~B. Arrenberg.
+\newblock Parallel channels for motion feature extraction in the pretectum and tectum of larval zebrafish.
+\newblock \emph{Cell Reports}, 30\penalty0 (2):\penalty0 442--453.e6, January 2020.
+\newblock ISSN 2211-1247.
+\newblock \doi{10.1016/j.celrep.2019.12.031}.
+\newblock URL \url{http://dx.doi.org/10.1016/j.celrep.2019.12.031}.
+
+\bibitem[Wullimann and Mueller(2004)]{Wullimann2004}
+Mario~F. Wullimann and Thomas Mueller.
+\newblock Teleostean and mammalian forebrains contrasted: Evidence from genes to behavior.
+\newblock \emph{Journal of Comparative Neurology}, 475\penalty0 (2):\penalty0 143–162, June 2004.
+\newblock ISSN 1096-9861.
+\newblock \doi{10.1002/cne.20183}.
+\newblock URL \url{http://dx.doi.org/10.1002/cne.20183}.
+
+\end{thebibliography}
