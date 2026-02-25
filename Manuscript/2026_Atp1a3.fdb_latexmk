@@ -1,25 +1,25 @@
 # Fdb version 4
-["bibtex 2026_Atp1a3"] 1771941876.36643 "2026_Atp1a3.aux" "2026_Atp1a3.bbl" "2026_Atp1a3" 1771942002.05294 0
-  "./References_Atp1a3.bib" 1771932602 175533 c41df208acce350a55e9cf6eba5436f9 ""
-  "2026_Atp1a3.aux" 1771942001 26818 9432af112ff3d45e138158a6889c073f "pdflatex"
+["bibtex 2026_Atp1a3"] 1772018175.1704 "2026_Atp1a3.aux" "2026_Atp1a3.bbl" "2026_Atp1a3" 1772018186.00407 0
+  "./References_Atp1a3.bib" 1772017040 177587 f156526add923ac706087bbe3595e940 ""
+  "2026_Atp1a3.aux" 1772018184 27751 a984996c6448284cebe78c300607c08d "pdflatex"
   "c:/texlive/2024/texmf-dist/bibtex/bst/natbib/plainnat.bst" 1734439290 26816 ffe5423d2019860bad9f54bc402fac15 ""
   (generated)
   "2026_Atp1a3.bbl"
   "2026_Atp1a3.blg"
   (rewritten before read)
-["pdflatex"] 1771941992.05584 "c:/Users/owen.randlett/Documents/GitHub/2025_atp1a3a/Manuscript/2026_Atp1a3.tex" "2026_Atp1a3.pdf" "2026_Atp1a3" 1771942002.05342 0
-  "2026_Atp1a3.aux" 1771942001 26818 9432af112ff3d45e138158a6889c073f "pdflatex"
-  "2026_Atp1a3.bbl" 1771941876 21414 3d9af4069dd8050efc05bd60df6e1efe "bibtex 2026_Atp1a3"
-  "2026_Atp1a3.out" 1771942001 6513 b95668d8f73124006c4e2b1643b07b08 "pdflatex"
-  "2026_Atp1a3.suppinfo" 1771942001 273 8edb0c224110ae4dd7bfa7471f97c73d "pdflatex"
-  "2026_Atp1a3.tex" 1771941991 58093 8dbf553dabdc6b0c58096d14d2ad7616 ""
+["pdflatex"] 1772018175.56691 "c:/Users/owen.randlett/Documents/GitHub/2025_atp1a3a/Manuscript/2026_Atp1a3.tex" "2026_Atp1a3.pdf" "2026_Atp1a3" 1772018186.0046 0
+  "2026_Atp1a3.aux" 1772018184 27751 a984996c6448284cebe78c300607c08d "pdflatex"
+  "2026_Atp1a3.bbl" 1772018175 23298 332e627702d05f901fd65478e5e46792 "bibtex 2026_Atp1a3"
+  "2026_Atp1a3.out" 1772018184 6513 ec06d7c330d0f88e2ea2c2aad619ad3a "pdflatex"
+  "2026_Atp1a3.suppinfo" 1772018184 273 8edb0c224110ae4dd7bfa7471f97c73d "pdflatex"
+  "2026_Atp1a3.tex" 1772018164 61499 412ef5afcd00fde369d183dbd55683b0 ""
   "Figures/Figure_DarkFlash.png" 1771580634 4035861 11a7480f2c968225bee6e41ab24bc0c3 ""
   "Figures/Figure_FreeSwimming.png" 1771941008 2605282 2b0bf40aefafe023286e76ce765f9645 ""
-  "Figures/Figure_Intersection.png" 1771939843 7606975 d7ddefc45d72d6507b52f3f9fdfdd0e1 ""
+  "Figures/Figure_Intersection.png" 1772014758 7797985 f12c303807d0d69f9db1034f88cadde2 ""
   "Figures/Figure_MutationAndQualitativePhenotype.png" 1770797409 2016479 d20d7e058c3c0c2ddc14ef30cd44c02c ""
   "Figures/Figure_OMR.png" 1771940873 1332224 85a3bc4b3dad2f5b3148f55ed63335cf ""
   "RandlettLab_elife.cls" 1771257507 16910 a6186104e6d35855eed8a48cf5f0d135 ""
-  "c:/Users/owen.randlett/Documents/GitHub/2025_atp1a3a/Manuscript/2026_Atp1a3.tex" 1771941991 58093 8dbf553dabdc6b0c58096d14d2ad7616 ""
+  "c:/Users/owen.randlett/Documents/GitHub/2025_atp1a3a/Manuscript/2026_Atp1a3.tex" 1772018164 61499 412ef5afcd00fde369d183dbd55683b0 ""
   "c:/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1734437800 2971 def0b6c1f0b107b3b936def894055589 ""
   "c:/texlive/2024/texmf-dist/fonts/enc/dvips/opensans/a_jg4h6q.enc" 1734439404 2952 84fda6c8ae8be17712e9d998ffe48bad ""
   "c:/texlive/2024/texmf-dist/fonts/enc/dvips/opensans/a_nvvucy.enc" 1734439404 3364 7c78cdd102714be824555fc722b51d02 ""

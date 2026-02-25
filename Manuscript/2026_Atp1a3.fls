@@ -501,6 +501,9 @@ INPUT ./Figures/Figure_Intersection.png
 INPUT ./Figures/Figure_Intersection.png
 INPUT ./Figures/Figure_Intersection.png
 INPUT ./Figures/Figure_Intersection.png
+INPUT c:/texlive/2024/texmf-dist/fonts/tfm/ascender/opensans/OpenSans-Bold-T1-TLF.tfm
+INPUT c:/texlive/2024/texmf-dist/fonts/vf/ascender/opensans/OpenSans-Bold-T1-TLF.vf
+INPUT c:/texlive/2024/texmf-dist/fonts/tfm/ascender/opensans/OpenSans-Bold-T1-TLF--base.tfm
 INPUT c:/texlive/2024/texmf-dist/fonts/vf/ascender/opensans/OpenSans-Regular-TS1-TLF.vf
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/ascender/opensans/OpenSans-Regular-TS1-TLF--base.tfm
 INPUT ./2026_Atp1a3.bbl

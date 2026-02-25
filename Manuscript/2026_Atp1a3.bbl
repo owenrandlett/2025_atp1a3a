@@ -1,4 +1,4 @@
-\begin{thebibliography}{48}
+\begin{thebibliography}{52}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -30,6 +30,14 @@ Ida~L Barlow, Eirinn Mackay, Emily Wheater, Aimee Goel, Sumi Lim, Steve Zimmerma
 \newblock ISSN 2050-084X.
 \newblock \doi{10.7554/elife.87521}.
 \newblock URL \url{http://dx.doi.org/10.7554/eLife.87521}.
+
+\bibitem[Br\"{u}ggemann(2021)]{Brggemann2021}
+Norbert Br\"{u}ggemann.
+\newblock Contemporary functional neuroanatomy and pathophysiology of dystonia.
+\newblock \emph{Journal of Neural Transmission}, 128\penalty0 (4):\penalty0 499–508, January 2021.
+\newblock ISSN 1435-1463.
+\newblock \doi{10.1007/s00702-021-02299-y}.
+\newblock URL \url{http://dx.doi.org/10.1007/s00702-021-02299-y}.
 
 \bibitem[Burgess and Granato(2007)]{Burgess2007-2}
 Harold~A. Burgess and Michael Granato.
@@ -173,6 +181,14 @@ Ana Mlinari{\'c}, Martina Horvat, and Vesna {\v S}upak~Smol{\v c}i{\'c}.
 \newblock Dealing with the positive publication bias: Why you should really publish your negative results.
 \newblock \emph{Biochem. Med. (Zagreb)}, 27\penalty0 (3):\penalty0 030201, October 2017.
 
+\bibitem[Okamoto et~al.(2021)Okamoto, Cherng, Nakajo, Chou, and Kinoshita]{Okamoto2021}
+Hitoshi Okamoto, Bor-Wei Cherng, Haruna Nakajo, Ming-Yi Chou, and Masae Kinoshita.
+\newblock Habenula as the experience-dependent controlling switchboard of behavior and attention in social conflict and learning.
+\newblock \emph{Current Opinion in Neurobiology}, 68:\penalty0 36–43, June 2021.
+\newblock ISSN 0959-4388.
+\newblock \doi{10.1016/j.conb.2020.12.005}.
+\newblock URL \url{http://dx.doi.org/10.1016/j.conb.2020.12.005}.
+
 \bibitem[Payrits et~al.(2017)Payrits, S{\'a}ghy, Csek{\H o}, Poh{\'o}czky, B{\"o}lcskei, Ernszt, Barab{\'a}s, Szolcs{\'a}nyi, {\'A}brah{\'a}m, Helyes, and Sz{\H o}ke]{Payrits2017-cd}
 Maja Payrits, {\'E}va S{\'a}ghy, Kata Csek{\H o}, Krisztina Poh{\'o}czky, Kata B{\"o}lcskei, D{\'a}vid Ernszt, Klaudia Barab{\'a}s, J{\'a}nos Szolcs{\'a}nyi, Istv{\'a}n~M {\'A}brah{\'a}m, Zsuzsanna Helyes, and {\'E}va Sz{\H o}ke.
 \newblock Estradiol sensitizes the transient receptor potential vanilloid 1 receptor in pain responses.
@@ -266,6 +282,14 @@ Matthew~T Sweney, Kenneth Silver, Marion Gerard-Blanluet, Jean-Michel Pedespan, 
 \newblock Alternating hemiplegia of childhood: early characteristics and evolution of a neurodevelopmental syndrome.
 \newblock \emph{Pediatrics}, 123\penalty0 (3):\penalty0 e534--41, March 2009.
 
+\bibitem[Tanimoto et~al.(2024)Tanimoto, Kakinuma, Aoki, Shiraki, Higashijima, and Okamoto]{Tanimoto2024}
+Yuki Tanimoto, Hisaya Kakinuma, Ryo Aoki, Toshiyuki Shiraki, Shin-ichi Higashijima, and Hitoshi Okamoto.
+\newblock Transgenic tools targeting the basal ganglia reveal both evolutionary conservation and specialization of neural circuits in zebrafish.
+\newblock \emph{Cell Reports}, 43\penalty0 (3):\penalty0 113916, March 2024.
+\newblock ISSN 2211-1247.
+\newblock \doi{10.1016/j.celrep.2024.113916}.
+\newblock URL \url{http://dx.doi.org/10.1016/j.celrep.2024.113916}.
+
 \bibitem[Thisse and Thisse(2008)]{Thisse2008-vr}
 Christine Thisse and Bernard Thisse.
 \newblock High-resolution in situ hybridization to whole-mount zebrafish embryos.
@@ -298,5 +322,13 @@ Kun Wang, Julian Hinz, Yue Zhang, Tod~R. Thiele, and Aristides~B. Arrenberg.
 \newblock ISSN 2211-1247.
 \newblock \doi{10.1016/j.celrep.2019.12.031}.
 \newblock URL \url{http://dx.doi.org/10.1016/j.celrep.2019.12.031}.
+
+\bibitem[Wullimann and Mueller(2004)]{Wullimann2004}
+Mario~F. Wullimann and Thomas Mueller.
+\newblock Teleostean and mammalian forebrains contrasted: Evidence from genes to behavior.
+\newblock \emph{Journal of Comparative Neurology}, 475\penalty0 (2):\penalty0 143–162, June 2004.
+\newblock ISSN 1096-9861.
+\newblock \doi{10.1002/cne.20183}.
+\newblock URL \url{http://dx.doi.org/10.1002/cne.20183}.
 
 \end{thebibliography}
