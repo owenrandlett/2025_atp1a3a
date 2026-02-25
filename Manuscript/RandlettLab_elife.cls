@@ -367,11 +367,11 @@
 % Added fig supp source data and code 2022/06
 \DeclareRobustCommand{\figsuppsrccode}[1]{%
   \protect\refstepcounter{fssrccode}%
-  \par\small\textbf{\figurename~\thefigure---figure supplement \arabic{figsupp}---source code~\arabic{fssrccode}. } #1\par
+  \par\scriptsize\textbf{\figurename~\thefigure---figure supplement \arabic{figsupp}---source code~\arabic{fssrccode}. } #1\par
 }
 \DeclareRobustCommand{\figsuppdata}[1]{%
   \protect\refstepcounter{fsdata}%
-  \par\small\textbf{\figurename~\thefigure---figure supplement \arabic{figsupp}---source data~\arabic{fsdata}. } #1\par
+  \par\scriptsize\textbf{\figurename~\thefigure---figure supplement \arabic{figsupp}---source data~\arabic{fsdata}. } #1\par
 }
 
 
@@ -407,7 +407,7 @@
   }%
   {%
   \ifstrequal{#1}{none}{}{%
-    \small\textbf{\figurename~\thefigure---figure supplement \arabic{figsupp}.} 
+    \scriptsize\textbf{\figurename~\thefigure---figure supplement \arabic{figsupp}.} 
     \ifstrempty{#1}{%
       \renewcommand\figsuppdata[1]{}%
       \renewcommand\figsuppsrccode[1]{}%
@@ -417,6 +417,7 @@
       #1}}}\raggedright\par
   \addtostream{suppinfo}{%
     \noindent\protect\begin{minipage}{\linewidth}
+    \protect\scriptsize
     \protect #3\noexpand\par
     \textbf{\figurename~\thefigure---figure supplement \arabic{figsupp}.} #2\noexpand\par
     \vskip8pt
@@ -426,17 +427,17 @@
 }
 \DeclareRobustCommand{\figdata}[1]{%
   \refstepcounter{data}
-  {\small\textbf{\figurename~\thefigure---source data \arabic{data}.} #1}\par
+  {\scriptsize\textbf{\figurename~\thefigure---source data \arabic{data}.} #1}\par
 }
 %% Added 2021/03/07  
 \DeclareRobustCommand{\figsrccode}[1]{%
   \refstepcounter{srccode}
-  {\small\textbf{\figurename~\thefigure---source code \arabic{srccode}.} #1}\par
+  {\scriptsize\textbf{\figurename~\thefigure---source code \arabic{srccode}.} #1}\par
 }
 %% Added 2018/06/03
 \DeclareRobustCommand{\videosupp}[1]{%
   \refstepcounter{videosupp}
-  {\small\textbf{\figurename~\thefigure---video \arabic{videosupp}.} #1}\par
+  {\scriptsize\textbf{\figurename~\thefigure---video \arabic{videosupp}.} #1}\par
 }
 
 % Added table source data and code 2022/06
@@ -454,11 +455,11 @@
 
 \DeclareRobustCommand{\tabledata}[1]{%
   \refstepcounter{data}
-  {\small\textbf{\tablename~\thetable---source data \arabic{data}.} #1}\par
+  {\scriptsize\textbf{\tablename~\thetable---source data \arabic{data}.} #1}\par
 }
 \DeclareRobustCommand{\tablesrccode}[1]{%
   \refstepcounter{srccode}
-  {\small\textbf{\tablename~\thetable---source code \arabic{srccode}.} #1}\par
+  {\scriptsize\textbf{\tablename~\thetable---source code \arabic{srccode}.} #1}\par
 }
 
 
