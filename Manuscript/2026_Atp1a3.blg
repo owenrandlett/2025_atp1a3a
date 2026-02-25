@@ -3,44 +3,44 @@ Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: 2026_Atp1a3.aux
 The style file: plainnat.bst
 Database file #1: References_Atp1a3.bib
-You've used 43 entries,
+You've used 48 entries,
             2773 wiz_defined-function locations,
-            949 strings with 17736 characters,
-and the built_in function-call counts, 30215 in all, are:
-= -- 2485
-> -- 2808
-< -- 12
-+ -- 940
-- -- 897
-* -- 3074
-:= -- 4916
-add.period$ -- 168
-call.type$ -- 43
-change.case$ -- 428
-chr.to.int$ -- 43
-cite$ -- 86
-duplicate$ -- 884
-empty$ -- 1706
-format.name$ -- 952
-if$ -- 5988
+            995 strings with 19305 characters,
+and the built_in function-call counts, 33591 in all, are:
+= -- 2789
+> -- 3093
+< -- 14
++ -- 1035
+- -- 987
+* -- 3410
+:= -- 5470
+add.period$ -- 198
+call.type$ -- 48
+change.case$ -- 473
+chr.to.int$ -- 48
+cite$ -- 96
+duplicate$ -- 985
+empty$ -- 1897
+format.name$ -- 1051
+if$ -- 6666
 int.to.chr$ -- 1
 int.to.str$ -- 1
-missing$ -- 43
-newline$ -- 262
-num.names$ -- 172
-pop$ -- 737
+missing$ -- 48
+newline$ -- 302
+num.names$ -- 192
+pop$ -- 802
 preamble$ -- 1
-purify$ -- 385
+purify$ -- 425
 quote$ -- 0
-skip$ -- 793
+skip$ -- 884
 stack$ -- 0
-substring$ -- 1003
-swap$ -- 85
+substring$ -- 1108
+swap$ -- 95
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 473
+type$ -- 528
 warning$ -- 0
-while$ -- 185
+while$ -- 205
 width$ -- 0
-write$ -- 644
+write$ -- 739

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.12.17)  19 FEB 2026 15:17
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.12.17)  24 FEB 2026 15:06
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1489,7 +1489,7 @@ Underfull \hbox (badness 1152) in paragraph at lines 131--135
 [2]
 LaTeX Font Info:    Font shape `T1/opensans-TLF/b/it' will be
 (Font)              scaled to size 10.0pt on input line 165.
-<Figures/Figure_MutationAndQualitativePhenotype.png, id=176, 514.5624pt x 313.4109pt>
+<Figures/Figure_MutationAndQualitativePhenotype.png, id=180, 514.5624pt x 313.4109pt>
 File: Figures/Figure_MutationAndQualitativePhenotype.png Graphic file (type png)
 <use Figures/Figure_MutationAndQualitativePhenotype.png>
 Package pdftex.def Info: Figures/Figure_MutationAndQualitativePhenotype.png  used on input line 176.
@@ -1517,70 +1517,76 @@ LaTeX Font Info:    Font shape `T1/opensans-TLF/m/n' will be
 [4 <./Figures/Figure_MutationAndQualitativePhenotype.png>]
 LaTeX Font Info:    Font shape `T1/opensans-TLF/b/it' will be
 (Font)              scaled to size 12.0pt on input line 220.
-<Figures/Figure_FreeSwimming.png, id=214, 375.44266pt x 567.68085pt>
+<Figures/Figure_FreeSwimming.png, id=218, 767.9892pt x 299.80005pt>
 File: Figures/Figure_FreeSwimming.png Graphic file (type png)
 <use Figures/Figure_FreeSwimming.png>
 Package pdftex.def Info: Figures/Figure_FreeSwimming.png  used on input line 225.
-(pdftex.def)             Requested size: 330.85953pt x 500.27098pt.
+(pdftex.def)             Requested size: 458.1144pt x 178.8384pt.
 
+Overfull \vbox (4.68484pt too high) has occurred while \output is active []
+
+
+
+[5{c:/texlive/2024/texmf-dist/fonts/enc/dvips/opensans/a_nvvucy.enc} <./Figures/Figure_FreeSwimming.png>]
 Underfull \hbox (badness 1264) in paragraph at lines 253--258
 \T1/opensans-TLF/m/n/10 elec-tro-phys-i-o-log-i-cal phe-no-types ex-pressed in other ATP1A3-deficient mod-els, we ex-pected to see very
  []
 
+<Figures/Figure_DarkFlash.png, id=241, 600.92505pt x 542.7477pt>
+File: Figures/Figure_DarkFlash.png Graphic file (type png)
+<use Figures/Figure_DarkFlash.png>
+Package pdftex.def Info: Figures/Figure_DarkFlash.png  used on input line 265.
+(pdftex.def)             Requested size: 458.1144pt x 413.76791pt.
 
 
-[5]
+[6]
 
-[6{c:/texlive/2024/texmf-dist/fonts/enc/dvips/opensans/a_nvvucy.enc} <./Figures/Figure_FreeSwimming.png>]
-Underfull \hbox (badness 1502) in paragraph at lines 277--279
+[7 <./Figures/Figure_DarkFlash.png>]
+Underfull \hbox (badness 1502) in paragraph at lines 299--301
 \T1/opensans-TLF/m/n/10 an in-creased re-sponse prob-a-bil-ity to acous-tic/-tap stim-uli ([][]\T1/opensans-TLF/b/it/10 Fig-ure 3[][][]\T1/opensans-TLF/m/n/10 Bi, Di, Eiv), with a bend am-pli-tude
  []
 
-<Figures/Figure_DarkFlash.png, id=260, 600.92505pt x 542.7477pt>
-File: Figures/Figure_DarkFlash.png Graphic file (type png)
-<use Figures/Figure_DarkFlash.png>
-Package pdftex.def Info: Figures/Figure_DarkFlash.png  used on input line 284.
-(pdftex.def)             Requested size: 458.1144pt x 413.76791pt.
-<Figures/Figure_OMR.png, id=265, 418.56375pt x 571.77615pt>
+<Figures/Figure_OMR.png, id=279, 518.53725pt x 184.5294pt>
 File: Figures/Figure_OMR.png Graphic file (type png)
 <use Figures/Figure_OMR.png>
-Package pdftex.def Info: Figures/Figure_OMR.png  used on input line 309.
-(pdftex.def)             Requested size: 330.85953pt x 451.95995pt.
+Package pdftex.def Info: Figures/Figure_OMR.png  used on input line 307.
+(pdftex.def)             Requested size: 458.1144pt x 163.02834pt.
 
 
-[7]
+[8 <./Figures/Figure_OMR.png>]
+<Figures/Figure_Intersection.png, id=310, 542.14545pt x 504.80595pt>
+File: Figures/Figure_Intersection.png Graphic file (type png)
+<use Figures/Figure_Intersection.png>
+Package pdftex.def Info: Figures/Figure_Intersection.png  used on input line 355.
+(pdftex.def)             Requested size: 305.41478pt x 284.384pt.
 
-[8 <./Figures/Figure_DarkFlash.png>]
 
-[9 <./Figures/Figure_OMR.png>]
+[9]
 
-[10]
-Underfull \hbox (badness 1152) in paragraph at lines 385--386
+[10 <./Figures/Figure_Intersection.png>]
+
+[11]
+Underfull \hbox (badness 1152) in paragraph at lines 431--432
 []\T1/opensans-TLF/m/n/10 Control of the LEDs, solenoid, and cam-era ac-tu-a-tor was man-aged by a Rasp-berry Pi Pico run-ning
  []
 
 
 
-[11]
-Underfull \hbox (badness 1117) in paragraph at lines 439--440
+[12]
+Underfull \hbox (badness 1117) in paragraph at lines 485--486
 []\T1/opensans-TLF/m/n/10 Behavioral events were op-er-a-tionally de-fined based on cu-mu-la-tive tail bend an-gle thresh-olds, with
  []
 
 
-
-[12]
-Underfull \hbox (badness 1132) in paragraph at lines 460--466
+Underfull \hbox (badness 1132) in paragraph at lines 506--512
 \T1/opensans-TLF/m/n/10 ster-ile/-sub-fer-tile (D. Gore-lick, per-sonal com-mu-ni-ca-tion), in-di-cat-ing a non-functional re-cep-tor. Sim-i-larly,
  []
 
 
-LaTeX Warning: Reference `fig:5' on page 13 undefined on input line 480.
 
+[13]
 
-
-[13] (./2026_Atp1a3.bbl
-
-[14]
+[14] (./2026_Atp1a3.bbl
 LaTeX Font Info:    Font shape `T1/opensans-TLF/m/it' will be
 (Font)              scaled to size 9.0pt on input line 11.
 LaTeX Font Info:    Trying to load font information for T1+stix on input line 23.
@@ -1593,50 +1599,49 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `cmss' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-LaTeX Font Info:    Trying to load font information for LGR+opensans-TLF on input line 49.
+
+
+[15{c:/texlive/2024/texmf-dist/fonts/enc/dvips/stix/stix-t1.enc}{c:/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}]
+LaTeX Font Info:    Trying to load font information for LGR+opensans-TLF on input line 57.
  (c:/texlive/2024/texmf-dist/tex/latex/opensans/LGRopensans-TLF.fd
 File: LGRopensans-TLF.fd 2019/06/24 Font definitions for LGR/opensans-TLF.
 )
 LaTeX Font Info:    Font shape `LGR/opensans-TLF/m/n' will be
-(Font)              scaled to size 9.0pt on input line 49.
+(Font)              scaled to size 9.0pt on input line 57.
 
-
-[15{c:/texlive/2024/texmf-dist/fonts/enc/dvips/stix/stix-t1.enc}{c:/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}{c:/texlive/2024/texmf-dist/fonts/enc/dvips/opensans/a_uv4o4i.enc}]
-Underfull \hbox (badness 1735) in paragraph at lines 110--113
+Underfull \hbox (badness 1735) in paragraph at lines 126--129
 []\T1/opensans-TLF/m/n/9 Laurie Anne Lamiré, Mar-tin Haese-meyer, Flo-rian En-gert, Michael Granato, and Owen Ran-dlett.  Func-tional and
  []
 
 
 
-[16]) (./2026_Atp1a3.suppinfo)
+[16{c:/texlive/2024/texmf-dist/fonts/enc/dvips/opensans/a_uv4o4i.enc}]
 
-[17] 
+[17]) (./2026_Atp1a3.suppinfo)
+
+[18] 
 enddocument/afterlastpage (AED): lastpage setting LastPage.
 (./2026_Atp1a3.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 1
 L3 programming layer <2021/03/21>
  ***********
-
-
-LaTeX Warning: There were undefined references.
-
 Package rerunfilecheck Info: File `2026_Atp1a3.out' has not changed.
-(rerunfilecheck)             Checksum: B120AAEDA6B8B4ACB4984B3A3FF89D38;5411.
+(rerunfilecheck)             Checksum: B95668D8F73124006C4E2B1643B07B08;6513.
  ) 
 Here is how much of TeX's memory you used:
- 30634 strings out of 473330
- 563046 string characters out of 5723877
- 1072237 words of memory out of 5000000
- 53210 multiletter control sequences out of 15000+600000
- 636264 words of font info for 194 fonts, out of 8000000 for 9000
+ 30665 strings out of 473330
+ 563733 string characters out of 5723877
+ 1076387 words of memory out of 5000000
+ 53233 multiletter control sequences out of 15000+600000
+ 635869 words of font info for 193 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 91i,11n,131p,2715b,1303s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 91i,12n,131p,2715b,1319s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2024/texmf-dist/fonts/type1/ascender/opensans/OpenSans-Bold.pfb><c:/texlive/2024/texmf-dist/fonts/type1/ascender/opensans/OpenSans-BoldItalic.pfb><c:/texlive/2024/texmf-dist/fonts/type1/ascender/opensans/OpenSans-Italic.pfb><c:/texlive/2024/texmf-dist/fonts/type1/ascender/opensans/OpenSans-Regular.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/stix/STIXGeneral-Regular.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfss0900.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/stix/stix-mathit.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/stix/stix-mathrm.pfb>
-Output written on 2026_Atp1a3.pdf (17 pages, 12173195 bytes).
+Output written on 2026_Atp1a3.pdf (18 pages, 22005865 bytes).
 PDF statistics:
- 490 PDF objects out of 1000 (max. 8388607)
- 440 compressed objects within 5 object streams
- 93 named destinations out of 1000 (max. 500000)
- 19669 words of extra memory for PDF output out of 20736 (max. 10000000)
+ 540 PDF objects out of 1000 (max. 8388607)
+ 487 compressed objects within 5 object streams
+ 102 named destinations out of 1000 (max. 500000)
+ 19682 words of extra memory for PDF output out of 20736 (max. 10000000)
 

@@ -1,4 +1,4 @@
-\begin{thebibliography}{43}
+\begin{thebibliography}{48}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -44,6 +44,14 @@ D~Paola Calderon, Rachel Fremont, Franca Kraenzlin, and Kamran Khodakhah.
 \newblock The neural substrates of rapid-onset {Dystonia-Parkinsonism}.
 \newblock \emph{Nat. Neurosci.}, 14\penalty0 (3):\penalty0 357--365, March 2011.
 
+\bibitem[Chen et~al.(2018)Chen, Mu, Hu, Kuan, Nikitchenko, Randlett, Chen, Gavornik, Sompolinsky, Engert, and Ahrens]{Chen2018-sdf}
+Xiuye Chen, Yu~Mu, Yu~Hu, Aaron~T. Kuan, Maxim Nikitchenko, Owen Randlett, Alex~B. Chen, Jeffery~P. Gavornik, Haim Sompolinsky, Florian Engert, and Misha~B. Ahrens.
+\newblock Brain-wide organization of neuronal activity and convergent sensorimotor transformations in larval zebrafish.
+\newblock \emph{Neuron}, 100\penalty0 (4):\penalty0 876--890.e5, November 2018.
+\newblock ISSN 0896-6273.
+\newblock \doi{10.1016/j.neuron.2018.09.042}.
+\newblock URL \url{http://dx.doi.org/10.1016/j.neuron.2018.09.042}.
+
 \bibitem[Doğanlı et~al.(2013)Doğanlı, Beck, Ribera, Oxvig, and Lykke-Hartmann]{Doanl2013}
 Canan Doğanlı, Hans~C. Beck, Angeles~B. Ribera, Claus Oxvig, and Karin Lykke-Hartmann.
 \newblock α3na+/k+-atpase deficiency causes brain ventricle dilation and abrupt embryonic motility in zebrafish.
@@ -59,6 +67,14 @@ Jens~P Dreier.
 \newblock ISSN 1546-170X.
 \newblock \doi{10.1038/nm.2333}.
 \newblock URL \url{http://dx.doi.org/10.1038/nm.2333}.
+
+\bibitem[Dunn et~al.(2016)Dunn, Mu, Narayan, Randlett, Naumann, Yang, Schier, Freeman, Engert, and Ahrens]{Dunn2016-asd}
+Timothy~W Dunn, Yu~Mu, Sujatha Narayan, Owen Randlett, Eva~A Naumann, Chao-Tsung Yang, Alexander~F Schier, Jeremy Freeman, Florian Engert, and Misha~B Ahrens.
+\newblock Brain-wide mapping of neural activity controlling zebrafish exploratory locomotion.
+\newblock \emph{eLife}, 5, March 2016.
+\newblock ISSN 2050-084X.
+\newblock \doi{10.7554/elife.12741}.
+\newblock URL \url{http://dx.doi.org/10.7554/eLife.12741}.
 
 \bibitem[El-Brolosy et~al.(2019)El-Brolosy, Kontarakis, Rossi, Kuenne, G{\"u}nther, Fukuda, Kikhi, Boezio, Takacs, Lai, Fukuda, Gerri, Giraldez, and Stainier]{El-Brolosy2019-uq}
 Mohamed~A El-Brolosy, Zacharias Kontarakis, Andrea Rossi, Carsten Kuenne, Stefan G{\"u}nther, Nana Fukuda, Khrievono Kikhi, Giulia L~M Boezio, Carter~M Takacs, Shih-Lei Lai, Ryuichi Fukuda, Claudia Gerri, Antonio~J Giraldez, and Didier Y~R Stainier.
@@ -124,6 +140,14 @@ GonÃ§alo Lopes, NiccolÃ² Bonacchi, JoÃ£o FrazÃ£o, Joana~P. Neto, Bassam~
 \newblock \doi{10.3389/fninf.2015.00007}.
 \newblock URL \url{http://dx.doi.org/10.3389/fninf.2015.00007}.
 
+\bibitem[Matsuda and Kubo(2021)]{Matsuda2021-a}
+Koji Matsuda and Fumi Kubo.
+\newblock Circuit organization underlying optic flow processing in zebrafish.
+\newblock \emph{Frontiers in Neural Circuits}, 15, July 2021.
+\newblock ISSN 1662-5110.
+\newblock \doi{10.3389/fncir.2021.709048}.
+\newblock URL \url{http://dx.doi.org/10.3389/fncir.2021.709048}.
+
 \bibitem[McDiarmid et~al.(2019)McDiarmid, Yu, and Rankin]{McDiarmid2019-td}
 Troy~A McDiarmid, Alex~J Yu, and Catharine~H Rankin.
 \newblock Habituation is more than learning to ignore: Multiple mechanisms serve to facilitate shifts in behavioral strategy.
@@ -166,6 +190,14 @@ Jonathan~W. Peirce.
 S~J Pittock, C~Joyce, V~O'Keane, B~Hugle, M~O Hardiman, F~Brett, A~J Green, D~E Barton, M~D King, and D~W Webb.
 \newblock Rapid-onset dystonia-parkinsonism: a clinical and genetic analysis of a new kindred.
 \newblock \emph{Neurology}, 55\penalty0 (7):\penalty0 991--995, October 2000.
+
+\bibitem[Portugues and Engert(2009)]{Portugues2009}
+Ruben Portugues and Florian Engert.
+\newblock The neural basis of visual behaviors in the larval zebrafish.
+\newblock \emph{Current Opinion in Neurobiology}, 19\penalty0 (6):\penalty0 644–647, December 2009.
+\newblock ISSN 0959-4388.
+\newblock \doi{10.1016/j.conb.2009.10.007}.
+\newblock URL \url{http://dx.doi.org/10.1016/j.conb.2009.10.007}.
 
 \bibitem[Qiu et~al.(2006)Qiu, Bosch, Tobias, Krust, Graham, Murphy, Korach, Chambon, Scanlan, R{\o}nnekleiv, and Kelly]{Qiu2006-ml}
 Jian Qiu, Martha~A Bosch, Sandra~C Tobias, Andree Krust, Sharon~M Graham, Stephanie~J Murphy, Kenneth~S Korach, Pierre Chambon, Thomas~S Scanlan, Oline~K R{\o}nnekleiv, and Martin~J Kelly.
@@ -258,5 +290,13 @@ Aikaterini Vezyroglou, Rhoda Akilapa, Katy Barwick, Saskia Koene, Catherine~A Br
 An~Vo, Nha Nguyen, Koji Fujita, Katharina~A Schindlbeck, Andrea Rommal, Susan~B Bressman, Martin Niethammer, and David Eidelberg.
 \newblock Disordered network structure and function in dystonia: pathological connectivity vs. adaptive responses.
 \newblock \emph{Cereb. Cortex}, 33\penalty0 (11):\penalty0 6943--6958, May 2023.
+
+\bibitem[Wang et~al.(2020)Wang, Hinz, Zhang, Thiele, and Arrenberg]{Wang2020-a}
+Kun Wang, Julian Hinz, Yue Zhang, Tod~R. Thiele, and Aristides~B. Arrenberg.
+\newblock Parallel channels for motion feature extraction in the pretectum and tectum of larval zebrafish.
+\newblock \emph{Cell Reports}, 30\penalty0 (2):\penalty0 442--453.e6, January 2020.
+\newblock ISSN 2211-1247.
+\newblock \doi{10.1016/j.celrep.2019.12.031}.
+\newblock URL \url{http://dx.doi.org/10.1016/j.celrep.2019.12.031}.
 
 \end{thebibliography}
