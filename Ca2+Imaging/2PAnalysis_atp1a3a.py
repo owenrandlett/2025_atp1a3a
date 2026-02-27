@@ -490,24 +490,7 @@ if re_analyze:
 
     #
 
-    IM_roi, im_proj = Ca2ImagingFns.draw_hit_volume_provideROIstats(np.arange(len(roi_stats_with_zbrain)), roi_stats_with_zbrain, metadata_zbrain, normalize=True, outline=outline_crop)
 
-    #%
-
-    plt.imshow(im_proj, cmap='inferno')
-    plt.title('ROIs identified, Cropped to forebrain')
-    plt.axis('off')
-    plt.show()
-
-
-
-    IM_roi, im_proj = Ca2ImagingFns.draw_hit_volume_provideROIstats(np.arange(len(roi_stats_with_zbrain)), roi_stats_with_zbrain, metadata_zbrain, crop_str='full_extents', normalize=True, outline=outline_full)
-
-    #
-    plt.imshow(im_proj, cmap='inferno')
-    plt.title('ROIs identified, Full brain')
-    plt.axis('off')
-    plt.show()
 
     np.savez(os.path.join(processed_data_flds_path, 'ImagingData_allFish.npz'),
                         roi_stats=roi_stats_with_zbrain,
@@ -541,6 +524,38 @@ ref_brain = np.moveaxis(ref_brain, [0,1,2], [2,1,0])
 
 xy_rez = ref_meta['space directions'][0][0]
 z_rez = ref_meta['space directions'][-1][-1]
+
+
+
+
+
+IM_roi, im_proj = Ca2ImagingFns.draw_hit_volume_provideROIstats(np.arange(len(roi_stats)), roi_stats, metadata_zbrain, normalize=False, outline=metadata_zbrain['outline_crop'])
+
+#%
+
+plt.imshow(im_proj, cmap='inferno')
+plt.title('ROIs identified, Cropped to forebrain')
+plt.axis('off')
+plt.colorbar()
+plt.savefig(os.path.join(processed_data_flds_path, 'IDdROIs_cropped.svg'),  
+            dpi=600,
+            bbox_inches="tight")
+plt.show()
+
+
+
+IM_roi, im_proj = Ca2ImagingFns.draw_hit_volume_provideROIstats(np.arange(len(roi_stats)), roi_stats, metadata_zbrain, crop_str='full_extents', normalize=False, outline=metadata_zbrain['outline_full'])
+
+#
+plt.imshow(im_proj, cmap='inferno')
+plt.title('ROIs identified, Full brain')
+plt.axis('off')
+plt.colorbar()
+plt.savefig(os.path.join(processed_data_flds_path, 'IDdROIs_FullBrain.svg'),  
+            dpi=300,
+            bbox_inches="tight")
+plt.show()
+
 
 #%% analze behaviour + imaging traces
 from scipy.signal import medfilt
@@ -935,7 +950,7 @@ plt.legend()
 
 #%% clustering of functional responses
 from sklearn.cluster import AffinityPropagation, KMeans, SpectralClustering, AgglomerativeClustering
-
+# re_analyze = True
 
 F_dff_std = np.nanstd(F_dff, axis=1)
 #%
@@ -1146,7 +1161,7 @@ if re_analyze:
 
 import numpy as np
 cluster_results = np.load(os.path.join(out_dir, "cluster_results.npy"),allow_pickle=True)
-#%%
+
 out_dir_orderedheatmaps = os.path.join(out_dir, 'clustered_ordered_heatmaps')
 os.makedirs(out_dir_orderedheatmaps, exist_ok=True)
 
