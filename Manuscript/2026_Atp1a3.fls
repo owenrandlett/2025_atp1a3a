@@ -517,12 +517,12 @@ INPUT ./2026_Atp1a3.bbl
 INPUT ./2026_Atp1a3.bbl
 INPUT 2026_Atp1a3.bbl
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/ascender/opensans/OpenSans-Italic-T1-TLF.tfm
+INPUT c:/texlive/2024/texmf-dist/fonts/vf/ascender/opensans/OpenSans-Italic-T1-TLF.vf
+INPUT c:/texlive/2024/texmf-dist/fonts/tfm/ascender/opensans/OpenSans-Italic-T1-TLF--base.tfm
 INPUT c:/texlive/2024/texmf-dist/tex/latex/opensans/LGRopensans-TLF.fd
 INPUT c:/texlive/2024/texmf-dist/tex/latex/opensans/LGRopensans-TLF.fd
 INPUT c:/texlive/2024/texmf-dist/tex/latex/opensans/LGRopensans-TLF.fd
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/ascender/opensans/OpenSans-Regular-LGR-TLF.tfm
-INPUT c:/texlive/2024/texmf-dist/fonts/vf/ascender/opensans/OpenSans-Italic-T1-TLF.vf
-INPUT c:/texlive/2024/texmf-dist/fonts/tfm/ascender/opensans/OpenSans-Italic-T1-TLF--base.tfm
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/stix/stix-mathrm.tfm
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/stix/stix-mathit.tfm
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/stix/stix-mathscr.tfm
@@ -542,6 +542,11 @@ INPUT c:/texlive/2024/texmf-dist/fonts/enc/dvips/opensans/a_uv4o4i.enc
 INPUT ./2026_Atp1a3.suppinfo
 INPUT ./2026_Atp1a3.suppinfo
 INPUT 2026_Atp1a3.suppinfo
+INPUT ./Figures/SupplementartFig_RegionQuantification_Ca2Imaging.png
+INPUT ./Figures/SupplementartFig_RegionQuantification_Ca2Imaging.png
+INPUT ./Figures/SupplementartFig_RegionQuantification_Ca2Imaging.png
+INPUT ./Figures/SupplementartFig_RegionQuantification_Ca2Imaging.png
+INPUT ./Figures/SupplementartFig_RegionQuantification_Ca2Imaging.png
 INPUT 2026_Atp1a3.aux
 INPUT ./2026_Atp1a3.out
 INPUT ./2026_Atp1a3.out

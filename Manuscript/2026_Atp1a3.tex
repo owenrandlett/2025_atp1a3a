@@ -403,8 +403,16 @@ This pattern of striatial suppression and pallidal activation is consistent with
 
 
 \label{fig:6}
+
+
+\figsupp[Regional quantification of identified neurons across genotypes.]
+{Number of functionally categories ROIs identified in Z-brain atlas regions.
+\textbf{A)} 
+}{\includegraphics[width=0.9\linewidth]{Figures/SupplementartFig_RegionQuantification_Ca2Imaging.png}}
+\label{fig:S6}
 \end{center}
 \end{figure}
+\vspace{3mm}
 
 While pERK is a useful proxy for neuronal activity, it is an indirect measure that reflects the integrated activity of neurons over a timescale of minutes, and thus does not capture the fast dynamics of neural activity that are critical for sensorimotor processing.
 To gain insight into the fast dynamics of neural activity in \emph{atp1a3a} mutants, we performed volumetric 2-photon Ca\textsuperscript{2+} imaging of the forebrain in response to sensory stimuli.
@@ -415,8 +423,11 @@ During imaging, larvae were presented with alternating DFs and 10 second duratio
 As discussed above, in this head-embedded preparation, \emph{atp1a3a} mutants generally show a very bursty swimming pattern, interspersed with periods of persistent tail bends, with the tail often stably bent to one side for many seconds (\autoref{fig:1}E-H). 
 Therefore, we also attempted to determine how these abnormal motor patterns relate to the altered forebrain activity patterns in mutants by identifying neurons that are tuned to either swimming vigor, or longer-term dynamics in the average tail angle.
 
-Based on our MAP-Mapping results, we expected to see a reduction in sensory-related responses in the forebrain of \emph{atp1a3a} mutants, and perhaps specific altered signals related to swimming dynamics and/or postural bending. 
-To analyze the Ca\textsuperscript{2+} imaging data, we segmented the imaging data into ROIs using suite2p \citep{Pachitariu2016}, which mostly (but not exlusively) identifies individual neuronal soma, here referred to as identified "neurons". Using regressor-based analyses \citep{Miri2011}, we identified neurons that show significant responses to the DF and OMR stimuli, as well as neurons that show significant correlations with either swimming vigor or tail angle dynamics, as well as any neurons showing significant variations in their activity across the 15-minute recording period.
+To analyze the Ca\textsuperscript{2+} imaging data, we segmented the imaging data into ROIs using suite2p \citep{Pachitariu2016}, which mostly (but not exlusively) identifies individual neuronal soma, here referred to as identified "neurons". Using regressor-based analyses \citep{Miri2011} and affinty-propagation clustering \citep{Lamire2023-he}, we identified neurons that show significant responses to the DF and OMR stimuli, neurons that show significant correlations with either swimming vigor or tail angle, as well as any neurons showing significant activity that we couldnt associate with any behavioural variables (\autoref{fig:6}C-E).
+Based on our MAP-Mapping results, we expected to see a reduction in sensory-related responses in \emph{atp1a3a} mutants, and indeed we saw significantly reduced numbers of DF and OMR responsive neurons in mutants relative to siblings (\autoref{fig:6}C-F).
+Interestingly, there was a clear regional-dependence to this change, where the telencephalic pallium and subpallium, as well as the habenula showed a near complete loss of sensory-responsive neurons (\autoref{fig:S6}A,B).  
+The other diencephalic regions we analyzed (pretectum, thalamus, posterior tuberculum) showed strong but less extreme reductions in these nueronal populations, while the midbrain tectum showed the least reduction, which did not reach statistical significance. These analyses are consistent with our MAP-Mapping experiments, showing that the \emph{atp1a3a} mutants telencephalon and habenula show the strongest alterations in physiological response, indicating that these circuits are particularly vulnerable to \emph{atp1a3a} loss, and may be critical for understanding the circuit-level mechanisms underlying the behavioural phenotypes in these mutants.
+
 
 
 
@@ -561,7 +572,7 @@ This work was supported by funding from the ATIP-Avenir program of the CNRS and 
 
 \bibliography{References_Atp1a3}
 
-
+\newpage
 
 
 
