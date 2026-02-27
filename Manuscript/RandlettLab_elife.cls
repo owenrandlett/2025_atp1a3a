@@ -107,7 +107,7 @@
 \renewcommand{\bibfont}{\small}
 
 % author--year citation style
-\bibliographystyle{plainnat}
+\bibliographystyle{apalike}
 
 
 

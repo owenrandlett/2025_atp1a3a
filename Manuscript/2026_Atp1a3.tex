@@ -389,6 +389,36 @@ We stained for \emph{tac1}, \emph{penka}, \emph{penkb} and \emph{npy} using HCR 
 This revealed that the zone of suppressed activity in the subpallium (SP\textsuperscript{S}) overlaps with the Vd/Vc striatal homologs, while the zone of activated activity (SP\textsuperscript{A}) overlaps with the dEN homolog (\autoref{fig:5}B).
 This pattern of striatial suppression and pallidal activation is consistent with the known inhibitory connectivity among these regions, and is consistent with a model in which basal ganglia circuits may be particularly sensitive to ATP1A3-loss. 
 
+\subsection{Ca2\textsuperscript{2+} imaging identifies altered sensorimotor responses in the \emph{atp1a3a} mutant forebrain}
+
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=0.9 \linewidth]{Figures/Figure_Ca2Imaging.png}
+
+
+\caption{\textbf{Ca\textsuperscript{2+} imaging of \emph{atp1a3a} mutant forebrain activity}\\
+\textbf{A)} asdfadfasdf
+}
+
+
+\label{fig:6}
+\end{center}
+\end{figure}
+
+While pERK is a useful proxy for neuronal activity, it is an indirect measure that reflects the integrated activity of neurons over a timescale of minutes, and thus does not capture the fast dynamics of neural activity that are critical for sensorimotor processing.
+To gain insight into the fast dynamics of neural activity in \emph{atp1a3a} mutants, we performed volumetric 2-photon Ca\textsuperscript{2+} imaging of the forebrain in response to sensory stimuli.
+We crossed \emph{atp1a3a} mutants with a transgenic line that expresses the nuclear-targeted GCaMP6f Ca\textsuperscript{2+} indicator pan-neuronally, in the pigment deficient \emph{Nacre} mutants (\emph{Tg(elavl3:H2B-GCaMP6f); mitfa\textsuperscript{-/-}}), to generate a line that allows for brain-wide Ca\textsuperscript{2+} imaging in \emph{atp1a3a}. 
+
+Larvae were imaged while head=embedded in agarose with the tail free to move and imaged with a modified \emph{pi\_tailtrack} apparatus \citep{Randlett2023}, integrating a videoprojector in order to present visual stimuli onto a screen below the larvae (\autoref{fig:6}A). Larvae were imaged over a 15-minute period, in a volume covering the areas of the forebrain showing the consistent altered activity patterns observed using pERK (\autoref{fig:5}, \autoref{fig:6}B). 
+During imaging, larvae were presented with alternating DFs and 10 second duration pulses of forward OMR motion, repeated at 30 second intervals, to determine how these sensory stimuli are represented in the forebrain of mutants relative to siblings (\autoref{fig:6}C,D). 
+As discussed above, in this head-embedded preparation, \emph{atp1a3a} mutants generally show a very bursty swimming pattern, interspersed with periods of persistent tail bends, with the tail often stably bent to one side for many seconds (\autoref{fig:1}E-H). 
+Therefore, we also attempted to determine how these abnormal motor patterns relate to the altered forebrain activity patterns in mutants by identifying neurons that are tuned to either swimming vigor, or longer-term dynamics in the average tail angle.
+
+Based on our MAP-Mapping results, we expected to see a reduction in sensory-related responses in the forebrain of \emph{atp1a3a} mutants, and perhaps specific altered signals related to swimming dynamics and/or postural bending. 
+To analyze the Ca\textsuperscript{2+} imaging data, we segmented the imaging data into ROIs using suite2p \citep{Pachitariu2016}, which mostly (but not exlusively) identifies individual neuronal soma, here referred to as identified "neurons". Using regressor-based analyses \citep{Miri2011}, we identified neurons that show significant responses to the DF and OMR stimuli, as well as neurons that show significant correlations with either swimming vigor or tail angle dynamics, as well as any neurons showing significant variations in their activity across the 15-minute recording period.
+
+
 
 \section{Materials and Methods}
 
@@ -407,7 +437,7 @@ The \emph{atp1a3a} CRISPR mutant zebrafish line was generated at the SickKids Ze
 The guide RNA (gRNA) was designed to target the \emph{atp1a3a} gene 82 base pairs downstream of the start of exon 8.
 This specific region was chosen due to its close proximity to two human mutations known to cause Rapid-onset Dystonia Parkinsonism (821T>C mutation and 829G>A mutation).
 The resultant \emph{atp1a3a} mutant allele has an 8 base pair deletion in exon 8 leading to a frameshift mutation with a premature stop in exon 9.
-For Ca\textsuperscript{2+} imaging experiments, \emph{atp1a3a} mutants were crossed with \emph{Tg(elavl3:Huc-GCaMP6f); mitfa\textsubscript{-/-}}, to generate a line that express the nuclear-targeted GCaMP6f Ca2+ indicator pan-neuronally, in the pigment deficient \emph{Nacre} mutants.
+For Ca\textsuperscript{2+} imaging experiments, \emph{atp1a3a} mutants were crossed with \emph{Tg(elavl3:H2B-GCaMP6f); mitfa\textsubscript{-/-}}, to generate a line that express the nuclear-targeted GCaMP6f Ca2+ indicator pan-neuronally, in the pigment deficient \emph{Nacre} mutants.
 
 
 \subsection{Genotyping}
@@ -517,66 +547,12 @@ Data visualization was performed using Matplotlib and seaborn.
 Statistical comparisons between distributions were conducted using the non-parametric Mann-Whitney U test as implemented in SciPy.
 
 \section{Discussion}
-
-\subsection{The promotion of habituation learning by estradiol is mediated by an unidentified target} 
-Our experiments indicate that Gper1, ER1, ER2a and ER2b do not mediate the positive effects of estradiol on habituation learning. 
-As this is fundamentally a negative result, it is difficult to conclusively demonstrate this beyond any doubt. 
-One major caveat relates to the actual functional nature of the mutant alleles that we have used. 
-These are all Cas9-generated small deletions resulting in frameshift mutations that lead to early stop codons, and are thus predicted null/knockout lines. 
-Despite this genetic confidence, it is always possible that residual activity could still remain, perhaps via alternate splicing or alternate start codons. 
-This could be further complicated by genetic/transcriptional compensation, where frameshift alleles can lead to the upregulation of paralogs in some circumstances \citep{El-Brolosy2019-uq}.
-As with all negative results, it is not possible to rule out all possible alternative explanations. 
-However, we recognize that this bias against publishing negative results is bad for science. 
-Negative results from well-designed and executed experiments are of value for the community and making this knowledge public is our duty as responsible scientists \citep{Mlinaric2017-kr}. 
-
-While the possibility of "residual activity" in our mutants is a clear limitation of our approach, we argue that this alternative interpretation is very unlikely. The \emph{esr1\textsuperscript{uab118}} and \emph{esr2b\textsuperscript{uab127}} alleles both exhibited a lack of estradiol responsiveness in other tissues \citep{Romano2017-ep}, and \emph{esr2b\textsuperscript{uab127}} mutants are female sterile/subfertile (D. Gorelick, personal communication), indicating a non-functional receptor.
-Similarly, \emph{gper1\textsuperscript{uab102}} mutants show a lack of estradiol responsiveness in heart rate modulation \citep{Romano2017-ep}. 
-Interestingly this was only observed in maternal-zygotic mutants. 
-While it seems unlikely that sufficient maternal mRNA/protein for Gper1 could persist in 5dpf larvae, we can formally rule this out with our current datasets. 
-The \emph{esr2a\textsuperscript{uab134}} mutants have no previously published phenotype, and so we do not have an independent positive control for the nature of this allele. However, the best evidence we have against the "residual activity" hypothesis is that we actually found phenotypes in our assays for \emph{esr1\textsuperscript{uab118}}, \emph{esr2a\textsuperscript{uab134}},  and \emph{gper1\textsuperscript{uab102}} mutants. 
-These phenotypes are just of the unexpected sign, where mutants show increased habituation (discussed below). 
-
-\subsection{Candidate estradiol targets that could promote habituation learning}
-
-We have concluded that the lack of habituation deficits in our mutants is due to the presence of an alternative receptor or pathway that mediates the learning-promoting effects of estradiol.
-What might this unidentified target be? 
-Various leads exist in the literature. 
-One hypothesis posits the existence of an unidentified “Gq-mER” (Gq-coupled membrane estrogen receptor) \citep{Qiu2006-ml, Vail2019-lx}, and therefore estradiol may signal via additional GPCRs beyond Gper1. 
-Another possibility is an interaction between estradiol and other membrane receptors, for example: the Voltage-Gated Sodium Channel Nav1.2 \citep{Sula2021-vs, Trevino2021-wl}, transient receptor potential (TRP) channels \citep{Payrits2017-cd, Ramirez-Barrantes2020-iv}, or various other ion channels \citep{Kow2016-dl}.
-The robust nature of our "non-canonical" but clearly estradiol-dependent phenotype, combined with the high-throughput nature of our behavioural assays, could be an ideal assay for future screening efforts to attempt to identify novel estradiol target(s). 
-
-\subsection{Multiple Estrogen Receptors act to suppress habituation learning.}
- 
-While we were surprised to find that the classical ERs do not promote habituation, we were shocked to find evidence of the opposite!
-We found that \emph{esr1\textsuperscript{uab118}}, \emph{esr2a\textsuperscript{uab134}},  and \emph{gper1\textsuperscript{uab102}} mutants habituate more than their sibling controls (\autoref{fig:1}, \autoref{fig:2}), consistent with a role for these ERs in inhibiting habituation.
-While effect sizes of these magnitudes border on those that are easily dismissible as "noise", they were not only observed in the single mutants experiments, but also in the double and triple mutant combinations of these alleles (\autoref{fig:3}-\autoref{fig:5}), providing good evidence that they are biologically meaningful effects. 
-In fact, these multi-mutants generally exhibited larger effect sizes, consistent with an additive interaction. 
- 
-Untangling the mechanisms of ER1-, ER2a- and Gper1-dependent suppression of habituation will require considerable further work. 
-The additive interaction we observed genetically indicates that the ERs act cooperatively to suppress habituation learning.
-All three receptors are expressed in the larval zebrafish brain \citep{Thisse2008-vr,Romano2017-ep}, but whether they are acting in the same or different cell types awaits characterization. 
-The study of this inhibitory pathway may be challenging since it opposes the major learning-promoting effect of estradiol, and therefore may be more straightforward to study after the identification and deletion of the estradiol target that promotes habituation. 
-One attractive hypothesis relates to the observation that estradiol exposure increases aromatase expression in the zebrafish brain \citep{Menuet2005-hn, Hao2013-ik}. 
-Since aromatase catalyzes the conversion of androgens into estrogens, ER mutants may have reduced levels of endogenous endogeous estrogens in the brain, which could lead to inhibited habituation.
-Future experiments aimed at manipulating the aromatase system in wild-type and ER mutant backgrounds could be used to test this hypothesis. 
-
-\subsection{Conclusion}
-
-What began as a straightforward study to identify the receptor(s) that mediate the habituation-promoting effects of estradiol has instead led us to a surprising and paradoxical result; 
-canonical ERs do regulate habituation, but are suppressive and act in opposition to the habituation-promoting effects of estradiol. 
-This fits with the general theme of our studies of this habituation paradigm -- we find increasing complexity and contradiction within this "simple" learning process the deeper we look. 
-This began with our detailed observations of behaviour, leading us to conclude that habituation results from a distributed plasticity process that adapts different aspects of behavior independently \citep{Randlett2019-fj}. 
-We believe that this property underlies our subsequent discoveries of pharmacological and genetic manipulations that can result in either specific changes in specific aspects of habituation (but not others), or even opposing effects, where a single manipulation can simultaneously increase and decrease habituation, depending on which component of behavior is measured \citep{Randlett2019-fj,Lamire2023-he}.
-This complexity appears to be a fundamental property of habituation \citep{McDiarmid2019-td}, and that the study of habituation will likely continue to surprise us, hopefully leading to unexpected insights into the nature of plasticity underlying learning and memory.
-
-\section{Data Availability Statement}
-
-Original data generated and analyzed during this study are included in this published article or in the data repositories listed in References.
+casdfadfsadf
 
 \section{Acknowledgments}
 
-We thank the Gorelick lab for sharing the ER-mutant zebrafish lines, and for sharing genotyping protocols and expertise, and the Randlett group members for helpful advice regarding the manuscript and work.
 We are grateful to the staff of the PRECI and AZR zebrafish facilities, including Laure Benard, Robert Renard, Annie Desenfant, Olivier Lohez, for the expert care provided to the zebrafish. 
+Imaging was performed in the CIQLE imaging platform (LYMIC, Lyon), and we thank the staff of the CIQLE for their support with confocal and 2-photon microscopy and image processing.
 We also gratefully acknowledge the communities that develop and maintain the numerous open-source software packages we rely on, most of which could not be cited here.
 
 
