@@ -1,48 +1,48 @@
-This is BibTeX, Version 0.99d (TeX Live 2024)
+This is BibTeX, Version 0.99d (TeX Live 2023/Debian)
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: 2026_Atp1a3.aux
 The style file: apalike.bst
 Database file #1: References_Atp1a3.bib
 Warning--empty journal in Pachitariu2016
-You've used 40 entries,
+You've used 39 entries,
             1935 wiz_defined-function locations,
-            763 strings with 14487 characters,
-and the built_in function-call counts, 21087 in all, are:
-= -- 1883
-> -- 1448
+            755 strings with 14178 characters,
+and the built_in function-call counts, 20591 in all, are:
+= -- 1838
+> -- 1420
 < -- 12
-+ -- 546
-- -- 534
-* -- 2115
-:= -- 3789
-add.period$ -- 119
-call.type$ -- 40
-change.case$ -- 467
-chr.to.int$ -- 40
-cite$ -- 41
-duplicate$ -- 551
-empty$ -- 1150
-format.name$ -- 584
-if$ -- 3891
++ -- 536
+- -- 524
+* -- 2065
+:= -- 3702
+add.period$ -- 116
+call.type$ -- 39
+change.case$ -- 457
+chr.to.int$ -- 39
+cite$ -- 40
+duplicate$ -- 537
+empty$ -- 1118
+format.name$ -- 573
+if$ -- 3797
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 40
-newline$ -- 202
-num.names$ -- 120
-pop$ -- 379
+missing$ -- 39
+newline$ -- 197
+num.names$ -- 117
+pop$ -- 371
 preamble$ -- 1
-purify$ -- 467
+purify$ -- 457
 quote$ -- 0
-skip$ -- 421
+skip$ -- 411
 stack$ -- 0
-substring$ -- 1322
-swap$ -- 39
+substring$ -- 1283
+swap$ -- 38
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 240
+type$ -- 234
 warning$ -- 1
-while$ -- 125
+while$ -- 122
 width$ -- 0
-write$ -- 519
+write$ -- 506
 (There was 1 warning)
