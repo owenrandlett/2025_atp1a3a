@@ -436,6 +436,7 @@ INPUT ./Figures/Figure_MutationAndQualitativePhenotype.png
 INPUT ./Figures/Figure_MutationAndQualitativePhenotype.png
 INPUT ./Figures/Figure_MutationAndQualitativePhenotype.png
 <<<<<<< HEAD
+<<<<<<< HEAD
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/ascender/opensans/OpenSans-Regular-T1-TLF.tfm
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/ascender/opensans/OpenSans-Bold-T1-TLF.tfm
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/ascender/opensans/OpenSans-BoldItalic-T1-TLF.tfm
@@ -470,6 +471,8 @@ INPUT c:/texlive/2024/texmf-dist/fonts/vf/ascender/opensans/OpenSans-Regular-T1-
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/ascender/opensans/OpenSans-Regular-T1-TLF--base.tfm
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/ascender/opensans/OpenSans-BoldItalic-T1-TLF.tfm
 =======
+=======
+>>>>>>> bdfdd3b3e2c66e1ab9786d2a5998a762c0aa5a56
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/ascender/opensans/OpenSans-Regular-T1-TLF.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/ascender/opensans/OpenSans-Bold-T1-TLF.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/ascender/opensans/OpenSans-BoldItalic-T1-TLF.tfm
@@ -507,12 +510,16 @@ INPUT /usr/share/texlive/texmf-dist/fonts/tfm/ascender/opensans/OpenSans-Regular
 INPUT /usr/share/texlive/texmf-dist/fonts/vf/ascender/opensans/OpenSans-Regular-T1-TLF.vf
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/ascender/opensans/OpenSans-Regular-T1-TLF--base.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/ascender/opensans/OpenSans-BoldItalic-T1-TLF.tfm
+<<<<<<< HEAD
+>>>>>>> bdfdd3b3e2c66e1ab9786d2a5998a762c0aa5a56
+=======
 >>>>>>> bdfdd3b3e2c66e1ab9786d2a5998a762c0aa5a56
 INPUT ./Figures/Figure_FreeSwimming.png
 INPUT ./Figures/Figure_FreeSwimming.png
 INPUT ./Figures/Figure_FreeSwimming.png
 INPUT ./Figures/Figure_FreeSwimming.png
 INPUT ./Figures/Figure_FreeSwimming.png
+<<<<<<< HEAD
 <<<<<<< HEAD
 INPUT c:/texlive/2024/texmf-dist/fonts/vf/ascender/opensans/OpenSans-Italic-T1-TLF.vf
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/ascender/opensans/OpenSans-Italic-T1-TLF--base.tfm
@@ -521,20 +528,28 @@ INPUT c:/texlive/2024/texmf-dist/fonts/tfm/ascender/opensans/OpenSans-Regular-T1
 INPUT c:/texlive/2024/texmf-dist/fonts/vf/ascender/opensans/OpenSans-BoldItalic-T1-TLF.vf
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/ascender/opensans/OpenSans-BoldItalic-T1-TLF--base.tfm
 =======
+=======
+>>>>>>> bdfdd3b3e2c66e1ab9786d2a5998a762c0aa5a56
 INPUT /usr/share/texlive/texmf-dist/fonts/vf/ascender/opensans/OpenSans-Regular-TS1-TLF.vf
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/ascender/opensans/OpenSans-Regular-TS1-TLF--base.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/enc/dvips/opensans/a_nvvucy.enc
 INPUT /usr/share/texlive/texmf-dist/fonts/vf/ascender/opensans/OpenSans-BoldItalic-T1-TLF.vf
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/ascender/opensans/OpenSans-BoldItalic-T1-TLF--base.tfm
+<<<<<<< HEAD
+>>>>>>> bdfdd3b3e2c66e1ab9786d2a5998a762c0aa5a56
+=======
 >>>>>>> bdfdd3b3e2c66e1ab9786d2a5998a762c0aa5a56
 INPUT ./Figures/Figure_DarkFlash.png
 INPUT ./Figures/Figure_DarkFlash.png
 INPUT ./Figures/Figure_DarkFlash.png
 INPUT ./Figures/Figure_DarkFlash.png
 INPUT ./Figures/Figure_DarkFlash.png
+<<<<<<< HEAD
 INPUT c:/texlive/2024/texmf-dist/fonts/vf/ascender/opensans/OpenSans-Regular-TS1-TLF.vf
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/ascender/opensans/OpenSans-Regular-TS1-TLF--base.tfm
 INPUT c:/texlive/2024/texmf-dist/fonts/enc/dvips/opensans/a_nvvucy.enc
+=======
+>>>>>>> bdfdd3b3e2c66e1ab9786d2a5998a762c0aa5a56
 INPUT ./Figures/Figure_OMR.png
 INPUT ./Figures/Figure_OMR.png
 INPUT ./Figures/Figure_OMR.png
@@ -550,6 +565,7 @@ INPUT ./Figures/Figure_Ca2Imaging.png
 INPUT ./Figures/Figure_Ca2Imaging.png
 INPUT ./Figures/Figure_Ca2Imaging.png
 INPUT ./Figures/Figure_Ca2Imaging.png
+<<<<<<< HEAD
 <<<<<<< HEAD
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/ascender/opensans/OpenSans-Bold-T1-TLF.tfm
 INPUT c:/texlive/2024/texmf-dist/fonts/vf/ascender/opensans/OpenSans-Bold-T1-TLF.vf
@@ -597,6 +613,18 @@ INPUT /usr/share/texlive/texmf-dist/fonts/tfm/ascender/opensans/OpenSans-Regular
 INPUT ./2026_Atp1a3.bbl
 INPUT ./2026_Atp1a3.bbl
 INPUT 2026_Atp1a3.bbl
+=======
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/ascender/opensans/OpenSans-Bold-T1-TLF.tfm
+INPUT /usr/share/texlive/texmf-dist/fonts/vf/ascender/opensans/OpenSans-Bold-T1-TLF.vf
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/ascender/opensans/OpenSans-Bold-T1-TLF--base.tfm
+INPUT /usr/share/texlive/texmf-dist/fonts/vf/ascender/opensans/OpenSans-Bold-T1-TLF.vf
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/ascender/opensans/OpenSans-Bold-T1-TLF--base.tfm
+INPUT /usr/share/texlive/texmf-dist/fonts/vf/ascender/opensans/OpenSans-Regular-TS1-TLF.vf
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/ascender/opensans/OpenSans-Regular-TS1-TLF--base.tfm
+INPUT ./2026_Atp1a3.bbl
+INPUT ./2026_Atp1a3.bbl
+INPUT 2026_Atp1a3.bbl
+>>>>>>> bdfdd3b3e2c66e1ab9786d2a5998a762c0aa5a56
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/ascender/opensans/OpenSans-Italic-T1-TLF.tfm
 INPUT /usr/share/texlive/texmf-dist/tex/latex/opensans/LGRopensans-TLF.fd
 INPUT /usr/share/texlive/texmf-dist/tex/latex/opensans/LGRopensans-TLF.fd
@@ -620,6 +648,9 @@ INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/stix/stix-mathsf.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/stix/stix-mathsfit.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/stix/stix-mathtt.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/ascender/opensans/OpenSans-Regular-TS1-TLF.tfm
+<<<<<<< HEAD
+>>>>>>> bdfdd3b3e2c66e1ab9786d2a5998a762c0aa5a56
+=======
 >>>>>>> bdfdd3b3e2c66e1ab9786d2a5998a762c0aa5a56
 INPUT ./2026_Atp1a3.suppinfo
 INPUT ./2026_Atp1a3.suppinfo
@@ -630,16 +661,22 @@ INPUT ./Figures/SupplementartFig_RegionQuantification_Ca2Imaging.png
 INPUT ./Figures/SupplementartFig_RegionQuantification_Ca2Imaging.png
 INPUT ./Figures/SupplementartFig_RegionQuantification_Ca2Imaging.png
 <<<<<<< HEAD
+<<<<<<< HEAD
 INPUT ./Figures/SupplementartFig_Ca2Heatmaps.png
 INPUT ./Figures/SupplementartFig_Ca2Heatmaps.png
 INPUT ./Figures/SupplementartFig_Ca2Heatmaps.png
 INPUT ./Figures/SupplementartFig_Ca2Heatmaps.png
 INPUT ./Figures/SupplementartFig_Ca2Heatmaps.png
 =======
+=======
+>>>>>>> bdfdd3b3e2c66e1ab9786d2a5998a762c0aa5a56
 INPUT ./Figures/SupplementartFig_RegionQuantification_Ca2Imaging.png
 INPUT ./Figures/SupplementartFig_RegionQuantification_Ca2Imaging.png
 INPUT ./Figures/SupplementartFig_RegionQuantification_Ca2Imaging.png
 INPUT ./Figures/SupplementartFig_RegionQuantification_Ca2Imaging.png
+<<<<<<< HEAD
+>>>>>>> bdfdd3b3e2c66e1ab9786d2a5998a762c0aa5a56
+=======
 >>>>>>> bdfdd3b3e2c66e1ab9786d2a5998a762c0aa5a56
 INPUT 2026_Atp1a3.aux
 INPUT ./2026_Atp1a3.out

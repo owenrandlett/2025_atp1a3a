@@ -1,5 +1,9 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.12.17)  2 MAR 2026 16:38
+=======
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2024.12.17)  1 MAR 2026 18:08
+>>>>>>> bdfdd3b3e2c66e1ab9786d2a5998a762c0aa5a56
 =======
 This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2024.12.17)  1 MAR 2026 18:08
 >>>>>>> bdfdd3b3e2c66e1ab9786d2a5998a762c0aa5a56
@@ -1479,9 +1483,12 @@ LaTeX Font Info:    Font shape `T1/opensans-TLF/m/n' will be
  [1
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 {c:/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{c:/texlive/2024/texmf-dist/fonts/enc/dvips/opensans/a_jg4h6q.enc}]
 Underfull \hbox (badness 1152) in paragraph at lines 132--136
 =======
+=======
+>>>>>>> bdfdd3b3e2c66e1ab9786d2a5998a762c0aa5a56
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/opensans/a_jg4h6q.enc}]
 Underfull \hbox (badness 1152) in paragraph at lines 131--135
 >>>>>>> bdfdd3b3e2c66e1ab9786d2a5998a762c0aa5a56
@@ -1512,12 +1519,17 @@ LaTeX Font Info:    Font shape `T1/opensans-TLF/m/it' will be
 (Font)              scaled to size 7.5pt on input line 206.
 LaTeX Font Info:    Font shape `T1/opensans-TLF/m/n' will be
 <<<<<<< HEAD
+<<<<<<< HEAD
 (Font)              scaled to size 7.5pt on input line 208.
 
 
 [3]
 
 [4 <./Figures/Figure_MutationAndQualitativePhenotype.png>]
+=======
+(Font)              scaled to size 7.5pt on input line 204.
+ [3] [4 <./Figures/Figure_MutationAndQualitativePhenotype.png>]
+>>>>>>> bdfdd3b3e2c66e1ab9786d2a5998a762c0aa5a56
 =======
 (Font)              scaled to size 7.5pt on input line 204.
  [3] [4 <./Figures/Figure_MutationAndQualitativePhenotype.png>]
@@ -1532,7 +1544,11 @@ Package pdftex.def Info: Figures/Figure_FreeSwimming.png  used on input line 225
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 [5]
+=======
+ [5{/usr/share/texlive/texmf-dist/fonts/enc/dvips/opensans/a_nvvucy.enc} <./Figures/Figure_FreeSwimming.png>]
+>>>>>>> bdfdd3b3e2c66e1ab9786d2a5998a762c0aa5a56
 =======
  [5{/usr/share/texlive/texmf-dist/fonts/enc/dvips/opensans/a_nvvucy.enc} <./Figures/Figure_FreeSwimming.png>]
 >>>>>>> bdfdd3b3e2c66e1ab9786d2a5998a762c0aa5a56
@@ -1546,6 +1562,7 @@ File: Figures/Figure_DarkFlash.png Graphic file (type png)
 Package pdftex.def Info: Figures/Figure_DarkFlash.png  used on input line 263.
 (pdftex.def)             Requested size: 458.1144pt x 413.76791pt.
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
 [6{c:/texlive/2024/texmf-dist/fonts/enc/dvips/opensans/a_nvvucy.enc} <./Figures/Figure_FreeSwimming.png>]
@@ -1553,6 +1570,8 @@ Package pdftex.def Info: Figures/Figure_DarkFlash.png  used on input line 263.
 [7 <./Figures/Figure_DarkFlash.png>]
 <Figures/Figure_OMR.png, id=274, 518.53725pt x 184.5294pt>
 =======
+=======
+>>>>>>> bdfdd3b3e2c66e1ab9786d2a5998a762c0aa5a56
 [6] [7 <./Figures/Figure_DarkFlash.png>]
 Underfull \hbox (badness 1502) in paragraph at lines 299--301
 \T1/opensans-TLF/m/n/10 an in-creased re-sponse prob-a-bil-ity to acous-tic/-tap stim-uli ([][]\T1/opensans-TLF/b/it/10 Fig-ure 3[][][]\T1/opensans-TLF/m/n/10 Bi, Di, Eiv), with a bend am-pli-tude
@@ -1590,6 +1609,7 @@ Package pdftex.def Info: Figures/Figure_Ca2Imaging.png  used on input line 389.
 (pdftex.def)             Requested size: 458.1144pt x 392.72316pt.
 LaTeX Font Info:    Font shape `T1/opensans-TLF/b/n' will be
 <<<<<<< HEAD
+<<<<<<< HEAD
 (Font)              scaled to size 5.0pt on input line 394.
 
 LaTeX Warning: Reference `fig:2,fig:3,fig:4' on page 11 undefined on input line 422.
@@ -1623,6 +1643,16 @@ Underfull \hbox (badness 1152) in paragraph at lines 527--528
 [15]
 Underfull \hbox (badness 1117) in paragraph at lines 581--582
 >>>>>>> bdfdd3b3e2c66e1ab9786d2a5998a762c0aa5a56
+=======
+(Font)              scaled to size 5.0pt on input line 402.
+[11] [12 <./Figures/Figure_Ca2Imaging.png>] [13] [14]
+Underfull \hbox (badness 1152) in paragraph at lines 527--528
+[]\T1/opensans-TLF/m/n/10 Control of the LEDs, solenoid, and cam-era ac-tu-a-tor was man-aged by a Rasp-berry Pi Pico run-ning
+ []
+
+[15]
+Underfull \hbox (badness 1117) in paragraph at lines 581--582
+>>>>>>> bdfdd3b3e2c66e1ab9786d2a5998a762c0aa5a56
 []\T1/opensans-TLF/m/n/10 Behavioral events were op-er-a-tionally de-fined based on cu-mu-la-tive tail bend an-gle thresh-olds, with
  []
 
@@ -1630,9 +1660,12 @@ Underfull \hbox (badness 1117) in paragraph at lines 581--582
 LaTeX Font Info:    Font shape `T1/opensans-TLF/m/it' will be
 (Font)              scaled to size 9.0pt on input line 6.
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
 [17]
+=======
+>>>>>>> bdfdd3b3e2c66e1ab9786d2a5998a762c0aa5a56
 =======
 >>>>>>> bdfdd3b3e2c66e1ab9786d2a5998a762c0aa5a56
 LaTeX Font Info:    Trying to load font information for LGR+opensans-TLF on input line 45.
@@ -1644,6 +1677,7 @@ LaTeX Font Info:    Font shape `LGR/opensans-TLF/m/n' will be
  [17{/usr/share/texlive/texmf-dist/fonts/enc/dvips/opensans/a_uv4o4i.enc}]
 LaTeX Font Info:    Font shape `TS1/opensans-TLF/m/n' will be
 (Font)              scaled to size 9.0pt on input line 70.
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 
@@ -1657,10 +1691,15 @@ LaTeX Font Info:    Font shape `TS1/opensans-TLF/m/n' will be
  [18]) [19] (./2026_Atp1a3.suppinfo
 <Figures/SupplementartFig_RegionQuantification_Ca2Imaging.png, id=421, 528.8558pt x 399.894pt>
 >>>>>>> bdfdd3b3e2c66e1ab9786d2a5998a762c0aa5a56
+=======
+ [18]) [19] (./2026_Atp1a3.suppinfo
+<Figures/SupplementartFig_RegionQuantification_Ca2Imaging.png, id=421, 528.8558pt x 399.894pt>
+>>>>>>> bdfdd3b3e2c66e1ab9786d2a5998a762c0aa5a56
 File: Figures/SupplementartFig_RegionQuantification_Ca2Imaging.png Graphic file (type png)
 <use Figures/SupplementartFig_RegionQuantification_Ca2Imaging.png>
 Package pdftex.def Info: Figures/SupplementartFig_RegionQuantification_Ca2Imaging.png  used on input line 9.
 (pdftex.def)             Requested size: 458.1144pt x 346.40388pt.
+<<<<<<< HEAD
 <<<<<<< HEAD
 <Figures/SupplementartFig_Ca2Heatmaps.png, id=438, 554.9533pt x 417.3994pt>
 File: Figures/SupplementartFig_Ca2Heatmaps.png Graphic file (type png)
@@ -1674,12 +1713,17 @@ Package pdftex.def Info: Figures/SupplementartFig_Ca2Heatmaps.png  used on input
 [22 <./Figures/SupplementartFig_Ca2Heatmaps.png>] 
 enddocument/afterlastpage (AED): lastpage setting LastPage.
 =======
+=======
+>>>>>>> bdfdd3b3e2c66e1ab9786d2a5998a762c0aa5a56
 File: Figures/SupplementartFig_RegionQuantification_Ca2Imaging.png Graphic file (type png)
 <use Figures/SupplementartFig_RegionQuantification_Ca2Imaging.png>
 Package pdftex.def Info: Figures/SupplementartFig_RegionQuantification_Ca2Imaging.png  used on input line 11.
 (pdftex.def)             Requested size: 458.1144pt x 346.40388pt.
 ) [20 <./Figures/SupplementartFig_RegionQuantification_Ca2Imaging.png>] [21] 
 enddocument/afterlastpage: lastpage setting LastPage.
+<<<<<<< HEAD
+>>>>>>> bdfdd3b3e2c66e1ab9786d2a5998a762c0aa5a56
+=======
 >>>>>>> bdfdd3b3e2c66e1ab9786d2a5998a762c0aa5a56
 (./2026_Atp1a3.aux)
  ***********
@@ -1691,6 +1735,7 @@ L3 programming layer <2021/03/21>
 LaTeX Warning: There were undefined references.
 
 Package rerunfilecheck Info: File `2026_Atp1a3.out' has not changed.
+<<<<<<< HEAD
 <<<<<<< HEAD
 (rerunfilecheck)             Checksum: F47A2FD19CAC49C25CD8A0B552FFFB17;5634.
  ) 
@@ -1713,6 +1758,11 @@ PDF statistics:
 (rerunfilecheck)             Checksum: D57780C1C67653768A12B97D26D89E52;5382.
  ) 
 Here is how much of TeX's memory you used:
+=======
+(rerunfilecheck)             Checksum: D57780C1C67653768A12B97D26D89E52;5382.
+ ) 
+Here is how much of TeX's memory you used:
+>>>>>>> bdfdd3b3e2c66e1ab9786d2a5998a762c0aa5a56
  30232 strings out of 474222
  555398 string characters out of 5748732
  1939975 words of memory out of 5000000

@@ -1,19 +1,26 @@
 # Fdb version 4
 <<<<<<< HEAD
+<<<<<<< HEAD
 ["bibtex 2026_Atp1a3"] 1772465887.10771 "2026_Atp1a3.aux" "2026_Atp1a3.bbl" "2026_Atp1a3" 1772465905.93161 0
   "./References_Atp1a3.bib" 1772462425 178611 a0cb70c0baacbb3114e96a28f6d031e2 ""
   "2026_Atp1a3.aux" 1772465904 27249 268bfce95f47a19af3e68cf11a2e5aeb "pdflatex"
   "c:/texlive/2024/texmf-dist/bibtex/bst/base/apalike.bst" 1734437443 24635 604dafcc79f521a11ea73e506e1fbd98 ""
 =======
+=======
+>>>>>>> bdfdd3b3e2c66e1ab9786d2a5998a762c0aa5a56
 ["bibtex 2026_Atp1a3"] 1772384921.43746 "2026_Atp1a3.aux" "2026_Atp1a3.bbl" "2026_Atp1a3" 1772384937.36399 0
   "./References_Atp1a3.bib" 1772355563.23078 175364 d5f2f0ee0bfbadefffa9b2df6d3078b2 ""
   "/usr/share/texlive/texmf-dist/bibtex/bst/base/apalike.bst" 1292289607 24635 604dafcc79f521a11ea73e506e1fbd98 ""
   "2026_Atp1a3.aux" 1772384937.03963 26666 fbb7436929a55ed83454dff49cca9146 "pdflatex"
+<<<<<<< HEAD
+>>>>>>> bdfdd3b3e2c66e1ab9786d2a5998a762c0aa5a56
+=======
 >>>>>>> bdfdd3b3e2c66e1ab9786d2a5998a762c0aa5a56
   (generated)
   "2026_Atp1a3.bbl"
   "2026_Atp1a3.blg"
   (rewritten before read)
+<<<<<<< HEAD
 <<<<<<< HEAD
 ["pdflatex"] 1772465887.49556 "c:/Users/owen.randlett/Documents/GitHub/2025_atp1a3a/Manuscript/2026_Atp1a3.tex" "2026_Atp1a3.pdf" "2026_Atp1a3" 1772465905.93212 0
   "2026_Atp1a3.aux" 1772465904 27249 268bfce95f47a19af3e68cf11a2e5aeb "pdflatex"
@@ -215,6 +222,8 @@
   "c:/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt" 1734440830 3343610 29cc6c3992ea887ad7f6880fdb800108 ""
   "c:/texlive/2024/texmf.cnf" 1734440697 713 614551405fc44b98efbf516466e3c909 ""
 =======
+=======
+>>>>>>> bdfdd3b3e2c66e1ab9786d2a5998a762c0aa5a56
 ["pdflatex"] 1772384921.55718 "/home/owen/2025_atp1a3a/Manuscript/2026_Atp1a3.tex" "2026_Atp1a3.pdf" "2026_Atp1a3" 1772384937.36424 0
   "/etc/texmf/web2c/texmf.cnf" 1734468879.79126 475 c0e671620eb5563b2130f56340a5fde8 ""
   "/home/owen/2025_atp1a3a/Manuscript/2026_Atp1a3.tex" 1772384904.80649 61898 9cae0dacff6f2a8283e9f7a0c70e9a5b ""
@@ -412,6 +421,9 @@
   "Figures/Figure_OMR.png" 1772024204.15553 1332224 d2c9837669dbaf81b713d68544ac4e7c ""
   "Figures/SupplementartFig_RegionQuantification_Ca2Imaging.png" 1772355563.21243 2094541 946a5be0870ea00d77d2d4e2a056e11e ""
   "RandlettLab_elife.cls" 1772355563.2291 16438 37ace8e19cddb8cc513da357020f7ea2 ""
+<<<<<<< HEAD
+>>>>>>> bdfdd3b3e2c66e1ab9786d2a5998a762c0aa5a56
+=======
 >>>>>>> bdfdd3b3e2c66e1ab9786d2a5998a762c0aa5a56
   (generated)
   "2026_Atp1a3.aux"
