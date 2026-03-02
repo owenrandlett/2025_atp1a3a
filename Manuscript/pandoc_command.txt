@@ -1,0 +1,1 @@
+pandoc -s ./manuscript/2026_Atp1a3.tex -o ./manuscript/2026_Atp1a3.docx --bibliography=./manuscript/References_Atp1a3.bib --citeproc
