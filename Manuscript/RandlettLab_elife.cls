@@ -180,7 +180,7 @@
   {\large\bfseries\raggedright}
   {\thesubsection}{}{#1}[]
 \titleformat{\subsubsection}
-  {\large\raggedright}
+  {\large\itshape\raggedright}
   {\thesubsubsection}{}{#1}[]    
 \titleformat{\paragraph}
   {\color{eLifeMediumGrey}\large\raggedright}
