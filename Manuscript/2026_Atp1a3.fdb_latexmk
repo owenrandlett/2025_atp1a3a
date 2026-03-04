@@ -1,27 +1,28 @@
 # Fdb version 4
-["bibtex 2026_Atp1a3"] 1772531605.52857 "2026_Atp1a3.aux" "2026_Atp1a3.bbl" "2026_Atp1a3" 1772531618.94631 0
-  "./References_Atp1a3.bib" 1772462425 178611 a0cb70c0baacbb3114e96a28f6d031e2 ""
-  "2026_Atp1a3.aux" 1772531618 28217 5fc14792e702cbf7e0d6f4ccd9758319 "pdflatex"
+["bibtex 2026_Atp1a3"] 1772612273.24673 "2026_Atp1a3.aux" "2026_Atp1a3.bbl" "2026_Atp1a3" 1772612292.55766 0
+  "./References_Atp1a3.bib" 1772533718 181333 780ab681aa25f3e750ab9c7307e592a0 ""
+  "2026_Atp1a3.aux" 1772612291 29002 4dbbcefac8e082e333f5277465d29f51 "pdflatex"
   "c:/texlive/2024/texmf-dist/bibtex/bst/base/apalike.bst" 1734437443 24635 604dafcc79f521a11ea73e506e1fbd98 ""
   (generated)
   "2026_Atp1a3.bbl"
   "2026_Atp1a3.blg"
   (rewritten before read)
-["pdflatex"] 1772531605.88091 "c:/Users/owen.randlett/Documents/GitHub/2025_atp1a3a/Manuscript/2026_Atp1a3.tex" "2026_Atp1a3.pdf" "2026_Atp1a3" 1772531618.94674 0
-  "2026_Atp1a3.aux" 1772531618 28217 5fc14792e702cbf7e0d6f4ccd9758319 "pdflatex"
-  "2026_Atp1a3.bbl" 1772531605 11466 6a94d6d5bb0c16051131933e1db1a9e5 "bibtex 2026_Atp1a3"
-  "2026_Atp1a3.out" 1772531618 8332 10b2357534b53bcb03153b669c13eaf5 "pdflatex"
-  "2026_Atp1a3.suppinfo" 1772531616 1143 899c623d62610dcb7fb31bfaaa6515b1 "pdflatex"
-  "2026_Atp1a3.tex" 1772531591 64144 481058f7699c2bf01bd24efc4a3034ea ""
+["pdflatex"] 1772612273.63177 "c:/Users/owen.randlett/Documents/GitHub/2025_atp1a3a/Manuscript/2026_Atp1a3.tex" "2026_Atp1a3.pdf" "2026_Atp1a3" 1772612292.55811 0
+  "2026_Atp1a3.aux" 1772612291 29002 4dbbcefac8e082e333f5277465d29f51 "pdflatex"
+  "2026_Atp1a3.bbl" 1772612273 12980 796231d932dabdfdf36e4cc55bbed5c0 "bibtex 2026_Atp1a3"
+  "2026_Atp1a3.out" 1772612291 9476 c88fbd99e4243f1338c3e3331e9f0c85 "pdflatex"
+  "2026_Atp1a3.suppinfo" 1772612284 1123 bb4c6983215a558be0a66ab4d97a3472 "pdflatex"
+  "2026_Atp1a3.tex" 1772612253 67583 8174ddcf601414914033e6ca4551ccb9 ""
   "Figures/Figure_Ca2Imaging.png" 1772452968 12804090 3b5189573cc84d275fefc653673200ad ""
   "Figures/Figure_DarkFlash.png" 1771580634 4035861 11a7480f2c968225bee6e41ab24bc0c3 ""
   "Figures/Figure_FreeSwimming.png" 1771941008 2605282 2b0bf40aefafe023286e76ce765f9645 ""
   "Figures/Figure_Intersection.png" 1772014758 7797985 f12c303807d0d69f9db1034f88cadde2 ""
   "Figures/Figure_MutationAndQualitativePhenotype.png" 1772453028 2040560 3e2ccd341f2d3d2f41ad6a14ad68e23a ""
   "Figures/Figure_OMR.png" 1771940873 1332224 85a3bc4b3dad2f5b3148f55ed63335cf ""
+  "Figures/SupplementartFig_Ca2Heatmaps.png" 1772452887 41472856 311fe0179f4e3f8a0a6cdda3cb853049 ""
   "Figures/SupplementartFig_RegionQuantification_Ca2Imaging.png" 1772189457 2094541 6d07670c4391d1505204df7c160cfd86 ""
   "RandlettLab_elife.cls" 1772530852 16982 d530601baa1745318ee06ffa160c0bda ""
-  "c:/Users/owen.randlett/Documents/GitHub/2025_atp1a3a/Manuscript/2026_Atp1a3.tex" 1772531591 64144 481058f7699c2bf01bd24efc4a3034ea ""
+  "c:/Users/owen.randlett/Documents/GitHub/2025_atp1a3a/Manuscript/2026_Atp1a3.tex" 1772612253 67583 8174ddcf601414914033e6ca4551ccb9 ""
   "c:/texlive/2024/texmf-dist/fonts/enc/dvips/opensans/a_jg4h6q.enc" 1734439404 2952 84fda6c8ae8be17712e9d998ffe48bad ""
   "c:/texlive/2024/texmf-dist/fonts/enc/dvips/opensans/a_nvvucy.enc" 1734439404 3364 7c78cdd102714be824555fc722b51d02 ""
   "c:/texlive/2024/texmf-dist/fonts/enc/dvips/opensans/a_uv4o4i.enc" 1734439404 3196 c24e59c6a721eefc5435c2036a1953f6 ""

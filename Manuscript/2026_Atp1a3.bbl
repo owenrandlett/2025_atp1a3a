@@ -15,6 +15,11 @@ Balestrino, M., Young, J., and Aitken, P. (1999).
 \newblock Block of (na+, k+)atpase with ouabain induces spreading depression-like depolarization in hippocampal slices.
 \newblock {\em Brain Research}, 838(1–2):37–44.
 
+\bibitem[Baraban et~al., 2013]{Baraban2013-NC}
+Baraban, S.~C., Dinday, M.~T., and Hortopan, G.~A. (2013).
+\newblock Drug screening in scn1a zebrafish mutant identifies clemizole as a potential dravet syndrome treatment.
+\newblock {\em Nature Communications}, 4(1).
+
 \bibitem[Barlow et~al., 2023]{Barlow2023}
 Barlow, I.~L., Mackay, E., Wheater, E., Goel, A., Lim, S., Zimmerman, S., Woods, I., Prober, D.~A., and Rihel, J. (2023).
 \newblock The zebrafish mutant dreammist implicates sodium homeostasis in sleep regulation.
@@ -39,6 +44,11 @@ Calderon, D.~P., Fremont, R., Kraenzlin, F., and Khodakhah, K. (2011).
 Chen, X., Mu, Y., Hu, Y., Kuan, A.~T., Nikitchenko, M., Randlett, O., Chen, A.~B., Gavornik, J.~P., Sompolinsky, H., Engert, F., and Ahrens, M.~B. (2018).
 \newblock Brain-wide organization of neuronal activity and convergent sensorimotor transformations in larval zebrafish.
 \newblock {\em Neuron}, 100(4):876--890.e5.
+
+\bibitem[Dinday and Baraban, 2015]{Dinday2015-EN}
+Dinday, M.~T. and Baraban, S.~C. (2015).
+\newblock Large-scale phenotype-based antiepileptic drug screening in a zebrafish model of dravet syndrome.
+\newblock {\em eneuro}, 2(4):ENEURO.0068--15.2015.
 
 \bibitem[Doğanlı et~al., 2013]{Doanl2013}
 Doğanlı, C., Beck, H.~C., Ribera, A.~B., Oxvig, C., and Lykke-Hartmann, K. (2013).
@@ -80,6 +90,11 @@ Kuo, S.-H. (2019).
 \newblock Ataxia.
 \newblock {\em Continuum (Minneap. Minn.)}, 25(4):1036--1054.
 
+\bibitem[Lagae et~al., 2019]{Lagae2019-LS}
+Lagae, L., Sullivan, J., Knupp, K., Laux, L., Polster, T., Nikanorova, M., Devinsky, O., Cross, J.~H., Guerrini, R., Talwar, D., Miller, I., Farfel, G., Galer, B.~S., Gammaitoni, A., Mistry, A., Morrison, G., Lock, M., Agarwal, A., Lai, W.~W., and Ceulemans, B. (2019).
+\newblock Fenfluramine hydrochloride for the treatment of seizures in dravet syndrome: a randomised, double-blind, placebo-controlled trial.
+\newblock {\em The Lancet}, 394(10216):2243–2254.
+
 \bibitem[Lamir{\'e} et~al., 2023]{Lamire2023-he}
 Lamir{\'e}, L.~A., Haesemeyer, M., Engert, F., Granato, M., and Randlett, O. (2023).
 \newblock Functional and pharmacological analyses of visual habituation learning in larval zebrafish.
@@ -109,6 +124,11 @@ Mink, J.~W. (2003).
 Mink, J.~W. (2018).
 \newblock Basal ganglia mechanisms in action selection, plasticity, and dystonia.
 \newblock {\em Eur. J. Paediatr. Neurol.}, 22(2):225--229.
+
+\bibitem[Nabbout et~al., 2020]{Nabbout2020-JAMA}
+Nabbout, R., Mistry, A., Zuberi, S., Villeneuve, N., Gil-Nagel, A., Sanchez-Carpintero, R., Stephani, U., Laux, L., Wirrell, E., Knupp, K., Chiron, C., Farfel, G., Galer, B.~S., Morrison, G., Lock, M., Agarwal, A., and Auvin, S. (2020).
+\newblock Fenfluramine for treatment-resistant seizures in patients with dravet syndrome receiving stiripentol-inclusive regimens: A randomized clinical trial.
+\newblock {\em JAMA Neurology}, 77(3):300.
 
 \bibitem[Okamoto et~al., 2021]{Okamoto2021}
 Okamoto, H., Cherng, B.-W., Nakajo, H., Chou, M.-Y., and Kinoshita, M. (2021).
