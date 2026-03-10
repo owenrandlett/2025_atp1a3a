@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.12.17)  4 MAR 2026 11:04
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.12.17)  10 MAR 2026 10:05
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1494,7 +1494,7 @@ Underfull \hbox (badness 1152) in paragraph at lines 132--136
 [2]
 LaTeX Font Info:    Font shape `T1/opensans-TLF/b/it' will be
 (Font)              scaled to size 10.0pt on input line 166.
-<Figures/Figure_MutationAndQualitativePhenotype.png, id=205, 512.3943pt x 313.4109pt>
+<Figures/Figure_MutationAndQualitativePhenotype.png, id=209, 512.3943pt x 313.4109pt>
 File: Figures/Figure_MutationAndQualitativePhenotype.png Graphic file (type png)
 <use Figures/Figure_MutationAndQualitativePhenotype.png>
 Package pdftex.def Info: Figures/Figure_MutationAndQualitativePhenotype.png  used on input line 177.
@@ -1522,7 +1522,7 @@ LaTeX Font Info:    Font shape `T1/opensans-TLF/m/n' will be
 [4 <./Figures/Figure_MutationAndQualitativePhenotype.png>]
 LaTeX Font Info:    Font shape `T1/opensans-TLF/b/it' will be
 (Font)              scaled to size 12.0pt on input line 220.
-<Figures/Figure_FreeSwimming.png, id=245, 767.9892pt x 299.80005pt>
+<Figures/Figure_FreeSwimming.png, id=249, 767.9892pt x 299.80005pt>
 File: Figures/Figure_FreeSwimming.png Graphic file (type png)
 <use Figures/Figure_FreeSwimming.png>
 Package pdftex.def Info: Figures/Figure_FreeSwimming.png  used on input line 225.
@@ -1536,7 +1536,7 @@ Underfull \hbox (badness 1264) in paragraph at lines 253--258
 
 LaTeX Font Info:    Font shape `T1/opensans-TLF/m/it' will be
 (Font)              scaled to size 12.0pt on input line 260.
-<Figures/Figure_DarkFlash.png, id=268, 600.92505pt x 542.7477pt>
+<Figures/Figure_DarkFlash.png, id=272, 600.92505pt x 542.7477pt>
 File: Figures/Figure_DarkFlash.png Graphic file (type png)
 <use Figures/Figure_DarkFlash.png>
 Package pdftex.def Info: Figures/Figure_DarkFlash.png  used on input line 264.
@@ -1546,7 +1546,7 @@ Package pdftex.def Info: Figures/Figure_DarkFlash.png  used on input line 264.
 [6{c:/texlive/2024/texmf-dist/fonts/enc/dvips/opensans/a_nvvucy.enc} <./Figures/Figure_FreeSwimming.png>]
 
 [7 <./Figures/Figure_DarkFlash.png>]
-<Figures/Figure_OMR.png, id=309, 518.53725pt x 184.5294pt>
+<Figures/Figure_OMR.png, id=313, 518.53725pt x 184.5294pt>
 File: Figures/Figure_OMR.png Graphic file (type png)
 <use Figures/Figure_OMR.png>
 Package pdftex.def Info: Figures/Figure_OMR.png  used on input line 304.
@@ -1554,7 +1554,7 @@ Package pdftex.def Info: Figures/Figure_OMR.png  used on input line 304.
 
 
 [8]
-<Figures/Figure_Intersection.png, id=340, 544.79535pt x 505.6491pt>
+<Figures/Figure_Intersection.png, id=344, 544.79535pt x 505.6491pt>
 File: Figures/Figure_Intersection.png Graphic file (type png)
 <use Figures/Figure_Intersection.png>
 Package pdftex.def Info: Figures/Figure_Intersection.png  used on input line 343.
@@ -1576,7 +1576,7 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `superscript' on input line 387.
 
-<Figures/Figure_Ca2Imaging.png, id=377, 525.6438pt x 450.60345pt>
+<Figures/Figure_Ca2Imaging.png, id=381, 525.6438pt x 450.60345pt>
 File: Figures/Figure_Ca2Imaging.png Graphic file (type png)
 <use Figures/Figure_Ca2Imaging.png>
 Package pdftex.def Info: Figures/Figure_Ca2Imaging.png  used on input line 392.
@@ -1601,22 +1601,25 @@ Underfull \hbox (badness 1831) in paragraph at lines 440--443
 [15]
 
 [16]
-Underfull \hbox (badness 1152) in paragraph at lines 556--557
+
+[17]
+Underfull \hbox (badness 1152) in paragraph at lines 581--582
 []\T1/opensans-TLF/m/n/10 Control of the LEDs, solenoid, and cam-era ac-tu-a-tor was man-aged by a Rasp-berry Pi Pico run-ning
  []
 
 
 
-[17]
-Underfull \hbox (badness 1117) in paragraph at lines 609--610
+[18]
+Underfull \hbox (badness 1117) in paragraph at lines 634--635
 []\T1/opensans-TLF/m/n/10 Behavioral events were op-er-a-tionally de-fined based on cu-mu-la-tive tail bend an-gle thresh-olds, with
  []
 
-
-
-[18] (./2026_Atp1a3.bbl
+(./2026_Atp1a3.bbl
 LaTeX Font Info:    Font shape `T1/opensans-TLF/m/it' will be
 (Font)              scaled to size 9.0pt on input line 6.
+
+
+[19]
 LaTeX Font Info:    Trying to load font information for LGR+opensans-TLF on input line 55.
  (c:/texlive/2024/texmf-dist/tex/latex/opensans/LGRopensans-TLF.fd
 File: LGRopensans-TLF.fd 2019/06/24 Font definitions for LGR/opensans-TLF.
@@ -1627,26 +1630,26 @@ LaTeX Font Info:    Font shape `TS1/opensans-TLF/m/n' will be
 (Font)              scaled to size 9.0pt on input line 80.
 
 
-[19{c:/texlive/2024/texmf-dist/fonts/enc/dvips/opensans/a_uv4o4i.enc}]
+[20{c:/texlive/2024/texmf-dist/fonts/enc/dvips/opensans/a_uv4o4i.enc}]
 
-[20])
+[21])
 
-[21] (./2026_Atp1a3.suppinfo
-<Figures/SupplementartFig_RegionQuantification_Ca2Imaging.png, id=494, 528.8558pt x 399.894pt>
+[22] (./2026_Atp1a3.suppinfo
+<Figures/SupplementartFig_RegionQuantification_Ca2Imaging.png, id=503, 528.8558pt x 399.894pt>
 File: Figures/SupplementartFig_RegionQuantification_Ca2Imaging.png Graphic file (type png)
 <use Figures/SupplementartFig_RegionQuantification_Ca2Imaging.png>
 Package pdftex.def Info: Figures/SupplementartFig_RegionQuantification_Ca2Imaging.png  used on input line 9.
 (pdftex.def)             Requested size: 458.1144pt x 346.40388pt.
-<Figures/SupplementartFig_Ca2Heatmaps.png, id=495, 554.9533pt x 417.3994pt>
+<Figures/SupplementartFig_Ca2Heatmaps.png, id=504, 554.9533pt x 417.3994pt>
 File: Figures/SupplementartFig_Ca2Heatmaps.png Graphic file (type png)
 <use Figures/SupplementartFig_Ca2Heatmaps.png>
 Package pdftex.def Info: Figures/SupplementartFig_Ca2Heatmaps.png  used on input line 11.
 (pdftex.def)             Requested size: 458.1144pt x 344.56892pt.
 )
 
-[22 <./Figures/SupplementartFig_RegionQuantification_Ca2Imaging.png>]
+[23 <./Figures/SupplementartFig_RegionQuantification_Ca2Imaging.png>]
 
-[23 <./Figures/SupplementartFig_Ca2Heatmaps.png>] 
+[24 <./Figures/SupplementartFig_Ca2Heatmaps.png>] 
 enddocument/afterlastpage (AED): lastpage setting LastPage.
 (./2026_Atp1a3.aux)
  ***********
@@ -1654,21 +1657,21 @@ LaTeX2e <2024-11-01> patch level 1
 L3 programming layer <2021/03/21>
  ***********
 Package rerunfilecheck Info: File `2026_Atp1a3.out' has not changed.
-(rerunfilecheck)             Checksum: C88FBD99E4243F1338C3E3331E9F0C85;9476.
+(rerunfilecheck)             Checksum: 334E5947A3381260EC3BB8BCC66F0F7B;9488.
  ) 
 Here is how much of TeX's memory you used:
- 30648 strings out of 473330
- 564106 string characters out of 5723877
+ 30651 strings out of 473330
+ 564143 string characters out of 5723877
  1073461 words of memory out of 5000000
- 53216 multiletter control sequences out of 15000+600000
+ 53217 multiletter control sequences out of 15000+600000
  633962 words of font info for 192 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 91i,12n,131p,2790b,1305s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 91i,12n,131p,2790b,1313s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2024/texmf-dist/fonts/type1/ascender/opensans/OpenSans-Bold.pfb><c:/texlive/2024/texmf-dist/fonts/type1/ascender/opensans/OpenSans-BoldItalic.pfb><c:/texlive/2024/texmf-dist/fonts/type1/ascender/opensans/OpenSans-Italic.pfb><c:/texlive/2024/texmf-dist/fonts/type1/ascender/opensans/OpenSans-Regular.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/stix/stix-mathit.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/stix/stix-mathrm.pfb>
-Output written on 2026_Atp1a3.pdf (23 pages, 59315202 bytes).
+Output written on 2026_Atp1a3.pdf (24 pages, 59317892 bytes).
 PDF statistics:
- 574 PDF objects out of 1000 (max. 8388607)
- 513 compressed objects within 6 object streams
- 114 named destinations out of 1000 (max. 500000)
- 16665 words of extra memory for PDF output out of 17280 (max. 10000000)
+ 584 PDF objects out of 1000 (max. 8388607)
+ 522 compressed objects within 6 object streams
+ 116 named destinations out of 1000 (max. 500000)
+ 16673 words of extra memory for PDF output out of 17280 (max. 10000000)
 
