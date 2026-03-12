@@ -1,11 +1,1 @@
 \setcounter{figure}{0}
- \setcounter{figsupp}{0} \refstepcounter{figure} 
- \setcounter{figsupp}{0} \refstepcounter{figure} 
- \setcounter{figsupp}{0} \refstepcounter{figure} 
- \setcounter{figsupp}{0} \refstepcounter{figure} 
- \setcounter{figsupp}{0} \refstepcounter{figure} 
- \setcounter{figsupp}{0} \refstepcounter{figure} 
-\refstepcounter{figsupp} \setcounter{fsdata}{0} \setcounter{fssrccode}{0} 
-\noindent \begin{minipage}{\linewidth } \scriptsize\includegraphics[width=0.9\linewidth ]{Figures/SupplementartFig_RegionQuantification_Ca2Imaging.png}\par \textbf {Figure~6---figure supplement 1.} Regional quantification of identified neurons across genotypes.. \textbf {A)} \par \vskip 8pt \end{minipage} \vskip 16pt 
-\refstepcounter{figsupp} \setcounter{fsdata}{0} \setcounter{fssrccode}{0} 
-\noindent \begin{minipage}{\linewidth } \scriptsize\includegraphics[width=0.9\linewidth ]{Figures/SupplementartFig_Ca2Heatmaps.png}\par \textbf {Figure~6---figure supplement 2.} Activity heatmaps of \emph {atp1a3a} mutants, compared to heterozygous and wild-type siblings. \textbf {A)} \par \vskip 8pt \end{minipage} \vskip 16pt 

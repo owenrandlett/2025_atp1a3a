@@ -15,6 +15,11 @@ Balestrino, M., Young, J., and Aitken, P. (1999).
 \newblock Block of (na+, k+)atpase with ouabain induces spreading depression-like depolarization in hippocampal slices.
 \newblock {\em Brain Research}, 838(1–2):37–44.
 
+\bibitem[Baraban et~al., 2005]{Baraban2005_JN}
+Baraban, S., Taylor, M., Castro, P., and Baier, H. (2005).
+\newblock Pentylenetetrazole induced changes in zebrafish behavior, neural activity and c-fos expression.
+\newblock {\em Neuroscience}, 131(3):759–768.
+
 \bibitem[Baraban et~al., 2013]{Baraban2013-NC}
 Baraban, S.~C., Dinday, M.~T., and Hortopan, G.~A. (2013).
 \newblock Drug screening in scn1a zebrafish mutant identifies clemizole as a potential dravet syndrome treatment.
@@ -139,6 +144,16 @@ Okamoto, H., Cherng, B.-W., Nakajo, H., Chou, M.-Y., and Kinoshita, M. (2021).
 Pachitariu, M., Stringer, C., Dipoppa, M., Schr\"{o}der, S., Rossi, L.~F., Dalgleish, H., Carandini, M., and Harris, K.~D. (2016).
 \newblock Suite2p: beyond 10, 000 neurons with standard two-photon microscopy.
 
+\bibitem[Pandey et~al., 2023]{Pandey2023_GR}
+Pandey, S., Moyer, A.~J., and Thyme, S.~B. (2023).
+\newblock A single-cell transcriptome atlas of the maturing zebrafish telencephalon.
+\newblock {\em Genome Research}, 33(4):658–671.
+
+\bibitem[Papadopoulou et~al., 2023]{Papadopoulou2023_MD}
+Papadopoulou, M.~T., Welniarz, Q., Roubertie, A., Gras, D., Milh, M., Panagiotakaki, E., and Roze, E. (2023).
+\newblock Effect of oxygen administration on paroxysmal motor events in alternating hemiplegia of childhood.
+\newblock {\em Movement Disorders}, 38(9):1759–1761.
+
 \bibitem[Peirce, 2007]{Peirce2007}
 Peirce, J.~W. (2007).
 \newblock Psychopy—psychophysics software in python.
@@ -194,6 +209,11 @@ Tanimoto, Y., Kakinuma, H., Aoki, R., Shiraki, T., Higashijima, S.-i., and Okamo
 \newblock Transgenic tools targeting the basal ganglia reveal both evolutionary conservation and specialization of neural circuits in zebrafish.
 \newblock {\em Cell Reports}, 43(3):113916.
 
+\bibitem[Thyme et~al., 2019]{Thyme2019_cell}
+Thyme, S.~B., Pieper, L.~M., Li, E.~H., Pandey, S., Wang, Y., Morris, N.~S., Sha, C., Choi, J.~W., Herrera, K.~J., Soucy, E.~R., Zimmerman, S., Randlett, O., Greenwood, J., McCarroll, S.~A., and Schier, A.~F. (2019).
+\newblock Phenotypic landscape of schizophrenia-associated genes defines candidates and their shared functions.
+\newblock {\em Cell}, 177(2):478--491.e20.
+
 \bibitem[Vezyroglou et~al., 2022]{Vezyroglou2022-co}
 Vezyroglou, A., Akilapa, R., Barwick, K., Koene, S., Brownstein, C.~A., Holder-Espinasse, M., Fry, A.~E., Nemeth, A.~H., Tofaris, G.~K., Hay, E., Hughes, I., Mansour, S., Mordekar, S.~R., Splitt, M., Turnpenny, P.~D., Demetriou, D., Koopmann, T.~T., Ruivenkamp, C. A.~L., Agrawal, P.~B., Carr, L., Clowes, V., Ghali, N., Holder, S.~E., Radley, J., Male, A., Sisodiya, S.~M., Kurian, M.~A., Cross, J.~H., and Balasubramanian, M. (2022).
 \newblock The phenotypic continuum of {ATPLA3-related} disorders.
@@ -208,6 +228,11 @@ Vo, A., Nguyen, N., Fujita, K., Schindlbeck, K.~A., Rommal, A., Bressman, S.~B.,
 Wang, K., Hinz, J., Zhang, Y., Thiele, T.~R., and Arrenberg, A.~B. (2020).
 \newblock Parallel channels for motion feature extraction in the pretectum and tectum of larval zebrafish.
 \newblock {\em Cell Reports}, 30(2):442--453.e6.
+
+\bibitem[Weinschutz~Mendes et~al., 2023]{WeinschutzMendes2023_CR}
+Weinschutz~Mendes, H., Neelakantan, U., Liu, Y., Fitzpatrick, S.~E., Chen, T., Wu, W., Pruitt, A., Jin, D.~S., Jamadagni, P., Carlson, M., Lacadie, C.~M., Enriquez, K.~D., Li, N., Zhao, D., Ijaz, S., Sakai, C., Szi, C., Rooney, B., Ghosh, M., Nwabudike, I., Gorodezky, A., Chowdhury, S., Zaheer, M., McLaughlin, S., Fernandez, J.~M., Wu, J., Eilbott, J.~A., Vander~Wyk, B., Rihel, J., Papademetris, X., Wang, Z., and Hoffman, E.~J. (2023).
+\newblock High-throughput functional analysis of autism genes in zebrafish identifies convergence in dopaminergic and neuroimmune pathways.
+\newblock {\em Cell Reports}, 42(3):112243.
 
 \bibitem[Wullimann and Mueller, 2004]{Wullimann2004}
 Wullimann, M.~F. and Mueller, T. (2004).
