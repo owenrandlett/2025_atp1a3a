@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.12.17)  13 MAR 2026 14:41
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.12.17)  18 MAR 2026 15:24
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1473,93 +1473,78 @@ LaTeX Font Info:    Font shape `T1/opensans-TLF/m/n' will be
 LaTeX Font Info:    Font shape `T1/opensans-TLF/b/n' will be
 (Font)              scaled to size 20.74pt on input line 101.
 LaTeX Font Info:    Font shape `TS1/opensans-TLF/m/n' will be
-(Font)              scaled to size 10.0pt on input line 116.
-LaTeX Font Info:    Font shape `TS1/opensans-TLF/m/n' will be
-(Font)              scaled to size 7.5pt on input line 116.
-LaTeX Font Info:    Font shape `T1/opensans-TLF/m/it' will be
 (Font)              scaled to size 10.0pt on input line 118.
-
-Underfull \hbox (badness 1137) in paragraph at lines 116--122
-\T1/opensans-TLF/m/n/10 the spe-cific brain re-gions, cir-cuit mech-a-nisms, and phys-i-o-log-i-cal dy-nam-ics most vul-ner-a-ble to ATP1A3
- []
-
-
-Underfull \hbox (badness 3281) in paragraph at lines 116--122
-\T1/opensans-TLF/m/n/10 loss re-main un-clear. Here we gen-er-ated a lar-val ze-brafish model of ATP1A3-related dis-or-ders by
- []
-
-
-Underfull \hbox (badness 1014) in paragraph at lines 127--131
-\T1/opensans-TLF/m/n/10 Al-ter-nat-ing Hemi-ple-gia of Child-hood (AHC), Rapid-Onset Dystonia-Parkinsonism (RDP), Cere-bel-lar Ataxia,
- []
-
+LaTeX Font Info:    Font shape `TS1/opensans-TLF/m/n' will be
+(Font)              scaled to size 7.5pt on input line 118.
+LaTeX Font Info:    Font shape `T1/opensans-TLF/m/it' will be
+(Font)              scaled to size 10.0pt on input line 120.
 
 
 LaTeX Font Info:    Font shape `T1/opensans-TLF/m/n' will be
-(Font)              scaled to size 9.0pt on input line 131.
+(Font)              scaled to size 9.0pt on input line 133.
 [1
 
 {c:/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{c:/texlive/2024/texmf-dist/fonts/enc/dvips/opensans/a_jg4h6q.enc}]
 
 [2]
 LaTeX Font Info:    Font shape `T1/opensans-TLF/m/it' will be
-(Font)              scaled to size 12.0pt on input line 158.
+(Font)              scaled to size 12.0pt on input line 161.
 LaTeX Font Info:    Font shape `T1/opensans-TLF/b/it' will be
-(Font)              scaled to size 10.0pt on input line 163.
+(Font)              scaled to size 10.0pt on input line 166.
 <Figures/Figure_MutationAndQualitativePhenotype.png, id=224, 512.3943pt x 313.4109pt>
 File: Figures/Figure_MutationAndQualitativePhenotype.png Graphic file (type png)
 <use Figures/Figure_MutationAndQualitativePhenotype.png>
-Package pdftex.def Info: Figures/Figure_MutationAndQualitativePhenotype.png  used on input line 174.
+Package pdftex.def Info: Figures/Figure_MutationAndQualitativePhenotype.png  used on input line 177.
 (pdftex.def)             Requested size: 458.1144pt x 280.21646pt.
 LaTeX Font Info:    Font shape `T1/opensans-TLF/m/n' will be
-(Font)              scaled to size 7.0pt on input line 185.
+(Font)              scaled to size 7.0pt on input line 188.
 LaTeX Font Info:    Font shape `T1/opensans-TLF/b/n' will be
-(Font)              scaled to size 7.0pt on input line 185.
+(Font)              scaled to size 7.0pt on input line 188.
 LaTeX Font Info:    Font shape `T1/opensans-TLF/b/it' will be
-(Font)              scaled to size 7.0pt on input line 185.
+(Font)              scaled to size 7.0pt on input line 188.
 LaTeX Font Info:    Font shape `T1/opensans-TLF/m/it' will be
-(Font)              scaled to size 7.0pt on input line 185.
+(Font)              scaled to size 7.0pt on input line 188.
 LaTeX Font Info:    Font shape `TS1/opensans-TLF/m/n' will be
-(Font)              scaled to size 7.0pt on input line 185.
+(Font)              scaled to size 7.0pt on input line 188.
 LaTeX Font Info:    Font shape `T1/opensans-TLF/m/n' will be
-(Font)              scaled to size 5.0pt on input line 185.
+(Font)              scaled to size 5.0pt on input line 188.
 LaTeX Font Info:    Font shape `T1/opensans-TLF/m/it' will be
-(Font)              scaled to size 7.5pt on input line 203.
+(Font)              scaled to size 7.5pt on input line 207.
 LaTeX Font Info:    Font shape `T1/opensans-TLF/m/n' will be
-(Font)              scaled to size 7.5pt on input line 205.
+(Font)              scaled to size 7.5pt on input line 209.
 
 
 [3]
 
 [4 <./Figures/Figure_MutationAndQualitativePhenotype.png>]
 LaTeX Font Info:    Font shape `T1/opensans-TLF/b/it' will be
-(Font)              scaled to size 12.0pt on input line 221.
+(Font)              scaled to size 12.0pt on input line 225.
 <Figures/Figure_FreeSwimming.png, id=264, 767.9892pt x 299.80005pt>
 File: Figures/Figure_FreeSwimming.png Graphic file (type png)
 <use Figures/Figure_FreeSwimming.png>
-Package pdftex.def Info: Figures/Figure_FreeSwimming.png  used on input line 226.
+Package pdftex.def Info: Figures/Figure_FreeSwimming.png  used on input line 230.
 (pdftex.def)             Requested size: 458.1144pt x 178.8384pt.
 
-Underfull \hbox (badness 5175) in paragraph at lines 244--249
+Underfull \hbox (badness 5175) in paragraph at lines 248--253
 \T1/opensans-TLF/m/n/10 Having es-tab-lished that \T1/opensans-TLF/m/it/10 atp1a3a \T1/opensans-TLF/m/n/10 mu-tants ex-hibit com-plex be-havioural ab-nor-mal-i-ties via cat-e-gor-i-cal
  []
 
 
-Underfull \hbox (badness 1253) in paragraph at lines 244--249
+Underfull \hbox (badness 1253) in paragraph at lines 248--253
 \T1/opensans-TLF/m/n/10 ob-ser-va-tion, we next sought to more sys-tem-at-i-cally char-ac-ter-ize their phe-no-types un-der spon-ta-neous
  []
 
 
 
 [5]
-Underfull \hbox (badness 1264) in paragraph at lines 255--260
+Underfull \hbox (badness 1264) in paragraph at lines 259--264
 \T1/opensans-TLF/m/n/10 elec-tro-phys-i-o-log-i-cal phe-no-types ex-pressed in other ATP1A3-deficient mod-els, we ex-pected to see very
  []
 
 <Figures/Figure_DarkFlash.png, id=287, 600.92505pt x 542.7477pt>
 File: Figures/Figure_DarkFlash.png Graphic file (type png)
 <use Figures/Figure_DarkFlash.png>
-Package pdftex.def Info: Figures/Figure_DarkFlash.png  used on input line 266.
+Package pdftex.def Info: Figures/Figure_DarkFlash.png  used on input line 270.
 (pdftex.def)             Requested size: 458.1144pt x 413.76791pt.
 
 
@@ -1569,7 +1554,7 @@ Package pdftex.def Info: Figures/Figure_DarkFlash.png  used on input line 266.
 <Figures/Figure_OMR.png, id=329, 518.53725pt x 184.5294pt>
 File: Figures/Figure_OMR.png Graphic file (type png)
 <use Figures/Figure_OMR.png>
-Package pdftex.def Info: Figures/Figure_OMR.png  used on input line 307.
+Package pdftex.def Info: Figures/Figure_OMR.png  used on input line 311.
 (pdftex.def)             Requested size: 458.1144pt x 163.02834pt.
 
 
@@ -1577,7 +1562,7 @@ Package pdftex.def Info: Figures/Figure_OMR.png  used on input line 307.
 <Figures/Figure_Intersection.png, id=359, 544.79535pt x 505.6491pt>
 File: Figures/Figure_Intersection.png Graphic file (type png)
 <use Figures/Figure_Intersection.png>
-Package pdftex.def Info: Figures/Figure_Intersection.png  used on input line 348.
+Package pdftex.def Info: Figures/Figure_Intersection.png  used on input line 352.
 (pdftex.def)             Requested size: 305.41478pt x 283.47017pt.
 
 
@@ -1586,29 +1571,29 @@ Package pdftex.def Info: Figures/Figure_Intersection.png  used on input line 348
 [10 <./Figures/Figure_Intersection.png>]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathsurround' on input line 392.
+(hyperref)                removing `\mathsurround' on input line 396.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\z@' on input line 392.
+(hyperref)                removing `\z@' on input line 396.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `superscript' on input line 392.
+(hyperref)                removing `superscript' on input line 396.
 
 <Figures/Figure_Ca2Imaging.png, id=398, 525.6438pt x 450.60345pt>
 File: Figures/Figure_Ca2Imaging.png Graphic file (type png)
 <use Figures/Figure_Ca2Imaging.png>
-Package pdftex.def Info: Figures/Figure_Ca2Imaging.png  used on input line 397.
+Package pdftex.def Info: Figures/Figure_Ca2Imaging.png  used on input line 401.
 (pdftex.def)             Requested size: 458.1144pt x 392.72316pt.
 LaTeX Font Info:    Font shape `T1/opensans-TLF/b/n' will be
-(Font)              scaled to size 5.0pt on input line 402.
+(Font)              scaled to size 5.0pt on input line 406.
 
 
 [11]
 
 [12 <./Figures/Figure_Ca2Imaging.png>]
-Underfull \hbox (badness 1831) in paragraph at lines 441--444
+Underfull \hbox (badness 1831) in paragraph at lines 445--448
 \T1/opensans-TLF/m/n/10 sub-pal-lium, as well as the habe-nula showed a near com-plete loss of sensory-tuned neu-rons ([][]\T1/opensans-TLF/b/it/10 fig-ure
  []
 
@@ -1617,7 +1602,7 @@ Underfull \hbox (badness 1831) in paragraph at lines 441--444
 [13]
 
 [14]
-Underfull \hbox (badness 1173) in paragraph at lines 485--488
+Underfull \hbox (badness 1173) in paragraph at lines 489--492
 \T1/opensans-TLF/m/n/10 un-ex-pect-edly, via sero-ton-er-gic path-ways. This has led to clin-i-cal tri-als and mo-ti-vat-ing hu-man use of
  []
 
@@ -1632,14 +1617,14 @@ Underfull \hbox (badness 1173) in paragraph at lines 485--488
 [18]
 
 [19]
-Underfull \hbox (badness 1152) in paragraph at lines 649--652
+Underfull \hbox (badness 1152) in paragraph at lines 653--656
 []\T1/opensans-TLF/m/n/10 Control of the LEDs, solenoid, and cam-era ac-tu-a-tor was man-aged by a Rasp-berry Pi Pico run-ning
  []
 
 
 
 [20]
-Underfull \hbox (badness 1117) in paragraph at lines 692--693
+Underfull \hbox (badness 1117) in paragraph at lines 696--697
 []\T1/opensans-TLF/m/n/10 Behavioral events were op-er-a-tionally de-fined based on cu-mu-la-tive tail bend an-gle thresh-olds, with
  []
 
@@ -1693,13 +1678,13 @@ Package rerunfilecheck Info: File `2026_Atp1a3.out' has not changed.
 Here is how much of TeX's memory you used:
  30685 strings out of 473330
  564830 string characters out of 5723877
- 1074492 words of memory out of 5000000
+ 1074522 words of memory out of 5000000
  53238 multiletter control sequences out of 15000+600000
  633567 words of font info for 191 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  91i,11n,131p,2790b,1331s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2024/texmf-dist/fonts/type1/ascender/opensans/OpenSans-Bold.pfb><c:/texlive/2024/texmf-dist/fonts/type1/ascender/opensans/OpenSans-BoldItalic.pfb><c:/texlive/2024/texmf-dist/fonts/type1/ascender/opensans/OpenSans-Italic.pfb><c:/texlive/2024/texmf-dist/fonts/type1/ascender/opensans/OpenSans-Regular.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/stix/stix-mathit.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/stix/stix-mathrm.pfb>
-Output written on 2026_Atp1a3.pdf (27 pages, 59332852 bytes).
+Output written on 2026_Atp1a3.pdf (27 pages, 59328880 bytes).
 PDF statistics:
  655 PDF objects out of 1000 (max. 8388607)
  590 compressed objects within 6 object streams
