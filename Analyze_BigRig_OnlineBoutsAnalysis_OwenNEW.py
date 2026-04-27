@@ -22,13 +22,14 @@ current_dir = os.path.realpath('/home/zeneb/github/2025_atp1a3a/')
 import glasbey
 
 #%
-big_rig3 = True
+big_rig3 = False
 #%
 # exp_dir = r'/media/BigBoy/MultiTracker/20250113_113921_atp1a3a_BR2_Phin'
 # exp_dir = r'/media/BigBoy/MultiTracker/20250127_110626_atp1a3a_BR3_Phin'
 
 exp_dirs = [
-    r'/media/BigBoy/MultiTracker/20250424_163708_PC-ATTAC_BR3'
+    r'/media/BigBoy/Common/atp1a3a_Data/BigRigData/20250113_113921_atp1a3a_BR2_Phin',
+    r'/media/BigBoy/Common/atp1a3a_Data/BigRigData/20250127_110626_atp1a3a_BR3_Phin'
 ]
 def stripplot_period_full_grid(data, period_name, global_y_lims=None, use_median = True):
 
@@ -165,7 +166,7 @@ def stripplot_period_full_grid(data, period_name, global_y_lims=None, use_median
     # Close stats file
     stats_file.close()
 
-
+#%%
 for exp_dir in exp_dirs:
     os.chdir(exp_dir)
     print('analzing ' + os.path.basename(exp_dir))
