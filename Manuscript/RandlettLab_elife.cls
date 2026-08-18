@@ -354,6 +354,15 @@
 \setcounter{video}{0}
 \newcounter{videosupp}
 \setcounter{videosupp}{0}
+%% Supplementary movies follow the same house style as the figure supplements:
+%% one continuous series ("Video S1", "Video S2", ...) independent of the main
+%% figure numbers.  eLife's videosupp counter resets at every figure, so two
+%% movies attached to different figures would both print "video 1"; suppvid is
+%% never reset.  \videosupp steps it last, so a \label inside \videosupp binds
+%% to suppvid and \autoref prints "Video S2".
+\newcounter{suppvid}
+\setcounter{suppvid}{0}
+\renewcommand{\thesuppvid}{S\arabic{suppvid}}
 \def\supplist{}
 
 \RequirePackage{newfile}
@@ -456,7 +465,8 @@
 %% Added 2018/06/03
 \DeclareRobustCommand{\videosupp}[1]{%
   \refstepcounter{videosupp}
-  {\scriptsize\textbf{\figurename~\thefigure---video \arabic{videosupp}.} #1}\par
+  \refstepcounter{suppvid}
+  {\scriptsize\textbf{\videoautorefname~\thesuppvid.} #1}\par
 }
 
 % Added table source data and code 2022/06
@@ -519,6 +529,7 @@
 \newcommand{\dataautorefname}{source data}
 \newcommand{\videoautorefname}{Video}
 \newcommand{\videosuppautorefname}{video}
+\newcommand{\suppvidautorefname}{Video} % with \thesuppvid="S2" gives "Video S2"
 \newcommand{\srccodeautorefname}{source code}
 \newcommand{\FIGSUPP}[2][]{%
   \ifstrequal{#1}{}{}{\autoref{fig:#1}---}\autoref{figsupp:#2}%
