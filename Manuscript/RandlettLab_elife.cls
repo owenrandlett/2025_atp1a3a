@@ -107,7 +107,9 @@
 \renewcommand{\bibfont}{\small}
 
 % author--year citation style
-\bibliographystyle{apalike}
+% Note: bibliography style is set in the main .tex file (\bibliographystyle{apalikedoi}).
+% Do not set it here as well -- a second \bibstyle in the .aux makes BibTeX abort.
+% \bibliographystyle{apalike}
 
 
 
@@ -324,6 +326,19 @@
 
 \newcounter{figsupp}
 \setcounter{figsupp}{0}
+%% House style: supplements are numbered in one continuous series ("Figure S1",
+%% "Figure S2", ...) independently of the main figure numbers, rather than
+%% eLife's per-figure "Figure 3---figure supplement 1".  eLife's figsupp counter
+%% is reset at every figure and so cannot carry a document-wide number; the
+%% separate suppfig counter below is never reset and is the single source of
+%% truth for both captions and \label.
+%% \figsupp steps suppfig LAST in the body, so a \label following \figsupp
+%% binds to suppfig and \autoref prints "Figure S2".  The suppinfo stream keeps
+%% its own copy in sync by replaying the same steps in the same order (see the
+%% \protect\refstepcounter{suppfig} in \figsupp and the reset at stream start).
+\newcounter{suppfig}
+\setcounter{suppfig}{0}
+\renewcommand{\thesuppfig}{S\arabic{suppfig}}
 \newcounter{data}
 \setcounter{data}{0}
 %% Added videos 2021/03/07
@@ -344,7 +359,7 @@
 \RequirePackage{newfile}
 \newoutputstream{suppinfo}
 \openoutputfile{\jobname.suppinfo}{suppinfo}
-\addtostream{suppinfo}{\protect\setcounter{figure}{0}}
+\addtostream{suppinfo}{\protect\setcounter{figure}{0}\protect\setcounter{suppfig}{0}}
 
 % Added video source data and code 2022/06
 \DeclareRobustCommand{\video}[1]{%
@@ -367,11 +382,11 @@
 % Added fig supp source data and code 2022/06
 \DeclareRobustCommand{\figsuppsrccode}[1]{%
   \protect\refstepcounter{fssrccode}%
-  \par\scriptsize\textbf{\figurename~\thefigure---figure supplement \arabic{figsupp}---source code~\arabic{fssrccode}. } #1\par
+  \par\scriptsize\textbf{\figurename~\thesuppfig---source code~\arabic{fssrccode}. } #1\par
 }
 \DeclareRobustCommand{\figsuppdata}[1]{%
   \protect\refstepcounter{fsdata}%
-  \par\scriptsize\textbf{\figurename~\thefigure---figure supplement \arabic{figsupp}---source data~\arabic{fsdata}. } #1\par
+  \par\scriptsize\textbf{\figurename~\thesuppfig---source data~\arabic{fsdata}. } #1\par
 }
 
 
@@ -400,14 +415,18 @@
 %% Updated 2017/06/30 to allow optional argument
 \DeclareRobustCommand{\figsupp}[3][]{%
   \refstepcounter{figsupp}%
+  %% suppfig is stepped last so that a \label placed after \figsupp binds to it
+  %% (giving "Figure S2") rather than to figsupp.
+  \refstepcounter{suppfig}%
   \addtostream{suppinfo}{%
   \protect\refstepcounter{figsupp}
+  \protect\refstepcounter{suppfig}
   \protect\setcounter{fsdata}{0}
   \protect\setcounter{fssrccode}{0}
   }%
   {%
   \ifstrequal{#1}{none}{}{%
-    \scriptsize\textbf{\figurename~\thefigure---figure supplement \arabic{figsupp}.} 
+    \scriptsize\textbf{\figurename~\thesuppfig.}
     \ifstrempty{#1}{%
       \renewcommand\figsuppdata[1]{}%
       \renewcommand\figsuppsrccode[1]{}%
@@ -419,7 +438,7 @@
     \noindent\protect\begin{minipage}{\linewidth}
     \protect\scriptsize
     \protect #3\noexpand\par
-    \textbf{\figurename~\thefigure---figure supplement \arabic{figsupp}.} #2\noexpand\par
+    \textbf{\figurename~\thesuppfig.} #2\noexpand\par
     \vskip8pt
     \protect\end{minipage}
     \vskip16pt
@@ -496,6 +515,7 @@
 %% Added autoref support for \figsupp, \figdata, \video, \videosupp, (2021-03-04) \figsrccode
 % Added support for figsupp, video source data and code 2022/06
 \newcommand{\figsuppautorefname}{figure Supplement}
+\newcommand{\suppfigautorefname}{Figure} % with \thesuppfig="S2" gives "Figure S2"
 \newcommand{\dataautorefname}{source data}
 \newcommand{\videoautorefname}{Video}
 \newcommand{\videosuppautorefname}{video}
@@ -533,5 +553,42 @@
 \newcommand{\BOX}[1]{\autoref{box:#1}}
 \let\oldautoref\autoref
 \renewcommand{\autoref}[1]{\emph{\textbf{\oldautoref{#1}}}}
+%% Panel-aware cross-reference: \autorefp{fig:1}{A} -> "Figure 1A", with the panel
+%% letter styled and hyperlinked to match the figure reference.
+%% NB: the \renewcommand above makes \autoref a plain 1-arg macro, which destroys
+%% hyperref's starred \autoref*.  So the panel letter cannot be nested inside a
+%% single \hyperref -- it gets its own, pointing at the same target.
+\newcommand{\autorefp}[2]{\autoref{#1}\emph{\textbf{\hyperref[#1]{#2}}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% LAB HOUSE STYLE
+%%% Deliberately at the very end of the class, so these load immediately before
+%%% the document preamble -- i.e. in the same order as if they were \usepackage'd
+%%% at the top of the .tex.  Do not move them earlier without re-checking output:
+%%% siunitx in particular is order-sensitive w.r.t. amsmath/unicode-math above.
+%%% NB: xcolor and booktabs are already required earlier in this class.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage{setspace}
+\RequirePackage{siunitx}
+\DeclareSIUnit\Molar{M}          % \SI{1}{\micro\Molar}
+\RequirePackage{gensymb}         % \degree, \celsius
+\RequirePackage{textgreek}       % \textalpha etc. in text mode
+\RequirePackage{longtable}       % multi-page tables (load before caption)
+\RequirePackage{pdflscape}       % landscape pages, hyperref-aware
+\RequirePackage{multirow}
+\RequirePackage{array}           % must precede makecell
+\RequirePackage{makecell}
+\RequirePackage{seqsplit}        % breaks long DNA / protein sequences anywhere
+\RequirePackage{doi}
+\renewcommand{\doitext}{}        % show the bare DOI as link text, no "doi:" prefix
+
+%%% Typesetting policy ---------------------------------------------------------
+%% Hyphenation is effectively disabled (hyphenpenalty), which is a deliberate
+%% readability choice; the cost is looser interword spacing, so tolerance and
+%% emergencystretch are raised to stop overfull boxes in the narrow columns.
+\tolerance=9999
+\emergencystretch=10pt
+\hyphenpenalty=1000000
+\exhyphenpenalty=100
 
 \endinput

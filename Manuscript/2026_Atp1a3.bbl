@@ -14,31 +14,37 @@ Albanese, A., Bhatia, K., Bressman, S.~B., Delong, M.~R., Fahn, S., Fung, V. S.~
 Balestrino, M., Young, J., and Aitken, P. (1999).
 \newblock Block of (na+, k+)atpase with ouabain induces spreading depression-like depolarization in hippocampal slices.
 \newblock {\em Brain Research}, 838(1–2):37–44.
+\newblock \doi{10.1016/s0006-8993(99)01674-1}.
 
 \bibitem[Baraban et~al., 2005]{Baraban2005_JN}
 Baraban, S., Taylor, M., Castro, P., and Baier, H. (2005).
 \newblock Pentylenetetrazole induced changes in zebrafish behavior, neural activity and c-fos expression.
 \newblock {\em Neuroscience}, 131(3):759–768.
+\newblock \doi{10.1016/j.neuroscience.2004.11.031}.
 
 \bibitem[Baraban et~al., 2013]{Baraban2013-NC}
 Baraban, S.~C., Dinday, M.~T., and Hortopan, G.~A. (2013).
 \newblock Drug screening in scn1a zebrafish mutant identifies clemizole as a potential dravet syndrome treatment.
 \newblock {\em Nature Communications}, 4(1).
+\newblock \doi{10.1038/ncomms3410}.
 
 \bibitem[Barlow et~al., 2023]{Barlow2023}
 Barlow, I.~L., Mackay, E., Wheater, E., Goel, A., Lim, S., Zimmerman, S., Woods, I., Prober, D.~A., and Rihel, J. (2023).
 \newblock The zebrafish mutant dreammist implicates sodium homeostasis in sleep regulation.
 \newblock {\em eLife}, 12.
+\newblock \doi{10.7554/elife.87521}.
 
 \bibitem[Br\"{u}ggemann, 2021]{Brggemann2021}
 Br\"{u}ggemann, N. (2021).
 \newblock Contemporary functional neuroanatomy and pathophysiology of dystonia.
 \newblock {\em Journal of Neural Transmission}, 128(4):499–508.
+\newblock \doi{10.1007/s00702-021-02299-y}.
 
 \bibitem[Burgess and Granato, 2007]{Burgess2007-2}
 Burgess, H.~A. and Granato, M. (2007).
 \newblock Modulation of locomotor activity in larval zebrafish during light adaptation.
 \newblock {\em Journal of Experimental Biology}, 210(14):2526–2539.
+\newblock \doi{10.1242/jeb.003939}.
 
 \bibitem[Calderon et~al., 2011]{Calderon2011-no}
 Calderon, D.~P., Fremont, R., Kraenzlin, F., and Khodakhah, K. (2011).
@@ -49,31 +55,37 @@ Calderon, D.~P., Fremont, R., Kraenzlin, F., and Khodakhah, K. (2011).
 Chen, X., Mu, Y., Hu, Y., Kuan, A.~T., Nikitchenko, M., Randlett, O., Chen, A.~B., Gavornik, J.~P., Sompolinsky, H., Engert, F., and Ahrens, M.~B. (2018).
 \newblock Brain-wide organization of neuronal activity and convergent sensorimotor transformations in larval zebrafish.
 \newblock {\em Neuron}, 100(4):876--890.e5.
+\newblock \doi{10.1016/j.neuron.2018.09.042}.
 
 \bibitem[Dinday and Baraban, 2015]{Dinday2015-EN}
 Dinday, M.~T. and Baraban, S.~C. (2015).
 \newblock Large-scale phenotype-based antiepileptic drug screening in a zebrafish model of dravet syndrome.
 \newblock {\em eneuro}, 2(4):ENEURO.0068--15.2015.
+\newblock \doi{10.1523/eneuro.0068-15.2015}.
 
 \bibitem[Doğanlı et~al., 2013]{Doanl2013}
 Doğanlı, C., Beck, H.~C., Ribera, A.~B., Oxvig, C., and Lykke-Hartmann, K. (2013).
 \newblock α3na+/k+-atpase deficiency causes brain ventricle dilation and abrupt embryonic motility in zebrafish.
 \newblock {\em Journal of Biological Chemistry}, 288(13):8862–8874.
+\newblock \doi{10.1074/jbc.m112.421529}.
 
 \bibitem[Dreier, 2011]{Dreier2011}
 Dreier, J.~P. (2011).
 \newblock The role of spreading depression, spreading depolarization and spreading ischemia in neurological disease.
 \newblock {\em Nature Medicine}, 17(4):439–447.
+\newblock \doi{10.1038/nm.2333}.
 
 \bibitem[Dunn et~al., 2016]{Dunn2016-asd}
 Dunn, T.~W., Mu, Y., Narayan, S., Randlett, O., Naumann, E.~A., Yang, C.-T., Schier, A.~F., Freeman, J., Engert, F., and Ahrens, M.~B. (2016).
 \newblock Brain-wide mapping of neural activity controlling zebrafish exploratory locomotion.
 \newblock {\em eLife}, 5.
+\newblock \doi{10.7554/elife.12741}.
 
 \bibitem[Guilbeault et~al., 2021]{Guilbeault2021}
 Guilbeault, N.~C., Guerguiev, J., Martin, M., Tate, I., and Thiele, T.~R. (2021).
 \newblock Bonzeb: open-source, modular software tools for high-resolution zebrafish tracking and analysis.
 \newblock {\em Scientific Reports}, 11(1).
+\newblock \doi{10.1038/s41598-021-85896-x}.
 
 \bibitem[Haq et~al., 2019]{Haq2019-sf}
 Haq, I.~U., Snively, B.~M., Sweadner, K.~J., Suerken, C.~K., Cook, J.~F., Ozelius, L.~J., Miller, C., McCall, W.~V., Whitlow, C.~T., and Brashear, A. (2019).
@@ -89,6 +101,7 @@ Holm, T.~H. and Lykke-Hartmann, K. (2016).
 Hunanyan, A.~S., Fainberg, N.~A., Linabarger, M., Arehart, E., Leonard, A.~S., Adil, S.~M., Helseth, A.~R., Swearingen, A.~K., Forbes, S.~L., Rodriguiz, R.~M., Rhodes, T., Yao, X., Kibbi, N., Hochman, D.~W., Wetsel, W.~C., Hochgeschwender, U., and Mikati, M.~A. (2014).
 \newblock Knock‐in mouse model of alternating hemiplegia of childhood: Behavioral and electrophysiologic characterization.
 \newblock {\em Epilepsia}, 56(1):82–93.
+\newblock \doi{10.1111/epi.12878}.
 
 \bibitem[Kuo, 2019]{Kuo2019-ei}
 Kuo, S.-H. (2019).
@@ -99,6 +112,7 @@ Kuo, S.-H. (2019).
 Lagae, L., Sullivan, J., Knupp, K., Laux, L., Polster, T., Nikanorova, M., Devinsky, O., Cross, J.~H., Guerrini, R., Talwar, D., Miller, I., Farfel, G., Galer, B.~S., Gammaitoni, A., Mistry, A., Morrison, G., Lock, M., Agarwal, A., Lai, W.~W., and Ceulemans, B. (2019).
 \newblock Fenfluramine hydrochloride for the treatment of seizures in dravet syndrome: a randomised, double-blind, placebo-controlled trial.
 \newblock {\em The Lancet}, 394(10216):2243–2254.
+\newblock \doi{10.1016/s0140-6736(19)32500-0}.
 
 \bibitem[Lamir{\'e} et~al., 2023]{Lamire2023-he}
 Lamir{\'e}, L.~A., Haesemeyer, M., Engert, F., Granato, M., and Randlett, O. (2023).
@@ -114,11 +128,13 @@ Li, Y., Liu, X., Wang, C., Su, Z., Zhao, K., Yang, M., Chen, S., and Zhou, L. (2
 Lopes, G., Bonacchi, N., FrazÃ£o, J., Neto, J.~P., Atallah, B.~V., Soares, S., Moreira, L., Matias, S., Itskov, P.~M., Correia, P.~A., Medina, R.~E., Calcaterra, L., Dreosti, E., Paton, J.~J., and Kampff, A.~R. (2015).
 \newblock Bonsai: an event-based framework for processing and controlling data streams.
 \newblock {\em Frontiers in Neuroinformatics}, 9.
+\newblock \doi{10.3389/fninf.2015.00007}.
 
 \bibitem[Matsuda and Kubo, 2021]{Matsuda2021-a}
 Matsuda, K. and Kubo, F. (2021).
 \newblock Circuit organization underlying optic flow processing in zebrafish.
 \newblock {\em Frontiers in Neural Circuits}, 15.
+\newblock \doi{10.3389/fncir.2021.709048}.
 
 \bibitem[Mink, 2003]{Mink2003-pf}
 Mink, J.~W. (2003).
@@ -134,30 +150,36 @@ Mink, J.~W. (2018).
 Nabbout, R., Mistry, A., Zuberi, S., Villeneuve, N., Gil-Nagel, A., Sanchez-Carpintero, R., Stephani, U., Laux, L., Wirrell, E., Knupp, K., Chiron, C., Farfel, G., Galer, B.~S., Morrison, G., Lock, M., Agarwal, A., and Auvin, S. (2020).
 \newblock Fenfluramine for treatment-resistant seizures in patients with dravet syndrome receiving stiripentol-inclusive regimens: A randomized clinical trial.
 \newblock {\em JAMA Neurology}, 77(3):300.
+\newblock \doi{10.1001/jamaneurol.2019.4113}.
 
 \bibitem[Okamoto et~al., 2021]{Okamoto2021}
 Okamoto, H., Cherng, B.-W., Nakajo, H., Chou, M.-Y., and Kinoshita, M. (2021).
 \newblock Habenula as the experience-dependent controlling switchboard of behavior and attention in social conflict and learning.
 \newblock {\em Current Opinion in Neurobiology}, 68:36–43.
+\newblock \doi{10.1016/j.conb.2020.12.005}.
 
 \bibitem[Pachitariu et~al., 2016]{Pachitariu2016}
 Pachitariu, M., Stringer, C., Dipoppa, M., Schr\"{o}der, S., Rossi, L.~F., Dalgleish, H., Carandini, M., and Harris, K.~D. (2016).
 \newblock Suite2p: beyond 10, 000 neurons with standard two-photon microscopy.
+\newblock \doi{10.1101/061507}.
 
 \bibitem[Pandey et~al., 2023]{Pandey2023_GR}
 Pandey, S., Moyer, A.~J., and Thyme, S.~B. (2023).
 \newblock A single-cell transcriptome atlas of the maturing zebrafish telencephalon.
 \newblock {\em Genome Research}, 33(4):658–671.
+\newblock \doi{10.1101/gr.277278.122}.
 
 \bibitem[Papadopoulou et~al., 2023]{Papadopoulou2023_MD}
 Papadopoulou, M.~T., Welniarz, Q., Roubertie, A., Gras, D., Milh, M., Panagiotakaki, E., and Roze, E. (2023).
 \newblock Effect of oxygen administration on paroxysmal motor events in alternating hemiplegia of childhood.
 \newblock {\em Movement Disorders}, 38(9):1759–1761.
+\newblock \doi{10.1002/mds.29561}.
 
 \bibitem[Peirce, 2007]{Peirce2007}
 Peirce, J.~W. (2007).
 \newblock Psychopy—psychophysics software in python.
 \newblock {\em Journal of Neuroscience Methods}, 162(1–2):8–13.
+\newblock \doi{10.1016/j.jneumeth.2006.11.017}.
 
 \bibitem[Pittock et~al., 2000]{Pittock2000-tq}
 Pittock, S.~J., Joyce, C., O'Keane, V., Hugle, B., Hardiman, M.~O., Brett, F., Green, A.~J., Barton, D.~E., King, M.~D., and Webb, D.~W. (2000).
@@ -168,11 +190,13 @@ Pittock, S.~J., Joyce, C., O'Keane, V., Hugle, B., Hardiman, M.~O., Brett, F., G
 Portugues, R. and Engert, F. (2009).
 \newblock The neural basis of visual behaviors in the larval zebrafish.
 \newblock {\em Current Opinion in Neurobiology}, 19(6):644–647.
+\newblock \doi{10.1016/j.conb.2009.10.007}.
 
 \bibitem[Randlett, 2023]{Randlett2023}
 Randlett, O. (2023).
 \newblock pi\_tailtrack: A compact, inexpensive and open-source behaviour-tracking system for head-restrained zebrafish.
 \newblock {\em Journal of Experimental Biology}, 226(22).
+\newblock \doi{10.1242/jeb.246335}.
 
 \bibitem[Randlett et~al., 2019]{Randlett2019-fj}
 Randlett, O., Haesemeyer, M., Forkin, G., Shoenhard, H., Schier, A.~F., Engert, F., and Granato, M. (2019).
@@ -183,16 +207,19 @@ Randlett, O., Haesemeyer, M., Forkin, G., Shoenhard, H., Schier, A.~F., Engert, 
 Randlett, O., Wee, C.~L., Naumann, E.~A., Nnaemeka, O., Schoppik, D., Fitzgerald, J.~E., Portugues, R., Lacoste, A. M.~B., Riegler, C., Engert, F., and Schier, A.~F. (2015).
 \newblock Whole-brain activity mapping onto a zebrafish brain atlas.
 \newblock {\em Nature Methods}, 12(11):1039–1046.
+\newblock \doi{10.1038/nmeth.3581}.
 
 \bibitem[Rossi et~al., 2015]{Rossi2015}
 Rossi, A., Kontarakis, Z., Gerri, C., Nolte, H., H\"{o}lper, S., Kr\"{u}ger, M., and Stainier, D. Y.~R. (2015).
 \newblock Genetic compensation induced by deleterious mutations but not gene knockdowns.
 \newblock {\em Nature}, 524(7564):230–233.
+\newblock \doi{10.1038/nature14580}.
 
 \bibitem[Ruan et~al., 2024]{Ruan2024}
 Ruan, D.-d., Zou, J., Liao, L.-s., Ji, M.-d., Wang, R.-l., Zhang, J.-h., Zhang, L., Gao, M.-z., Chen, Q., Yu, H.-p., Wei, W., Li, Y.-f., Li, H., Lin, F., Luo, J.-w., and Lin, X.-f. (2024).
 \newblock In vitro study of atp1a3 p.ala275pro mutant causing alternating hemiplegia of childhood and rapid-onset dystonia-parkinsonism.
 \newblock {\em Frontiers in Neuroscience}, 18.
+\newblock \doi{10.3389/fnins.2024.1415576}.
 
 \bibitem[Salles et~al., 2021]{Salles2021-bq}
 Salles, P.~A., Mata, I.~F., Br{\"u}nger, T., Lal, D., and Fernandez, H.~H. (2021).
@@ -208,11 +235,13 @@ Sweney, M.~T., Silver, K., Gerard-Blanluet, M., Pedespan, J.-M., Renault, F., Ar
 Tanimoto, Y., Kakinuma, H., Aoki, R., Shiraki, T., Higashijima, S.-i., and Okamoto, H. (2024).
 \newblock Transgenic tools targeting the basal ganglia reveal both evolutionary conservation and specialization of neural circuits in zebrafish.
 \newblock {\em Cell Reports}, 43(3):113916.
+\newblock \doi{10.1016/j.celrep.2024.113916}.
 
 \bibitem[Thyme et~al., 2019]{Thyme2019_cell}
 Thyme, S.~B., Pieper, L.~M., Li, E.~H., Pandey, S., Wang, Y., Morris, N.~S., Sha, C., Choi, J.~W., Herrera, K.~J., Soucy, E.~R., Zimmerman, S., Randlett, O., Greenwood, J., McCarroll, S.~A., and Schier, A.~F. (2019).
 \newblock Phenotypic landscape of schizophrenia-associated genes defines candidates and their shared functions.
 \newblock {\em Cell}, 177(2):478--491.e20.
+\newblock \doi{10.1016/j.cell.2019.01.048}.
 
 \bibitem[Vezyroglou et~al., 2022]{Vezyroglou2022-co}
 Vezyroglou, A., Akilapa, R., Barwick, K., Koene, S., Brownstein, C.~A., Holder-Espinasse, M., Fry, A.~E., Nemeth, A.~H., Tofaris, G.~K., Hay, E., Hughes, I., Mansour, S., Mordekar, S.~R., Splitt, M., Turnpenny, P.~D., Demetriou, D., Koopmann, T.~T., Ruivenkamp, C. A.~L., Agrawal, P.~B., Carr, L., Clowes, V., Ghali, N., Holder, S.~E., Radley, J., Male, A., Sisodiya, S.~M., Kurian, M.~A., Cross, J.~H., and Balasubramanian, M. (2022).
@@ -228,15 +257,18 @@ Vo, A., Nguyen, N., Fujita, K., Schindlbeck, K.~A., Rommal, A., Bressman, S.~B.,
 Wang, K., Hinz, J., Zhang, Y., Thiele, T.~R., and Arrenberg, A.~B. (2020).
 \newblock Parallel channels for motion feature extraction in the pretectum and tectum of larval zebrafish.
 \newblock {\em Cell Reports}, 30(2):442--453.e6.
+\newblock \doi{10.1016/j.celrep.2019.12.031}.
 
 \bibitem[Weinschutz~Mendes et~al., 2023]{WeinschutzMendes2023_CR}
 Weinschutz~Mendes, H., Neelakantan, U., Liu, Y., Fitzpatrick, S.~E., Chen, T., Wu, W., Pruitt, A., Jin, D.~S., Jamadagni, P., Carlson, M., Lacadie, C.~M., Enriquez, K.~D., Li, N., Zhao, D., Ijaz, S., Sakai, C., Szi, C., Rooney, B., Ghosh, M., Nwabudike, I., Gorodezky, A., Chowdhury, S., Zaheer, M., McLaughlin, S., Fernandez, J.~M., Wu, J., Eilbott, J.~A., Vander~Wyk, B., Rihel, J., Papademetris, X., Wang, Z., and Hoffman, E.~J. (2023).
 \newblock High-throughput functional analysis of autism genes in zebrafish identifies convergence in dopaminergic and neuroimmune pathways.
 \newblock {\em Cell Reports}, 42(3):112243.
+\newblock \doi{10.1016/j.celrep.2023.112243}.
 
 \bibitem[Wullimann and Mueller, 2004]{Wullimann2004}
 Wullimann, M.~F. and Mueller, T. (2004).
 \newblock Teleostean and mammalian forebrains contrasted: Evidence from genes to behavior.
 \newblock {\em Journal of Comparative Neurology}, 475(2):143–162.
+\newblock \doi{10.1002/cne.20183}.
 
 \end{thebibliography}
