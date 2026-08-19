@@ -57,6 +57,12 @@ Chen, X., Mu, Y., Hu, Y., Kuan, A.~T., Nikitchenko, M., Randlett, O., Chen, A.~B
 \newblock {\em Neuron}, 100(4):876--890.e5.
 \newblock \doi{10.1016/j.neuron.2018.09.042}.
 
+\bibitem[Choi et~al., 2018]{Choi2018}
+Choi, H. M.~T., Schwarzkopf, M., Fornace, M.~E., Acharya, A., Artavanis, G., Stegmaier, J., Cunha, A., and Pierce, N.~A. (2018).
+\newblock Third-generation in situ hybridization chain reaction: multiplexed, quantitative, sensitive, versatile, robust.
+\newblock {\em Development}, 145(12):dev165753.
+\newblock \doi{10.1242/dev.165753}.
+
 \bibitem[Dinday and Baraban, 2015]{Dinday2015-EN}
 Dinday, M.~T. and Baraban, S.~C. (2015).
 \newblock Large-scale phenotype-based antiepileptic drug screening in a zebrafish model of dravet syndrome.
@@ -225,6 +231,11 @@ Ruan, D.-d., Zou, J., Liao, L.-s., Ji, M.-d., Wang, R.-l., Zhang, J.-h., Zhang, 
 Salles, P.~A., Mata, I.~F., Br{\"u}nger, T., Lal, D., and Fernandez, H.~H. (2021).
 \newblock {ATP1A3-related} disorders: An ever-expanding clinical spectrum.
 \newblock {\em Front. Neurol.}, 12:637890.
+
+\bibitem[Schindelin et~al., 2012]{Schindelin2012-hd}
+Schindelin, J., Arganda-Carreras, I., Frise, E., Kaynig, V., Longair, M., Pietzsch, T., Preibisch, S., Rueden, C., Saalfeld, S., Schmid, B., Tinevez, J.-Y., White, D.~J., Hartenstein, V., Eliceiri, K., Tomancak, P., and Cardona, A. (2012).
+\newblock Fiji: an open-source platform for biological-image analysis.
+\newblock {\em Nat. Methods}, 9(7):676--682.
 
 \bibitem[Sweney et~al., 2009]{Sweney2009-ky}
 Sweney, M.~T., Silver, K., Gerard-Blanluet, M., Pedespan, J.-M., Renault, F., Arzimanoglou, A., Schlesinger-Massart, M., Lewelt, A.~J., Reyna, S.~P., and Swoboda, K.~J. (2009).
