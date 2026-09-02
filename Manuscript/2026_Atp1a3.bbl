@@ -34,6 +34,12 @@ Barlow, I.~L., Mackay, E., Wheater, E., Goel, A., Lim, S., Zimmerman, S., Woods,
 \newblock {\em eLife}, 12.
 \newblock \doi{10.7554/elife.87521}.
 
+\bibitem[Brown and Lorden, 1989]{Brown1989}
+Brown, L.~L. and Lorden, J.~F. (1989).
+\newblock Regional cerebral glucose utilization reveals widespread abnormalities in the motor system of the rat mutant dystonic.
+\newblock {\em The Journal of Neuroscience}, 9(11):4033--4041.
+\newblock \doi{10.1523/jneurosci.09-11-04033.1989}.
+
 \bibitem[Br\"{u}ggemann, 2021]{Brggemann2021}
 Br\"{u}ggemann, N. (2021).
 \newblock Contemporary functional neuroanatomy and pathophysiology of dystonia.
@@ -86,6 +92,24 @@ Dunn, T.~W., Mu, Y., Narayan, S., Randlett, O., Naumann, E.~A., Yang, C.-T., Sch
 \newblock Brain-wide mapping of neural activity controlling zebrafish exploratory locomotion.
 \newblock {\em eLife}, 5.
 \newblock \doi{10.7554/elife.12741}.
+
+\bibitem[Ebert et~al., 1996]{Ebert1996}
+Ebert, U., Gernert, M., L\"{o}scher, W., and Richter, A. (1996).
+\newblock Abnormal c-fos expression in the lateral habenula during dystonic attacks in a hamster model of idiopathic dystonia.
+\newblock {\em Brain Research}, 728(1):125--129.
+\newblock \doi{10.1016/0006-8993(96)00510-0}.
+
+\bibitem[Facchin et~al., 2015]{Facchin2015}
+Facchin, L., Dubou\'{e}, E.~R., and Halpern, M.~E. (2015).
+\newblock Disruption of epithalamic left-right asymmetry increases anxiety in zebrafish.
+\newblock {\em The Journal of Neuroscience}, 35(48):15847--15859.
+\newblock \doi{10.1523/jneurosci.2593-15.2015}.
+
+\bibitem[Fremont et~al., 2014]{Fremont2014}
+Fremont, R., Calderon, D.~P., Maleki, S., and Khodakhah, K. (2014).
+\newblock Abnormal high-frequency burst firing of cerebellar neurons in rapid-onset dystonia-parkinsonism.
+\newblock {\em The Journal of Neuroscience}, 34(35):11723--11732.
+\newblock \doi{10.1523/jneurosci.1409-14.2014}.
 
 \bibitem[Guilbeault et~al., 2021]{Guilbeault2021}
 Guilbeault, N.~C., Guerguiev, J., Martin, M., Tate, I., and Thiele, T.~R. (2021).
@@ -152,6 +176,25 @@ Mink, J.~W. (2018).
 \newblock Basal ganglia mechanisms in action selection, plasticity, and dystonia.
 \newblock {\em Eur. J. Paediatr. Neurol.}, 22(2):225--229.
 
+\bibitem[Mitchell et~al., 1990]{Mitchell1990}
+Mitchell, I.~J., Luquin, R., Boyce, S., Clarke, C.~E., Robertson, R.~G., Sambrook, M.~A., and Crossman, A.~R. (1990).
+\newblock Neural mechanisms of dystonia: evidence from a 2-deoxyglucose uptake study in a primate model of dopamine agonist-induced dystonia.
+\newblock {\em Movement Disorders}, 5(1):49--54.
+\newblock \doi{10.1002/mds.870050113}.
+
+\bibitem[Moyer et~al., 2026]{Moyer2026}
+Moyer, A.~J., Capps, M. E.~S., Conklin, C.~L., Bastien, B.~L., Martina, V., Gannaway, W.~C., Cummings, C.~E., Martinez, J.~A., Chen, M., Kioschos, G., Torija-Olson, E.~G., Klein, M.~C., Vivian, M.~D., Calhoun, C. C.~S., and Thyme, S.~B. (2026).
+\newblock Zebrafish screen of schizophrenia risk genes reveals convergent dysregulation of cholesterol metabolism.
+\newblock {\em bioRxiv}.
+\newblock Preprint.
+\newblock \doi{10.64898/2026.02.17.706411}.
+
+\bibitem[Mu et~al., 2019]{Mu2019}
+Mu, Y., Bennett, D.~V., Rubinov, M., Narayan, S., Yang, C.-T., Tanimoto, M., Mensh, B.~D., Looger, L.~L., and Ahrens, M.~B. (2019).
+\newblock Glia accumulate evidence that actions are futile and suppress unsuccessful behavior.
+\newblock {\em Cell}, 178(1):27--43.e19.
+\newblock \doi{10.1016/j.cell.2019.05.050}.
+
 \bibitem[Nabbout et~al., 2020]{Nabbout2020-JAMA}
 Nabbout, R., Mistry, A., Zuberi, S., Villeneuve, N., Gil-Nagel, A., Sanchez-Carpintero, R., Stephani, U., Laux, L., Wirrell, E., Knupp, K., Chiron, C., Farfel, G., Galer, B.~S., Morrison, G., Lock, M., Agarwal, A., and Auvin, S. (2020).
 \newblock Fenfluramine for treatment-resistant seizures in patients with dravet syndrome receiving stiripentol-inclusive regimens: A randomized clinical trial.
@@ -163,11 +206,6 @@ Okamoto, H., Cherng, B.-W., Nakajo, H., Chou, M.-Y., and Kinoshita, M. (2021).
 \newblock Habenula as the experience-dependent controlling switchboard of behavior and attention in social conflict and learning.
 \newblock {\em Current Opinion in Neurobiology}, 68:36–43.
 \newblock \doi{10.1016/j.conb.2020.12.005}.
-
-\bibitem[Pachitariu et~al., 2016]{Pachitariu2016}
-Pachitariu, M., Stringer, C., Dipoppa, M., Schr\"{o}der, S., Rossi, L.~F., Dalgleish, H., Carandini, M., and Harris, K.~D. (2016).
-\newblock Suite2p: beyond 10, 000 neurons with standard two-photon microscopy.
-\newblock \doi{10.1101/061507}.
 
 \bibitem[Pandey et~al., 2023]{Pandey2023_GR}
 Pandey, S., Moyer, A.~J., and Thyme, S.~B. (2023).
@@ -237,6 +275,12 @@ Schindelin, J., Arganda-Carreras, I., Frise, E., Kaynig, V., Longair, M., Pietzs
 \newblock Fiji: an open-source platform for biological-image analysis.
 \newblock {\em Nat. Methods}, 9(7):676--682.
 
+\bibitem[Smith et~al., 2021]{Smith2021}
+Smith, R.~S., Florio, M., Akula, S.~K., Neil, J.~E., Wang, Y., Hill, R.~S., Goldman, M., Mullally, C.~D., Reed, N., Bello-Espinosa, L., Flores-Sarnat, L., Monteiro, F.~P., Erasmo, C.~B., Pinto~e Vairo, F., Morava, E., Barkovich, A.~J., Gonzalez-Heydrich, J., Brownstein, C.~A., McCarroll, S.~A., and Walsh, C.~A. (2021).
+\newblock Early role for a na+,k+-atpase (atp1a3) in brain development.
+\newblock {\em Proceedings of the National Academy of Sciences}, 118(25):e2023333118.
+\newblock \doi{10.1073/pnas.2023333118}.
+
 \bibitem[Sweney et~al., 2009]{Sweney2009-ky}
 Sweney, M.~T., Silver, K., Gerard-Blanluet, M., Pedespan, J.-M., Renault, F., Arzimanoglou, A., Schlesinger-Massart, M., Lewelt, A.~J., Reyna, S.~P., and Swoboda, K.~J. (2009).
 \newblock Alternating hemiplegia of childhood: early characteristics and evolution of a neurodevelopmental syndrome.
@@ -248,11 +292,23 @@ Tanimoto, Y., Kakinuma, H., Aoki, R., Shiraki, T., Higashijima, S.-i., and Okamo
 \newblock {\em Cell Reports}, 43(3):113916.
 \newblock \doi{10.1016/j.celrep.2024.113916}.
 
+\bibitem[Tewari et~al., 2017]{Tewari2017}
+Tewari, A., Fremont, R., and Khodakhah, K. (2017).
+\newblock It's not just the basal ganglia: Cerebellum as a target for dystonia therapeutics.
+\newblock {\em Movement Disorders}, 32(11):1537--1545.
+\newblock \doi{10.1002/mds.27123}.
+
 \bibitem[Thyme et~al., 2019]{Thyme2019_cell}
 Thyme, S.~B., Pieper, L.~M., Li, E.~H., Pandey, S., Wang, Y., Morris, N.~S., Sha, C., Choi, J.~W., Herrera, K.~J., Soucy, E.~R., Zimmerman, S., Randlett, O., Greenwood, J., McCarroll, S.~A., and Schier, A.~F. (2019).
 \newblock Phenotypic landscape of schizophrenia-associated genes defines candidates and their shared functions.
 \newblock {\em Cell}, 177(2):478--491.e20.
 \newblock \doi{10.1016/j.cell.2019.01.048}.
+
+\bibitem[Vetro et~al., 2021]{Vetro2021}
+Vetro, A., Nielsen, H.~N., Holm, R., Hevner, R.~F., Parrini, E., Powis, Z., M\o{}ller, R.~S., Bellan, C., Simonati, A., Lesca, G., Helbig, K.~L., Palmer, E.~E., Mei, D., and Guerrini, R. (2021).
+\newblock Atp1a2- and atp1a3-associated early profound epileptic encephalopathy and polymicrogyria.
+\newblock {\em Brain}, 144(5):1435--1450.
+\newblock \doi{10.1093/brain/awab052}.
 
 \bibitem[Vezyroglou et~al., 2022]{Vezyroglou2022-co}
 Vezyroglou, A., Akilapa, R., Barwick, K., Koene, S., Brownstein, C.~A., Holder-Espinasse, M., Fry, A.~E., Nemeth, A.~H., Tofaris, G.~K., Hay, E., Hughes, I., Mansour, S., Mordekar, S.~R., Splitt, M., Turnpenny, P.~D., Demetriou, D., Koopmann, T.~T., Ruivenkamp, C. A.~L., Agrawal, P.~B., Carr, L., Clowes, V., Ghali, N., Holder, S.~E., Radley, J., Male, A., Sisodiya, S.~M., Kurian, M.~A., Cross, J.~H., and Balasubramanian, M. (2022).
