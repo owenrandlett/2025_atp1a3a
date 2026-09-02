@@ -1,0 +1,120 @@
+,Sum Positive,Sum Negative,Mean Positive,Mean Negative
+-Forebrain-Diencephalon-Caudal Hypothalamus,0.0,7518067.0,0.0,23.437781941409185
+-Forebrain-Diencephalon-Habenula,0.0,19862711.0,0.0,75.97949292714462
+-Forebrain-Diencephalon-Intermediate Hypothalamus,26273084.0,69366832.0,19.68090561989823,51.96200315666544
+-Forebrain-Diencephalon-Intermediate Hypothalamus-Diffuse Nucleus of the Intermediate Hypothalamus,0.0,0.0,0.0,0.0
+-Forebrain-Diencephalon-Optic Tract and Accessory Optic System,0.0,0.0,0.0,0.0
+"-Forebrain-Diencephalon-Optic Tract and Accessory Optic System-Retinal Arborization Field 1 (AF1, Approximate Location)",0.0,0.0,0.0,0.0
+"-Forebrain-Diencephalon-Optic Tract and Accessory Optic System-Retinal Arborization Field 2 (AF2, Approximate Location)",0.0,0.0,0.0,0.0
+-Forebrain-Diencephalon-Optic Tract and Accessory Optic System-Retinal Arborization Field 3 (AF3),0.0,0.0,0.0,0.0
+-Forebrain-Diencephalon-Optic Tract and Accessory Optic System-Retinal Arborization Field 4 (AF4),0.0,0.0,0.0,0.0
+-Forebrain-Diencephalon-Optic Tract and Accessory Optic System-Retinal Arborization Field 5 (AF5),0.0,0.0,0.0,0.0
+-Forebrain-Diencephalon-Optic Tract and Accessory Optic System-Retinal Arborization Field 6 (AF6),0.0,0.0,0.0,0.0
+-Forebrain-Diencephalon-Optic Tract and Accessory Optic System-Retinal Arborization Field 7 (AF7),0.0,0.0,0.0,0.0
+-Forebrain-Diencephalon-Optic Tract and Accessory Optic System-Retinal Arborization Field 8 (AF8),0.0,0.0,0.0,0.0
+-Forebrain-Diencephalon-Optic Tract and Accessory Optic System-Retinal Arborization Field 9 (AF9),0.0,0.0,0.0,0.0
+-Forebrain-Diencephalon-Pineal,0.0,10964.0,0.0,0.30081211589113255
+-Forebrain-Diencephalon-Pituitary,0.0,13457589.0,0.0,162.08104299650728
+-Forebrain-Diencephalon-Posterior Tuberculum,10975437.0,58201887.0,32.98373568382554,174.91017962272315
+-Forebrain-Diencephalon-Posterior Tuberculum-Posterior Tuberculum Oxytocin Cluster,1414417.0,0.0,105.58502538071066,0.0
+-Forebrain-Diencephalon-Preglomerular Complex (approximate area),28090.0,32958147.0,0.0841524390426574,98.73650610097694
+-Forebrain-Diencephalon-Preoptic Area,0.0,1986162.0,0.0,2.8719775119077573
+-Forebrain-Diencephalon-Preoptic Area-Anterior Preoptic Dopaminergic Cluster,0.0,0.0,0.0,0.0
+-Forebrain-Diencephalon-Preoptic Area-Preoptoic Oxytocin Cluster,0.0,0.0,0.0,0.0
+-Forebrain-Diencephalon-Pretectum,13525.0,33143231.0,0.026828876400705387,65.74459504761754
+-Forebrain-Diencephalon-Rostral Hypothalamus,2025743.0,67704198.0,2.9642648100347095,99.07138843526664
+-Forebrain-Diencephalon-Rostral Hypothalamus-Hypocretin Neuron Cluster,54426.0,0.0,3.0607355753008663,0.0
+-Forebrain-Diencephalon-Rostral Hypothalamus-Qrfp Neuron Cluster,13244.0,0.0,0.5528007346189164,0.0
+-Forebrain-Diencephalon-Thalamus-Dorsal Thalamus,9195062.0,39599124.0,40.0046204046117,172.28246247552752
+-Forebrain-Diencephalon-Thalamus-Ventral Thalamus,2329724.0,81291205.0,7.745479329088884,270.2634938577389
+-Forebrain-Olfactory Bulb,0.0,39711497.0,0.0,97.92686216777388
+-Forebrain-Telencephalon-Pallium,34177815.0,14489635.0,37.71990243848603,15.99129782197231
+-Forebrain-Telencephalon-Subpallium,0.0,0.0,0.0,0.0
+-Ganglia-Anterior Lateral Line Ganglion,0.0,0.0,0.0,0.0
+-Ganglia-Facial Sensory Ganglion,0.0,0.0,0.0,0.0
+-Ganglia-Facial glossopharyngeal ganglion,0.0,0.0,0.0,0.0
+-Ganglia-Lateral Line Neuromast D1,0.0,0.0,0.0,0.0
+-Ganglia-Lateral Line Neuromast D2,0.0,0.0,0.0,0.0
+-Ganglia-Lateral Line Neuromast N,0.0,299212.0,0.0,17.56248165756882
+-Ganglia-Lateral Line Neuromast O1,0.0,0.0,0.0,0.0
+-Ganglia-Lateral Line Neuromast OC1,0.0,0.0,0.0,0.0
+-Ganglia-Lateral Line Neuromast SO1,0.0,0.0,0.0,0.0
+-Ganglia-Lateral Line Neuromast SO2,0.0,0.0,0.0,0.0
+-Ganglia-Lateral Line Neuromast SO3,0.0,0.0,0.0,0.0
+-Ganglia-Olfactory Epithelium,0.0,63049794.0,0.0,129.9411687117955
+-Ganglia-Posterior Lateral Line Ganglia,0.0,0.0,0.0,0.0
+-Ganglia-Statoacoustic Ganglion,0.0,7916783.0,0.0,130.7759386821283
+-Ganglia-Trigeminal Ganglion,0.0,0.0,0.0,0.0
+-Ganglia-Vagal Ganglia,0.0,415509.0,0.0,3.917420121244119
+-Hindbrain-Caudal Hindbrain,1898465.0,5344086.0,0.9545824573823997,2.68710286802384
+-Hindbrain-Caudal Hindbrain-Area Postrema,0.0,0.0,0.0,0.0
+-Hindbrain-Caudal Hindbrain-Inferior Olive,12990.0,0.0,0.30581255738399604,0.0
+-Hindbrain-Caudal Hindbrain-Lateral Reticular Nucleus,0.0,0.0,0.0,0.0
+-Hindbrain-Caudal Hindbrain-Noradrendergic neurons of the Interfascicular and Vagal areas,0.0,0.0,0.0,0.0
+-Hindbrain-Caudal Hindbrain-Small cluster of TH stained neurons,0.0,0.0,0.0,0.0
+-Hindbrain-Caudal Hindbrain-X Vagus motorneuron cluster,0.0,0.0,0.0,0.0
+-Hindbrain-Rhombomere 1,5728.0,3266102.0,0.0056273215894432705,3.20869523357609
+-Hindbrain-Rhombomere 1-Cerebellum-Cerebellar Corpus,989921.0,26338787.0,1.0440541643683336,27.779105859720655
+-Hindbrain-Rhombomere 1-Cerebellum-Granular Eminence,0.0,0.0,0.0,0.0
+-Hindbrain-Rhombomere 1-Cerebellum-Medial Caudal Lobe,0.0,3039976.0,0.0,37.05525420836432
+-Hindbrain-Rhombomere 1-Cerebellum-Valvula Cerebellum,0.0,3125985.0,0.0,18.122492637339704
+-Hindbrain-Rhombomere 1-Interpeduncular Nucleus,23284351.0,0.0,148.60707538740394,0.0
+-Hindbrain-Rhombomere 1-Locus Coeruleus,0.0,0.0,0.0,0.0
+-Hindbrain-Rhombomere 1-Oculomotor Nucleus nIV,0.0,0.0,0.0,0.0
+-Hindbrain-Rhombomere 1-Raphe - Superior,11627074.0,0.0,317.26353416284655,0.0
+-Hindbrain-Rhombomere 1-RoL-R1,0.0,0.0,0.0,0.0
+-Hindbrain-Rhombomere 1-Ventrolateral Stripe of Serotonergic Neurons,0.0,41703.0,0.0,6.280572289156627
+-Hindbrain-Rhombomere 2,1420783.0,6042144.0,1.2865600496954253,5.471335935823356
+-Hindbrain-Rhombomere 2-Anterior Cluster of nV Trigeminal Motorneurons,0.0,0.0,0.0,0.0
+-Hindbrain-Rhombomere 2-Locus Coeruleus,0.0,0.0,0.0,0.0
+-Hindbrain-Rhombomere 2-Raphe - Superior,0.0,0.0,0.0,0.0
+-Hindbrain-Rhombomere 2-RoL2,0.0,0.0,0.0,0.0
+-Hindbrain-Rhombomere 2-RoM1,0.0,0.0,0.0,0.0
+-Hindbrain-Rhombomere 2-RoM2,0.0,0.0,0.0,0.0
+-Hindbrain-Rhombomere 2-Ventrolateral Stripe of Serotonergic Neurons,0.0,0.0,0.0,0.0
+-Hindbrain-Rhombomere 3,5885706.0,2767.0,8.698854726599045,0.004089523164850496
+-Hindbrain-Rhombomere 3-Posterior Cluster of nV Trigeminal Motorneurons,0.0,0.0,0.0,0.0
+-Hindbrain-Rhombomere 3-Raphe - Inferior,0.0,0.0,0.0,0.0
+-Hindbrain-Rhombomere 3-RoL3,0.0,0.0,0.0,0.0
+-Hindbrain-Rhombomere 3-RoM3,0.0,0.0,0.0,0.0
+-Hindbrain-Rhombomere 3-RoV3,0.0,0.0,0.0,0.0
+-Hindbrain-Rhombomere 3-Spiral Fiber Neuron Anterior cluster,0.0,0.0,0.0,0.0
+-Hindbrain-Rhombomere 3-Spiral Fiber Neuron Posterior cluster,0.0,0.0,0.0,0.0
+-Hindbrain-Rhombomere 3-Ventrolateral Stripe of Serotonergic Neurons,0.0,0.0,0.0,0.0
+-Hindbrain-Rhombomere 4,841364.0,435315.0,1.1328297720510023,0.5861170578018339
+-Hindbrain-Rhombomere 4-Mauthner Cell Axon Cap,0.0,0.0,0.0,0.0
+-Hindbrain-Rhombomere 4-Mauthner,0.0,0.0,0.0,0.0
+-Hindbrain-Rhombomere 4-MiM1,0.0,0.0,0.0,0.0
+-Hindbrain-Rhombomere 4-MiR1,0.0,0.0,0.0,0.0
+-Hindbrain-Rhombomere 4-MiR2,0.0,0.0,0.0,0.0
+-Hindbrain-Rhombomere 4-MiV1,0.0,0.0,0.0,0.0
+-Hindbrain-Rhombomere 4-Raphe - Inferior,0.0,0.0,0.0,0.0
+-Hindbrain-Rhombomere 4-Spinal Backfill Vestibular Population,0.0,0.0,0.0,0.0
+-Hindbrain-Rhombomere 5,925530.0,16672364.0,1.4210894819755497,25.59930107081111
+-Hindbrain-Rhombomere 5-Medial Vestibular Nucleus,0.0,0.0,0.0,0.0
+-Hindbrain-Rhombomere 5-MiD2,0.0,0.0,0.0,0.0
+-Hindbrain-Rhombomere 5-MiV2,0.0,0.0,0.0,0.0
+-Hindbrain-Rhombomere 5-Raphe - Inferior,0.0,0.0,0.0,0.0
+-Hindbrain-Rhombomere 5-Tangential Vestibular Nucleus,0.0,0.0,0.0,0.0
+-Hindbrain-Rhombomere 5-VII Facial Motor and octavolateralis efferent neurons,0.0,0.0,0.0,0.0
+-Hindbrain-Rhombomere 6,0.0,7411123.0,0.0,9.389155078750532
+-Hindbrain-Rhombomere 6-Medial Vestibular Nucleus,0.0,0.0,0.0,0.0
+-Hindbrain-Rhombomere 6-MiD3,0.0,0.0,0.0,0.0
+-Hindbrain-Rhombomere 6-MiT,0.0,0.0,0.0,0.0
+-Hindbrain-Rhombomere 6-Raphe - Inferior,0.0,83248.0,0.0,12.894671623296158
+-Hindbrain-Rhombomere 6-Tangential Vestibular Nucleus,0.0,0.0,0.0,0.0
+-Hindbrain-Rhombomere 6-VII Facial Motor and octavolateralis efferent neurons,0.0,487919.0,0.0,12.743725024159636
+-Hindbrain-Rhombomere 7,601561.0,0.0,0.795379991775957,0.0
+-Hindbrain-Rhombomere 7-CaD,0.0,0.0,0.0,0.0
+-Hindbrain-Rhombomere 7-CaV,0.0,0.0,0.0,0.0
+-Hindbrain-Rhombomere 7-Raphe - Inferior,0.0,0.0,0.0,0.0
+-Hindbrain-Rhombomere 7-VII' Facial Motor and octavolateralis efferent neurons,0.0,0.0,0.0,0.0
+-Midbrain-Tectum-Neuropil,0.0,0.0,0.0,0.0
+-Midbrain-Tectum-Stratum Periventriculare,0.0,3184625.0,0.0,1.0101486695235407
+-Midbrain-Tegmentum,727278.0,0.0,2.635017481567363,0.0
+-Midbrain-Tegmentum-NucMLF (nucleus of the medial longitudinal fascicle,0.0,0.0,0.0,0.0
+-Midbrain-Tegmentum-Oculomotor Nucleus nIII,4346478.0,0.0,77.01195981502153,0.0
+-Midbrain-Torus Longitudinalis,0.0,34108531.0,0.0,538.1846884516465
+-Midbrain-Torus Semicircularis,36669.0,0.0,0.053764891316300724,0.0
+-Retina-Retina,120072.0,0.0,0.01608957807469369,0.0
+-Spinal Cord-Spinal Cord,44257047.0,0.0,54.344066572853656,0.0
