@@ -57,5 +57,8 @@ desktop.ini
 # ---------------------------------------------------------------------------
 # Project-specific
 # ---------------------------------------------------------------------------
-Manuscript/Figures/SupplementartFig_Ca2Heatmaps.svg
+# Ca2+ heatmap figure sources: the .svg is >200 MB, well over GitHub's 100 MB limit.
+# Matched by name rather than by path -- the previous path-pinned rule silently
+# stopped applying when the file was moved into FigureMakingFiles/.
+SupplementartFig_Ca2Heatmaps.*
 Manuscript/abstracts/Abstract_ZebrafishCircuits2026.md
