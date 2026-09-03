@@ -158,7 +158,7 @@ Collectively, our data support a model in which forebrain circuits are particula
 
 Due to the teleost genome duplication, zebrafish possess two genes that are orthologous to human ATP1A3: \emph{atp1a3a} and \emph{atp1a3b}. Zebrafish \emph{atp1a3a} has 21 exons and shares 92\% amino acid conservation with human ATP1A3, and a similarly broad gene expression in neurons throughout the central nervous system \citep{Doanl2013}. 
 The \emph{atp1a3b} gene also shows very high conservation (91\%), but its expression is highly localized to certain brain areas in the midbrain and hindbrain \citep{Doanl2013}. 
-For this project have focused on the more highly-conserved and more broadly-expressed \emph{atp1a3a} gene. 
+For this project we have focused on the more highly-conserved and more broadly-expressed \emph{atp1a3a} gene. 
 We generated a mutant line using CRISPR-Cas9, yielding an 8 base pair frameshifting deletion in exon 8, and premature stop codon in exon 9 (\autoref{fig:1}A). 
 qRT-PCR experiments show a strong loss of \emph{atp1a3a} mRNA levels, indicating that the transcript is degraded through nonsense-mediated decay (\autoref{fig:1}B).
 We tested for genetic compensation through paralog upregulation \citep{Rossi2015}, and indeed found that \emph{atp1a3b} mRNA levels are significantly higher in \emph{atp1a3a} mutants, indicating that \emph{atp1a3b} overexpression may compensate for \emph{atp1a3a} loss. 
@@ -195,17 +195,17 @@ Heterozygous larvae are therefore structurally indistinguishable from wild-types
 \begin{figure}
 \begin{center}
 %% Source: Figures/Figure_MutationAndMorphometry.svg
-%% Panels A-B carried over from the original figure; C and E are the DBM projections
-%% (MUT vs WT and HET vs WT, both at maxval 500); D is still an empty placeholder in
-%% the SVG and needs the Z-Brain region quantification plot dropped in.
+%% Panels A-B carried over from the original figure; C and D are the DBM projections
+%% (MUT vs WT and HET vs WT, both at maxval 500); E is the Z-Brain region
+%% quantification, from FigureMakingFiles/DBM_analysis/plot_DBM_region_heatmap.py.
 \includegraphics[width=0.9\linewidth]{Figures/Figure_MutationAndMorphometry.png}
 
 \caption{\textbf{Generation of an \emph{atp1a3a} null allele and deformation-based morphometry of the mutant brain}\\
 \textbf{A)} The \emph{atp1a3a} allele in genomic and protein frames of reference. Top: gene structure, with exons drawn proportional to their coding length (canonical transcript ENSDART00000104950), showing the location of the 8 bp deletion in exon 8 (orange) and of the resulting premature stop codon in exon 9 (red). Middle: the 30 bp of exon 8 spanned by the expanded window, with the 20 nt gRNA target indicated in blue and the 8 deleted bases in orange. Bottom: predicted membrane topology of the wild-type and mutant proteins. Wildtype Atp1a3a consists of 1023 amino acids and 10 transmembrane helices; the mutant protein consists of 272 amino acids identical to wildtype followed by 78 frameshifted amino acids, yielding a total protein length of 350 amino acids and retaining only the first two transmembrane helices. Transmembrane helix boundaries are those annotated for human ATP1A3 (UniProt P13637).\\
 \textbf{B)} Comparison of \emph{atp1a3a} and \emph{atp1a3b} expression levels in \emph{atp1a3a} mutants. Expression was quantified using RT-qPCR and normalized to \emph{actb2} expression. Relative expression levels are normalized to expression levels in \emph{atp1a3a}\textsuperscript{+/+} larvae. Data are presented as means $\pm$ SEM. * $p < 0.05$; ** $p < 0.01$; *** $p < 0.001$.\\
 \textbf{C)} Deformation-based morphometry comparing \emph{atp1a3a\textsuperscript{-/-}} larvae to \emph{atp1a3a\textsuperscript{+/+}} siblings, displayed as dorsal and sagittal projections. Yellow indicates regions of locally increased volume in mutants, cyan indicates locally decreased volume.\\
-\textbf{D)} The equivalent comparison between \emph{atp1a3a\textsuperscript{+/-}} and \emph{atp1a3a\textsuperscript{+/+}} siblings, processed and analysed identically, which returns essentially no signal.\\
-\textbf{E)} Volume differences within Z-Brain atlas regions, normalized to the volume of each region, for the 25 regions showing the largest differences in the \emph{atp1a3a\textsuperscript{-/-}} versus \emph{atp1a3a\textsuperscript{+/+}} comparison, grouped by the direction of the change and ordered by effect size within each group. Colours as in \textbf{C)}, with black indicating no significant difference, on a linear scale.
+\textbf{D)} The equivalent comparison between \emph{atp1a3a\textsuperscript{+/-}} and \emph{atp1a3a\textsuperscript{+/+}} siblings, processed and analysed identically, which returns essentially no signal. Scale bar = 100 \textmu m.\\
+\textbf{E)} Volume differences within Z-Brain atlas regions, normalized to the volume of each region, for the 25 regions showing the largest differences in the \emph{atp1a3a\textsuperscript{-/-}} versus \emph{atp1a3a\textsuperscript{+/+}} comparison, grouped by the direction of the change and ordered by effect size within each group. The same regions are shown for the \emph{atp1a3a\textsuperscript{+/-}} versus \emph{atp1a3a\textsuperscript{+/+}} comparison of \textbf{D)} in the right-hand column, which is uniformly black. Colours as in \textbf{C)}, with black indicating no significant difference, on a linear scale.
 }
 
 \label{fig:1}
@@ -225,8 +225,8 @@ Heterozygous larvae are therefore structurally indistinguishable from wild-types
 \textbf{C)} Transitions between swimming phenotypes across repeated observations of the same larvae, shown separately for \emph{atp1a3a\textsuperscript{+/+}}, \emph{atp1a3a\textsuperscript{+/-}} and \emph{atp1a3a\textsuperscript{-/-}} larvae from heterozygous incrosses. Larvae were categorized as "Normal Swimming" (blue), "Mild Unbalanced Swimming" (orange) or "Severe Unbalanced Swimming" (dark red) at baseline, +1 hr, +2 hrs and +8 hrs, and genotyped post-hoc. Bar heights and ribbon widths are proportional to the number of larvae in each category and moving between categories, respectively, with the number of larvae per category indicated. Wild-type larvae remain in the "Normal" category throughout, whereas heterozygous and homozygous mutant larvae move between categories across observations.\\
 \textbf{D)} Head-embedded behavioural setup for quantifying tail kinematics in response to visual stimuli. Based on pi\_tailtrack \citep{Randlett2023}\\
 \textbf{E)} Image sequences from an \emph{atp1a3a} mutant larva in the head-embedded preparation, with tracked tail points in blue relative to the midline. Left: a period of normal swimming, with the tail returning to the midline. Right: a period with the "bent tail" phenotype, with a persistent bend to one side of the midline (orange arrows).\\
-\textbf{F)} Tail tracking traces of 3 WT larvae showing normal bursts of swimming/tail flicks (blue), with few substantial or long-lasting deviations in the tail angle relative to the midline.\\
-\textbf{G)} Tail tracking traces of 3 \emph{atp1a3a} mutant larvae showing very bursty swimming patterns with vigorous activity followed by periods of quiescence, and many periods of persistent tail bends reflected as large deviations in the Tail Angle.
+\textbf{F)} Tail tracking traces of 3 WT larvae showing normal bursts of swimming/tail flicks (blue), with few substantial or long-lasting deviations in the tail angle (orange) relative to the midline.\\
+\textbf{G)} Tail tracking traces of 3 \emph{atp1a3a} mutant larvae showing very bursty swimming patterns with vigorous activity followed by periods of quiescence, and many periods of persistent tail bends reflected as large deviations in the tail angle (orange). Traces are plotted as in \textbf{F)}.
 }
 
 \label{fig:2}
@@ -255,7 +255,7 @@ The distribution of phenotypes in \emph{atp1a3a\textsuperscript{+/+}}, \emph{atp
 A key feature of ATP1A3-related disorders is that symptoms often come in waves/attacks, and can be triggered by stress, fever, or exertion \citep{Salles2021-bq}. This was also the case in our mutants, where we observed that fish could transition between abnormal/unbalanced swimming, and normal swimming phases. 
 For example, a mutant larva exhibiting strong unbalanced swimming is swimming normally 3 minutes later in the same recording session (\autoref{videosupp:transience1}).
 To quantify the frequency and prevalence of these transitions, we repeatedly observed fish from heterozygous incrosses in 24-well plates every hour over 3 hours, and then again 5 hours later, categorizing them as "Normal", "Mild Unbalanced", or "Severe Unbalanced" (\autoref{fig:2}C), and then did post-hoc genotyping to identify their mutational status. 
-While wildtype fish were always classified as normal, \emph{atp1a3a\textsuperscript{-/+}} and \emph{atp1a3a\textsuperscript{-/-}} showed very strong dynamics in their phenotypic expression, with nearly all fish that we observed in an "unbalanced" state transitioning between categories across observations (\autoref{fig:2}C).
+While wildtype fish were always classified as normal, \emph{atp1a3a\textsuperscript{+/-}} and \emph{atp1a3a\textsuperscript{-/-}} showed very strong dynamics in their phenotypic expression, with nearly all fish that we observed in an "unbalanced" state transitioning between categories across observations (\autoref{fig:2}C).
 
 As the tail-bending phenotype was difficult to quantify in this multi-well plate format, we used a head-embedded preparation in which the larva is embedded in agarose with the tail free to move, and presented visual stimuli to elicit swimming behaviour using a projector and screen below the larvae (\autoref{fig:2}D).
 Observing \emph{atp1a3a} mutants in this setup revealed periods of normal swimming interspersed with periods of persistent tail bends, with the tail often stably bent to one side for many seconds (\autoref{fig:2}E).
@@ -285,7 +285,7 @@ Spontaneous swimming in the larger channels in the absence of any stimulus, wher
 \textbf{H)} bout duration are modestly increased.
 Statistics: Kruskal-Wallis with Dunn's multiple comparisons test.
 \\ \textbf{I)} MAP-Mapping analysis of brain-wide activity patterns in \emph{atp1a3a} mutants relative to WT siblings revealed a distributed but fairly restricted pattern of altered activity, with strong activation and suppression patterns in the forebrain, including the pallium (Pal), subpallium (SPal), habenula (Hab), and diencephalon in the posterior tuberculum (PT) and preoptic area. 
-More modest changes are seen in the cerebellum (CB) spinal cord (SC) and midbrain tegmentum (TEG). 
+More modest changes are seen in the cerebellum (CB), spinal cord (SC) and midbrain tegmentum (Teg). 
 Scale bar = 100 \textmu m.
 }
 
@@ -331,7 +331,7 @@ Boxed area \textbf{(i)}, shows the response to 30 acoustic/"tap" stimuli, delive
 Dots represent mean population response probability for each stimulus, and lines are smoothed across time/stimuli with a Savitzky–Golay filter (window = 15 stimuli, order = 2). O-bend responses to DF and C-bend responses to tap stimuli are defined as turns with a bend amplitude of at least 3 radian, and 1 radian, respectively.
 \\ \textbf{C)} Examples of the maximal bending amplitude of three WT (teal) and mutant (orange) larvae in response to a dark flash, showing the reduced response amplitude in mutants.
 \\ \textbf{D)} Same data as \textbf{(B)}, but analyzed to consider any turning response, defined as a bend of at least 1 radian, which reveals a more similar response probability between mutants and siblings, suggesting that mutants are able to respond to the stimulus, but with reduced amplitude.
-\\ \textbf{E)} Per-fish quantification of the probability of turning responses, and \textbf{F} quantification of the maximal bend amplitude in response to stimuli, for different epochs of the experiment: \textbf{i)} the Naive Response to the first 5 DFs, \textbf{ii)} the remainder of the first training block (DFs 6-60), \textbf{iii)} the trained response in blocks 2-4 (DFs 61-240), and \textbf{iv)} the response to tap stimuli (Taps 1-30). Significance tests are Kruskal-Wallis tests with Dunn's multiple comparisons test, * p < 0.05, ** p < 0.01, *** p < 0.001.
+\\ \textbf{E)} Per-fish quantification of the probability of turning responses, and \textbf{F)} quantification of the maximal bend amplitude in response to stimuli, for different epochs of the experiment: \textbf{i)} the Naive Response to the first 5 DFs, \textbf{ii)} the remainder of the first training block (DFs 6-60), \textbf{iii)} the trained response in blocks 2-4 (DFs 61-240), and \textbf{iv)} the response to tap stimuli (Taps 1-30). Significance tests are Kruskal-Wallis tests with Dunn's multiple comparisons test.
 \\ \textbf{G)} MAP-Mapping analysis of brain-wide activity patterns in \emph{atp1a3a} mutants relative to WT siblings after being stimulated with 10 DFs at 1min intervals. The signals in the optic tectum (Tec) are strongly suppressed, while the cerebellum (CB) and hindbrain areas show more modest alterations. 
 Strong activation and suppression patterns are seen in the forebrain, including the pallium (Pal), subpallium (SPal), habenula (Hab).
 Scale bar = 100 \textmu m.
@@ -367,10 +367,11 @@ Therefore, \emph{atp1a3a} mutants are not simply hyporesponsive to stimuli, but 
 
 \caption{\textbf{\emph{atp1a3a} mutants show reduced directional responses to Optomotor stimuli and altered neuronal activation in the midbrain and forebrain}\\
 \textbf{A)} Arena for Optomotor Response (OMR) assay, in which larvae are placed in tracks and either presented with global red light for the stimulus-free condition ("No Stim."), or with moving striped patterns that elicit robust directional swimming responses in WT larvae ("OMR Stim.").
-\textbf{B)} \emph{atp1a3a} mutants and siblings show a robust increase in swimming during the OMR stimulus, indicating that they are able to perceive the stimulus and respond with increased swimming activity.
-\textbf{C)} \emph{atp1a3a} mutant larvae show a significantly reduced turning response to the direction of motion, with a much smaller realignment of the orientation of the larvae towards the axis of motion of the stimulus (0 degrees would reflect perfect alignment). Lines = mean orientation across larvae, shaded area = SEM.
-\textbf{D)} \emph{atp1a3a} mutants show a reduced OMR performance, measured as the ratio of swimming along the correct dimension of motion, normalized to all movements. 
-\textbf{E)} MAP-Mapping analysis of brain-wide activity patterns in \emph{atp1a3a} mutants relative to WT siblings after being stimulated with the OMR stimulus. Similar to the DF stimulus, we observed a strong suppression of activity in the midbrain optic tectum (Tec) and tegmentum (Teg). Suppressed activity is also seen in the anterior hindbrain Rhombomeres 1 and 2 (RB1/2). Strong activation and suppression patterns are again seen in the forebrain, including the pallium (Pal), subpallium (SPal), habenula (Hab) and preoptic area (pOA).
+\textbf{B)} \emph{atp1a3a} mutants and siblings show a robust increase in swimming during the OMR stimulus, indicating that they are able to perceive the stimulus and respond with increased swimming activity. Each line is one larva, shown in both the No Stimulus and OMR conditions. Within each genotype, distance travelled was compared between conditions using a paired t-test: \emph{atp1a3a\textsuperscript{+/+}} p = 0.003, \emph{atp1a3a\textsuperscript{+/-}} p = 0.0002, \emph{atp1a3a\textsuperscript{-/-}} p = 0.0002.
+\textbf{C)} \emph{atp1a3a} mutant larvae show a reduced turning response to the direction of motion, with a much smaller realignment of the orientation of the larvae towards the axis of motion of the stimulus (0 degrees would reflect perfect alignment). Lines = mean orientation across larvae, shaded area = SEM.
+\textbf{D)} \emph{atp1a3a} mutants show a reduced OMR performance, measured as the ratio of swimming along the correct dimension of motion, normalized to all movements. Genotypes were compared using a Kruskal-Wallis test (p = 0.0001) followed by Dunn's multiple comparisons test: \emph{atp1a3a\textsuperscript{+/+}} versus \emph{atp1a3a\textsuperscript{-/-}} p = 0.0008 and \emph{atp1a3a\textsuperscript{+/-}} versus \emph{atp1a3a\textsuperscript{-/-}} p = 0.003; the \emph{atp1a3a\textsuperscript{+/+}} versus \emph{atp1a3a\textsuperscript{+/-}} comparison was not significant. 
+\textbf{E)} MAP-Mapping analysis of brain-wide activity patterns in \emph{atp1a3a} mutants relative to WT siblings after being stimulated with the OMR stimulus. Similar to the DF stimulus, we observed a strong suppression of activity in the midbrain optic tectum (Tec) and tegmentum (Teg). Suppressed activity is also seen in the anterior hindbrain, at the level of Rhombomeres 1 and 2 (RB1/2). Strong activation and suppression patterns are again seen in the forebrain, including the pallium (Pal), subpallium (SPal), habenula (Hab) and preoptic area (pOA).
+Scale bar = 100 \textmu m.
 }
 
 \label{fig:5}
@@ -387,14 +388,19 @@ We quantified the response of larvae to this motion in three ways:
 \\3) the OMR-following performance of the fish calculated as the proportion of swimming in the dimension following motion (up or down) relative to the total motion of the fish (\autoref{fig:5}D).
 
 Interestingly, \emph{atp1a3a} mutant larvae showed a robust increase in swimming during the stimulation period, indicating that they are able to perceive the stimulus and respond with increased swimming activity (\autoref{fig:5}B). 
-However, they showed a significantly reduced turning response to the direction of motion, with a much smaller realignment of the orientation of the larvae towards the axis of motion of the stimulus (\autoref{fig:5}C). 
+However, they showed an inability to turn in the direction of motion, with a much smaller realignment of the orientation of the larvae towards the axis of motion of the stimulus (\autoref{fig:5}C). 
 Mutants also showed a reduced increase in vertical swimming relative to horizontal swimming (\autoref{fig:5}D), indicating a reduced ability to use the motion cues to guide their swimming direction.
-We note also that mutants showed hypoactivity relative to WT siblings in the "No-Stimulus" condition (\autoref{fig:5}B, p=0.049, Kruskal-Wallis/Dunn's), consistent with the reduced rate of spontaneous bout initiation that we observed in these same channels in the absence of any stimulus (\autoref{fig:3}F), and opposing what we found when tracking their behaviour in our multi-well assay (\autoref{fig:3}B). As discussed above, this hypoactivity may be related to the larger arena, different lighting, or differing handling during the experiment (see Methods).
+We note also that in these same channels, and in the absence of any stimulus, mutants initiate movement bouts at less than half the rate of their wild-type siblings (\autoref{fig:3}F), which is the opposite of the hyperactivity we observed in the multi-well assay (\autoref{fig:3}B). As discussed above, this hypoactivity may be related to the larger arena, different lighting, or differing handling during the experiment (see Methods).
 
 We again then used MAP-Mapping analysis to determine the brain-wide activity patterns in \emph{atp1a3a} mutants relative to WT siblings after being stimulated with an OMR stimulus (\autoref{fig:5}E).
 Similar to the DF stimulus (\autoref{fig:4}G), we observed a strong suppression of activity in the optic tectum -- though in a clearly distinct more posterior/ventral pattern, reflecting the differential topographic presentation of the OMR stimulus below the animals. 
 We observed relatively little change in the diencephalic pretectum, which is thought to be more critical than the tectum for motion processing in the context of the OMR \citep{Matsuda2021-a, Wang2020-a}, indicating that this area may be less affected in \emph{atp1a3a} mutants.
-However, activity was strongly suppressed in multiple areas of the anterior hindbrain (Rhombomeres 1/2), which has been associated with OMR sensorimotor processing \citep{Chen2018-sdf}, as well as turn direction regulation through the ARTR \citep{Dunn2016-asd}. 
+However, activity was strongly suppressed in multiple areas of the anterior hindbrain, at the level of Rhombomeres 1 and 2, which has been associated with OMR sensorimotor processing \citep{Chen2018-sdf}, as well as turn direction regulation through the ARTR \citep{Dunn2016-asd}.
+%% TODO(Owen): confirm against the OMR region quantification whether this suppression falls
+%% inside or outside the cerebellar sub-regions of rhombomere 1 (Z-Brain nests Cerebellum
+%% under Rhombomere 1). If it is outside, say "non-cerebellar" here and in the Fig 5 legend;
+%% if it overlaps, add OMR to the list of contexts in the Discussion ("The cerebellum was
+%% certainly altered...") so the intersection argument stays consistent.
 Therefore, the reduced OMR turning responses in \emph{atp1a3a} mutants may be related to dysfunction in these areas. 
 Similar to the DF stimulus, we observed strong patterns of both activation and suppression in the forebrain, including the pallium, subpallium and habenula, again consistent with a model in which these areas are particularly sensitive to \emph{atp1a3a} loss irrespective of stimulus or behavioural context.  
 
@@ -408,10 +414,10 @@ Similar to the DF stimulus, we observed strong patterns of both activation and s
 
 \caption{\textbf{Dysregulated activity in the forebrain of \emph{atp1a3a} mutants in the habenula and areas homologous to the basal ganglia}\\
 \textbf{A)} Generation of the intersection map. The MAP-Mapping comparisons of \emph{atp1a3a\textsuperscript{-/-}} to \emph{atp1a3a\textsuperscript{+/+}} siblings from the three stimulus and behavioural contexts (Free Swimming, Dark Flash, OMR; left) were intersected, retaining only voxels showing a significant alteration in the same direction in all three experiments (right), shown as \textbf{i)} sagittal and \textbf{ii)} dorsal projections. Dashed boxes indicate the telencephalic region expanded in \textbf{B-F)}. Scale bar = 100 \textmu m.\\
-\textbf{B)} The region of locally increased volume in the pallium coincides with the zone of increased activity. Left: the deformation-based morphometry comparison of \emph{atp1a3a\textsuperscript{-/-}} to \emph{atp1a3a\textsuperscript{+/+}} siblings (as in \autoref{fig:1}C, yellow = increased volume, cyan = decreased volume), cropped to the telencephalon. Right: the same volume shown together with the intersection activity map from \textbf{A)}. \textbf{i)} sagittal, \textbf{ii)} dorsal. Arrows indicate the pallial zone of locally increased volume, which overlaps the zone of increased activity (Pa\textsuperscript{A}). The same two maps are shown as a scrolling stack through the whole brain in \autoref{videosupp:dbmintersection}.\\
-\textbf{C)} Activity patterns displayed on top of the Z-Brain atlas marker for neuronal nuclei (\emph{Tg(elavl3:H2B-RFP)}) \citep{Randlett2015} for the telencephalic region in \textbf{i)} sagittal,  \textbf{ii)} dorsal projections. Activation is seen in the Habenula (HB\textsuperscript{A}), lateral pallium (Pa\textsuperscript{A}), and subpallium (SPa\textsuperscript{A}), while suppression is seen in the more medial subpallium (SPa\textsuperscript{S}).
-\textbf{D)} Activation patterns shown relative to \emph{npy} expression (yellow), highlighting the colocalization of this dEN (pallidum) marker with SPa\textsuperscript{A}.
-\textbf{E)} Suppression patterns shown relative to \emph{tac1} (red), \emph{penka} (blue) and \emph{penkb} (cyan) expression, highlighting the proximity of these Vd/Vc (striatum) markers to SPa\textsuperscript{S}.
+\textbf{B)} The region of locally increased volume in the pallium coincides with the zone of increased activity. Left: the deformation-based morphometry comparison of \emph{atp1a3a\textsuperscript{-/-}} to \emph{atp1a3a\textsuperscript{+/+}} siblings (as in \autoref{fig:1}C, yellow = increased volume, cyan = decreased volume), cropped to the telencephalon. Right: the same volume shown together with the intersection activity map from \textbf{A)}. \textbf{i)} sagittal, \textbf{ii)} dorsal. Arrows indicate the pallial zone of locally increased volume, which overlaps the zone of increased activity (Pal\textsuperscript{A}). The same two maps are shown as a scrolling stack through the whole brain in \autoref{videosupp:dbmintersection}.\\
+\textbf{C)} Activity patterns displayed on top of the Z-Brain atlas marker for neuronal nuclei (\emph{Tg(elavl3:H2B-RFP)}) \citep{Randlett2015} for the telencephalic region in \textbf{i)} sagittal,  \textbf{ii)} dorsal projections. Activation is seen in the Habenula (Hab), lateral pallium (Pal\textsuperscript{A}), and subpallium (SPal\textsuperscript{A}), while suppression is seen in the more medial subpallium (SPal\textsuperscript{S}).
+\textbf{D)} Activation patterns shown relative to \emph{npy} expression (yellow), highlighting the colocalization of this dEN (pallidum) marker with SPal\textsuperscript{A}.
+\textbf{E)} Suppression patterns shown relative to \emph{tac1} (red), \emph{penka} (blue) and \emph{penkb} (cyan) expression, highlighting the proximity of these Vd/Vc (striatum) markers to SPal\textsuperscript{S}.
 \textbf{F)} Overlap of all markers and activity patterns\\
 \textbf{G)} Single-plane examples of pERK immunostaining (green) combined with HCR labelling of \emph{npy} (yellow, top) and \emph{penkb} (cyan, bottom) in the subpallium of \emph{atp1a3a\textsuperscript{+/+}} (left) and \emph{atp1a3a\textsuperscript{-/-}} (right) larvae. \\
 \textbf{H)} Mean pERK signal measured in individual \emph{npy}-labelled neurons (dEN/pallidum homolog), showing increased pERK signal in \emph{atp1a3a\textsuperscript{-/-}} larvae relative to \emph{atp1a3a\textsuperscript{+/+}} siblings. Each point is the mean across all labelled neurons of one larva, white circles indicate the median. \emph{atp1a3a\textsuperscript{+/+}} n = 8, \emph{atp1a3a\textsuperscript{-/-}} n = 9; two-sided Mann-Whitney U test, p = [P].\\
@@ -441,8 +447,8 @@ In our MAP-Mapping experiments focusing on three stimulus contexts (No Stimulus,
 However, some of the most dramatic patterns were in the forebrain, and appeared to be highly consistent across experiments: including the pallium, subpallium and habenula. 
 
 To examine the consistencies in these patterns quantitatively, we directly compared the MAP-Mapping results across these three experiments by generating an intersection map, where only pixels that show significant alterations in all three experiments are retained (\autoref{fig:6}A).
-This revealed a very striking and bilaterally symmetrical pattern of altered activity, with a zone of co-activation in the habenula (HB\textsuperscript{A}), activation of the lateral pallium (Pa\textsuperscript{A}), and two zones of activation and suppression in the subpallium (SPa\textsuperscript{A} and SPa\textsuperscript{S}, respectively).
-We noted that the pallial zone of activation (Pa\textsuperscript{A}) falls within the region in which the morphometric analysis identified locally increased volume (\autoref{fig:6}B, \autoref{videosupp:dbmintersection}; compare \autoref{fig:1}C), making the pallium the one region in which both measures are altered in the same location; we return to the interpretation of this coincidence in the Discussion.
+This revealed a very striking and bilaterally symmetrical pattern of altered activity, with a zone of co-activation in the habenula (Hab), activation of the lateral pallium (Pal\textsuperscript{A}), and two zones of activation and suppression in the subpallium (SPal\textsuperscript{A} and SPal\textsuperscript{S}, respectively).
+We noted that the pallial zone of activation (Pal\textsuperscript{A}) falls within the region in which the morphometric analysis identified locally increased volume (\autoref{fig:6}B, \autoref{videosupp:dbmintersection}; compare \autoref{fig:1}C), making the pallium the one region in which both measures are altered in the same location; we return to the interpretation of this coincidence in the Discussion.
 
 The zebrafish habenula is thought to function as a key integrative hub linking sensory inputs and internal state to downstream neuromodulatory circuits, thereby regulating aversive processing, stress coping, attention, and action selection \citep{Okamoto2021}. 
 Distinct dorsal and ventral habenular subdivisions contribute differentially to these processes, with the dorsal habenula modulating innate and state-dependent behaviors and the ventral habenula supporting associative learning.
@@ -455,7 +461,7 @@ We were therefore particularly interested in examining basal ganglia–associate
 Tanimoto et al., have recently defined markers for the basal ganglia homologs in zebrafish based on conserved gene expression and connectivity analyses \citep{Tanimoto2024}, which we used to operationally define the larval zebrafish basal ganglia subregions in our activity maps. 
 In this framework, \emph{tac1} and \emph{penkb} are used as markers of Vd/Vc, the homologs of the striatum, while \emph{npy} and \emph{nkx2.1} demarcate the dorsal entopeduncular nucleus (dEN), the homolog of pallidum. 
 We stained for \emph{tac1}, \emph{penka}, \emph{penkb} and \emph{npy} using HCR in situ hybridization, and registered these images to the Z-Brain atlas \citep{Randlett2015} (\autoref{fig:6}C-F, \autoref{videosupp:basalganglia1}).
-This revealed that the zone of suppressed activity in the subpallium (SPa\textsuperscript{S}) is proximal to markers for the Vd/Vc, the homolog of the striatum, while the zone of activated activity (SPa\textsuperscript{A}) overlaps with the dEN, the homolog of the pallidum (\autoref{fig:6}C).
+This revealed that the zone of suppressed activity in the subpallium (SPal\textsuperscript{S}) is proximal to markers for the Vd/Vc, the homolog of the striatum, while the zone of activated activity (SPal\textsuperscript{A}) overlaps with the dEN, the homolog of the pallidum (\autoref{fig:6}C).
 This led us to the hypothesis that \emph{atp1a3a} loss results in opposing changes in activity within the two major divisions of the basal ganglia homolog: increased activity in the pallidal homolog and decreased activity in the striatal homolog, a pattern that would be consistent with the known inhibitory connectivity among these regions.
 However, these comparisons rest on the spatial correspondence between activity maps and marker gene expression after registration to a common atlas, and are therefore limited by the precision of this registration and by the fact that the activity maps are computed across, rather than within, individual cells.
 Two zones that appear proximal or overlapping in atlas coordinates may nonetheless correspond to distinct populations of neurons.
@@ -656,7 +662,7 @@ The \emph{atp1a3a} CRISPR mutant zebrafish line was generated at the SickKids Ze
 The guide RNA (gRNA) was designed to target the \emph{atp1a3a} gene 82 base pairs downstream of the start of exon 8.
 This specific region was chosen due to its close proximity to two human mutations known to cause Rapid-onset Dystonia Parkinsonism (821T>C mutation and 829G>A mutation).
 The resultant \emph{atp1a3a} mutant allele has an 8 base pair deletion in exon 8 leading to a frameshift mutation with a premature stop in exon 9.
-For Ca\textsuperscript{2+} imaging experiments, \emph{atp1a3a} mutants were crossed with \emph{Tg(elavl3:H2B-GCaMP6f); mitfa\textsubscript{-/-}}, to generate a line that express the nuclear-targeted GCaMP6f Ca2+ indicator pan-neuronally, in the pigment deficient \emph{Nacre} mutants.
+The line was maintained on a \emph{Tg(elavl3:H2B-GCaMP6f); mitfa\textsuperscript{-/-}} background, which expresses nuclear-targeted GCaMP6f pan-neuronally in pigment-deficient \emph{Nacre} mutants. The GCaMP6f signal provides the pan-neuronal anatomical channel used to register each brain to the reference (see below); larvae carrying this background were used for all imaging experiments.
 
 
 \subsection{Genotyping}
@@ -750,34 +756,16 @@ Group comparisons were made between \emph{atp1a3a\textsuperscript{-/-}} (n = 9) 
 Larvae were embedded in agarose with the tail free to move and imaged using the \emph{pi\_tailtrack} system \citep{Randlett2023}, with visual stimuli presented on a screen below the larva.
 
 \subsection{Data analysis}
-Phenotypic distributions were visualized and analyzed using multiple statistical approaches.
+All analyses were carried out in Python using custom scripts (available at \href{https://github.com/owenrandlett/2025_atp1a3a}{github.com/owenrandlett/2025\_atp1a3a}), built on NumPy, Pandas, SciPy and Numba, with figures produced using Matplotlib and seaborn.
+A threshold of $p < 0.05$ was used to determine statistical significance throughout.
 
-Pie charts depicting the relative proportions of phenotypes in atp1a3a mutants were generated with Python packages Matplotlib, Pandas, and NumPy.
+Behavioural events were defined from cumulative tail bend angle thresholds, with deflections greater than 3 radians classified as O-bends and those exceeding 1 radian as C-bends.
+The relative proportions of the phenotypic categories, the transitions between them across repeated observations, and the distributions of tail angle were summarised using Matplotlib, Pandas and NumPy.
+Swim kinematics from the OMR assay were analysed using the Pingouin library, after excluding outliers, defined as values falling more than 1.5 interquartile ranges below the first quartile or above the third quartile.
+Comparisons between two independent distributions used the non-parametric Mann-Whitney U test as implemented in SciPy, and comparisons across the three genotypes used Kruskal-Wallis tests with Dunn's multiple-comparisons correction. Paired comparisons of the same larvae across two stimulus conditions used a paired t-test. The test used is indicated in each figure legend.
 
-The same visualization pipeline was employed for phenotype transience assays, while histograms of tail angle distributions were constructed using these packages as well.
-
-Statistical evaluation of swim kinematics during OMR assays was conducted with the Pingouin library.
-
-Outliers were identified as values exceeding 1.5 times the interquartile range below the first quartile or above the third quartile and were excluded prior to subsequent analyses.
-
-For RT-qPCR, relative expression levels of atp1a3a and atp1a3b were quantified using the $\Delta\Delta Ct$ method.
-
-Data were analyzed with one-way ANOVAs followed by Bonferroni-corrected post hoc t-tests.
-
-Outlier replicates were defined as those with |z| > 3.5 and removed prior to analysis.
-
-A threshold of p < 0.05 was adopted to determine statistical significance in all tests.
-
-Data analysis was carried out in Python using a custom-developed script.
-
-Behavioral events were operationally defined based on cumulative tail bend angle thresholds, with deflections greater than 3 radians classified as O-bends and those exceeding 1 radian designated as C-bends.
-
-The computational framework integrated several open-source libraries: NumPy, Pandas, Numba and SciPy for statistical procedures.
-
-Data visualization was performed using Matplotlib and seaborn.
-
-Statistical comparisons between distributions were conducted using the non-parametric Mann-Whitney U test as implemented in SciPy.
-
+For RT-qPCR, relative expression levels of \emph{atp1a3a} and \emph{atp1a3b} were quantified using the $\Delta\Delta Ct$ method.
+Replicate values with $|z| > 3.5$ were treated as outliers and removed prior to analysis, and genotypes were compared using one-way ANOVA followed by Bonferroni-corrected post hoc t-tests.
 
 
 \section{Data availability}
